@@ -109,11 +109,13 @@ bool test_game_piece(cgame g)
   for(int i=0;i<NB_PIECES;i++)
     {
       cdst=game_piece(g,i);
-      result = result && test_equality_int(get_height(g->pieces[i]), get_height(cdst), "copy get_height");
-      result = result && test_equality_int(get_width(g->pieces[i]), get_width(cdst), "copy get_width");
-      result = result && test_equality_int(get_x(g->pieces[i]), get_x(cdst), "copy get_x");
-      result = result && test_equality_int(get_y(g->pieces[i]), get_y(cdst), "copy get_y");
-      result = result && test_equality_bool(is_horizontal(g->pieces[i]), is_horizontal(cdst), "copy is_horizontal");
+      cpiece cpieceG;
+      copy_piece(g->pieces[i],cpieceG);
+      result = result && test_equality_int(get_height(cpieceG), get_height(cdst), "copy get_height");
+      result = result && test_equality_int(get_width(cpieceG), get_width(cdst), "copy get_width");
+      result = result && test_equality_int(get_x(cpieceG), get_x(cdst), "copy get_x");
+      result = result && test_equality_int(get_y(cpieceG), get_y(cdst), "copy get_y");
+      result = result && test_equality_bool(is_horizontal(cpieceG), is_horizontal(cdst), "copy is_horizontal");
     }
   free(dst);
   return result;
@@ -196,7 +198,7 @@ int main(int argc,char * argv[])
   result=result && test_equality_bool(false,game_over_hr(ptr_g),"game_over_hr");
   result=result && test_equality_bool(true,test_game_piece(ptr_g),"test_game_piece");
   result=result && test_equality_bool(true,test_copy(ptr_g),"test_copy");
-  result=result && test_equality_bool(true,solve(g),"solve");
+  result=result && test_equality_bool(true,solve(g,ptr_g),"solve");
   result=result && test_equality_bool(false,game_over_hr(ptr_g),"game_over_hr");
   if(result==true)
     {
