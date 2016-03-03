@@ -54,7 +54,7 @@ void copy_piece(cpiece src, piece dst)
 
 void move_piece(piece p, dir d, int distance)
 {
-  if (p->horizontal)
+  if (is_horizontal(p))
   {
     if (d == LEFT)
       p->x -= distance;
@@ -72,33 +72,33 @@ void move_piece(piece p, dir d, int distance)
 
 bool intersect(cpiece p1, cpiece p2)
 {
-  if (p1->x == p2->x && p1->y == p2->y)
+  if (get_x(p1) == get_x(p2) && get_y(p1) == get_y(p2))
     return true;
-  if (p1->horizontal){
-    if (p2->horizontal){
-	if (p1->y != p2->y)
-	  return false;
-	if (((p2->x + get_width(p2)) >= p1->x) || ((p1->x + get_width(p1)) >= p2->x))
-	  return true;
+  if (is_horizontal(p1)){
+    if (is_horizontal(p2)){
+      if (get_y(p1) != get_y(p2))
 	return false;
-    }
-    if (p1->x <= p2->x){
-	if ((p1->x + get_width(p1)) >= p2->x)
-	  return true;
-      }
-    return false;
-  }
-  if (p2->horizontal==false){
-    if (p1->x != p2->x)
+      if ( (((get_x(p1)+get_width(p1)) > get_x(p2)) && (get_x(p1) < (get_x(p2)+get_width(p2))))  ||  (((get_x(p2)+get_width(p2)) > get_x(p1)) && (get_x(p2) < (get_x(p1)+get_width(p1)))) )
+	return true;
       return false;
-    if (((p1->y + get_height(p1)) >= p2->y) || ((p2->y + get_height(p2)) >= p1->y))
+    }
+    if ( (get_y(p1) < get_y(p2))  ||  (get_y(p1) > (get_y(p2)+get_height(p2))) )
+      return false;
+    if ( (get_x(p1) <= get_x(p2)) && (get_x(p1)+get_width(p1) > get_x(p2)) )
       return true;
     return false;
   }
-  if (p2->x <= p1->x){
-    if ((p2->x + get_width(p2)) >= p1->x)
-      return true;
+  if (!is_horizontal(p2)){
+    if (get_x(p1) != get_x(p2))
+      return false;
+    if ( (((get_y(p1)+get_height(p1)) > get_y(p2)) && (get_y(p1) < (get_y(p2)+get_height(p2))))  ||  (((get_y(p2)+get_height(p2)) > get_y(p1)) && (get_y(p2) < (get_y(p1)+get_height(p1)))) )
+	return true;
+    return false;
   }
+  if ( (get_y(p2) < get_y(p1))  ||  (get_y(p2) > (get_y(p1)+get_height(p1))) )
+    return false;
+  if ( (get_x(p2) <= get_x(p1)) && (get_x(p2)+get_width(p2) > get_x(p1)) )
+    return true;
   return false;
 }
   
