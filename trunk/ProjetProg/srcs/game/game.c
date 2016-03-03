@@ -1,4 +1,5 @@
 #include "game.h"
+#include "piece.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -139,7 +140,7 @@ bool play_move(game g, int piece_num, dir d, int distance){
 
     }
     copy_piece((cpiece)copyPiece, g->redCar);
-    g->nbMove ++;
+    g->nbMove += d ;
     delete_piece(copyPiece);
     return true;
   }
@@ -182,7 +183,7 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	return false;
 
     copy_piece((cpiece)copyPiece,g->piece[piece_num]);
-    g->nbMove ++;
+    g->nbMove += d;
     return true;
   }
 
