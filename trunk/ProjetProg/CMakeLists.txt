@@ -3,4 +3,6 @@ projet(ProjetProg)
 
 include_directories(include)
 add_definitions(-std=gnu99 -Wall -Wextra)
-add_subdirectory(srcs)
+add_subdirectory(src)
+
+install(TARGETS game DESTINATION lib)
