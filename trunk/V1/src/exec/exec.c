@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include <exec>
 
 static inline int is_opt(const char* str);
@@ -26,7 +28,7 @@ is_opt(const char* str)
 
 static void parse_opt(const char* opt, int* flags)
 {
-  switch (*str + 1)
+  switch (*opt + 1)
     {
     case 't' :
       *flags &= (0 << TERM_F);
