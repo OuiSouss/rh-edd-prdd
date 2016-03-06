@@ -11,7 +11,7 @@ struct game_s {
   piece* piece;
   int nbPiece;
   piece redCar;
-};
+} __attribute__((packed));
 #endif /* _GAME_S */
 
 
@@ -72,7 +72,7 @@ game new_game_hr (int nb_piece, piece *piece){
 }
 
 void delete_game (game g){
-  for (int i = 0; i < (*g).nbPiece - 2; ++i)
+  for (int i = 0; i < ((*g).nbPiece - 2); ++i)
     delete_piece(g->piece[i]);
   delete_piece(g->redCar);
   free(g);
@@ -198,4 +198,3 @@ bool play_move(game g, int piece_num, dir d, int distance){
 int game_nb_moves(cgame g){
   return g->nbMove;
 }
-

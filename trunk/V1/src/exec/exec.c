@@ -14,9 +14,8 @@ struct game_s {
   piece* piece;
   int nbPiece;
   piece redCar;
-};
+} __attribute__((packed));
 #endif /* _GAME_S */
-
 
 #define TERM_F 0
 #define GUI_F 1
@@ -204,13 +203,13 @@ static void manage_piece(char* buffer, struct s_exec* data_set)
   char* buff_ret = NULL;
   fprintf(stdout, "Choose the number of the piece to move. ");
   buff_ret = fgets(buffer, 31, stdin);
-  if (buff_ret == NULL || (strlen(buff_ret) != 2))
+  if (buff_ret == NULL || (strlen(buff_ret) != 2) || (strncmp(buff_ret, "quit\n", 5) == 0))
     (*data_set).status = -1;
   else
     {
       *(buffer + 1) = '\0';
       int nb_pc = atoi(buffer);
-      if (nb_pc < game_nb_pieces((*data_set).g) && nb_pc >= 0)
+      if ((nb_pc < game_nb_pieces((*data_set).g)) && (nb_pc >= 0))
 	manage_move(nb_pc, buffer, data_set);
       else
 	{
@@ -225,7 +224,7 @@ static void manage_move(const int nb_pc, char* buffer, struct s_exec* data_set)
   char* buff_ret = NULL;
   fprintf(stdout, "Choose a direction to move the piece. ");
   buff_ret = fgets(buffer, 31, stdin);
-  if (buff_ret == NULL)
+  if (buff_ret == NULL || (strlen(buff_ret) < 3) || (strlen(buff_ret) > 6))
     (*data_set).status = -1;
   else
     {
@@ -275,7 +274,7 @@ static dir get_dir(const char* buffer)
     return UP;
   if (strlen(buffer) == 5)
     return RIGHT;
-  if (!strcmp(buffer, "DOWN"))
+  if (strcmp(buffer, "DOWN") == 0)
     return DOWN;
   return LEFT;
 }
