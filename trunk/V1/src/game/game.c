@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 #ifndef _GAME_S
 # define _GAME_S
 struct game_s {
@@ -72,9 +73,10 @@ game new_game_hr (int nb_piece, piece *piece){
 }
 
 void delete_game (game g){
-  for (int i = 0; i < ((*g).nbPiece - 2); ++i)
+  for (int i = 0; i < ((*g).nbPiece - 1); ++i)
     delete_piece(g->piece[i]);
   delete_piece(g->redCar);
+  free(g->piece);
   free(g);
 }
 

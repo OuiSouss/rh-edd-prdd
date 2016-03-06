@@ -17,6 +17,7 @@ struct game_s {
 } __attribute__((packed));
 #endif /* _GAME_S */
 
+
 #define TERM_F 0
 #define GUI_F 1
 #define IOCTL_F 2
@@ -37,12 +38,16 @@ static void print_empty_board_line(char* buffer);
 static void print_line(const int n, int grid[6][6], char* buffer);
 
 static void prompt_user(struct s_exec* data_set);
-static void manage_piece(char* buffer, struct s_exec* data_set);
-static void manage_move(const int nb_pc, char* buffer, struct s_exec* data_set);
+static void manage_move(const int nb_pc, struct s_exec* data_set);
 
 static int is_dir(const char* buffer);
 static dir get_dir(const char* buffer);
 
+static inline void xfree(char** ptr)
+{
+  if (*ptr != NULL)
+    { free(*ptr); *ptr = NULL; }
+}
 
 void init_exec(struct s_exec* data_set, const int argc, const char** argv)
 {
@@ -92,15 +97,19 @@ static int parse_game_data(const char* filepath, game* g_ptr)
   FILE* fstream = fopen(filepath, "r");
   if (fstream != NULL)
     {
-      char* str = NULL;
       char buffer[16];
-      piece pcs[19];
+      char* str = buffer;
+      piece* pcs = malloc(sizeof(*pcs) * 19);
       int nb_pcs = 0;
-      for (int i = 0; i < 2; ++i)
+      for (int i = 0; (i < 18) && (str != NULL); ++i)
 	{
 	  str = fgets(buffer, 15, fstream);
-	  get_piece(str, &(*(pcs + i)));
-	  ++nb_pcs;
+	  if (str != NULL)
+	    {
+	      get_piece(str, &(*(pcs + i)));
+	      ++nb_pcs;
+	      *(pcs + nb_pcs) = NULL; 
+	    }
 	}
       *g_ptr = new_game_hr(nb_pcs, pcs);
       return fclose(fstream);
@@ -137,7 +146,7 @@ static void printout_game(const struct s_exec* data_set)
       print_empty_board_line(buffer);
       print_full_board_line(buffer);
     }
-  free(buffer);
+  xfree(&buffer);
 }
 
 static void print_buffer(const char* buffer)
@@ -195,11 +204,6 @@ void end_exec(struct s_exec* data_set) { delete_game((*data_set).g); }
 static void prompt_user(struct s_exec* data_set)
 {
   char* buffer = malloc(sizeof(*buffer) * 32);
-  manage_piece(buffer, data_set);
-}
-
-static void manage_piece(char* buffer, struct s_exec* data_set)
-{
   char* buff_ret = NULL;
   fprintf(stdout, "Choose the number of the piece to move. ");
   buff_ret = fgets(buffer, 31, stdin);
@@ -210,17 +214,20 @@ static void manage_piece(char* buffer, struct s_exec* data_set)
       *(buffer + 1) = '\0';
       int nb_pc = atoi(buffer);
       if ((nb_pc < game_nb_pieces((*data_set).g)) && (nb_pc >= 0))
-	manage_move(nb_pc, buffer, data_set);
+	manage_move(nb_pc, data_set);
       else
 	{
 	  fprintf(stderr, "invalid piece number provided\n");
-	  manage_piece(buffer, data_set);
+	  xfree(&buffer);
+	  prompt_user(data_set);
 	}
     }
+  xfree(&buffer);
 }
 
-static void manage_move(const int nb_pc, char* buffer, struct s_exec* data_set)
+static void manage_move(const int nb_pc, struct s_exec* data_set)
 {
+  char* buffer = malloc(sizeof(*buffer) * 32);
   char* buff_ret = NULL;
   fprintf(stdout, "Choose a direction to move the piece. ");
   buff_ret = fgets(buffer, 31, stdin);
@@ -247,9 +254,11 @@ static void manage_move(const int nb_pc, char* buffer, struct s_exec* data_set)
 	{
 	  (*data_set).status = 0;
 	  fprintf(stderr, "invalid direction provided for movement\n");
-	  manage_move(nb_pc, buffer, data_set);
+	  xfree(&buffer);
+	  manage_move(nb_pc, data_set);
 	}
     }
+  xfree(&buffer);
 }
 
 static int is_dir(const char* buffer)
