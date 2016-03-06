@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifndef _GAME_S
+# define _GAME_S
 struct game_s {
   int board[6][6];
   int nbMove;
@@ -10,6 +12,7 @@ struct game_s {
   int nbPiece;
   piece redCar;
 };
+#endif /* _GAME_S */
 
 
 game new_game_hr (int nb_piece, piece *piece){
@@ -22,8 +25,8 @@ game new_game_hr (int nb_piece, piece *piece){
 
   //look if piece in parameter don't intersect
 
-  for (int i= 0; i<nb_piece -1; ++i){
-    for (int j= i+1; j<nb_piece; ++i){
+  for (int i= 0; i<nb_piece -2; ++i){
+    for (int j= i+1; j<nb_piece - 1; ++i){
       if (intersect (piece[i], piece[j])){
 	fprintf (stderr," Conflict of intersect between pieces! Change parameter\n");
 	exit(EXIT_FAILURE);
@@ -38,6 +41,9 @@ game new_game_hr (int nb_piece, piece *piece){
   int width = 0;
   int height = 0;
 
+  for (int w = 0; w < 6; ++w)
+    for (int h = 0; h < 6; ++h)
+      (*newGame).board[h][w] = -1;
   newGame->redCar = new_piece_rh(0,3,true,true);
   newGame->board[3][0] = 0;
   newGame->board[3][1] = 0;
@@ -48,13 +54,13 @@ game new_game_hr (int nb_piece, piece *piece){
       y = get_y(piece[i]);
       if (is_horizontal(piece[i])){
 	width = get_width(piece[i]);
-	for (int j=0; i<width; ++i){
+	for (int j=0; j<width; ++j){
 	  newGame->board[y][x+j] = i+1;
 	}
       }
       else {
 	height = get_height(piece[i]);
-	for (int j=0; i<height; ++i){
+	for (int j=0; j<height; ++j){
 	  newGame->board[y+j][x] = i+1;
 	}
       }
@@ -66,7 +72,7 @@ game new_game_hr (int nb_piece, piece *piece){
 }
 
 void delete_game (game g){
-  for (int i = 0; g->piece[i] != NULL; i++)
+  for (int i = 0; i < (*g).nbPiece - 2; ++i)
     delete_piece(g->piece[i]);
   delete_piece(g->redCar);
   free(g);
@@ -118,7 +124,6 @@ bool play_move(game g, int piece_num, dir d, int distance){
     //Direction correspond with the type of piece
     if (d == UP || d == DOWN)
       return false;
-    
     //copy the redCar to do the move on the copy
     piece copyPiece = new_piece_rh(0,0,true,true);
     copy_piece((cpiece)g->redCar, copyPiece);
@@ -135,19 +140,20 @@ bool play_move(game g, int piece_num, dir d, int distance){
     //copy not intersect with other pieces?
     for(int i=0; i<g->nbPiece -2; ++i){
       if(intersect((cpiece)copyPiece,(cpiece)(g->piece[i])))
-	delete_piece(copyPiece);
-	return false;
-
+	{
+	  delete_piece(copyPiece);
+	  return false;
+	}
     }
     copy_piece((cpiece)copyPiece, g->redCar);
     g->nbMove += d ;
     delete_piece(copyPiece);
     return true;
   }
-
+  
   //case of piece_num part of piece[]
   else{
-
+    
     //Test direction compatible
     if(is_horizontal(g->piece[piece_num -1]) && (d==UP || d==DOWN))
       return false;
@@ -192,3 +198,4 @@ bool play_move(game g, int piece_num, dir d, int distance){
 int game_nb_moves(cgame g){
   return g->nbMove;
 }
+

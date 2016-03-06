@@ -1,5 +1,4 @@
 add_library(game STATIC game.c piece.c)
-
 install(TARGETS game DESTINATION ${PROJECT_SOURCE_DIR}/lib)
 
 add_executable(test_piece test_piece1.c)
