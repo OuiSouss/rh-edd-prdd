@@ -35,13 +35,18 @@ static void printout_game(const struct s_exec* data_set);
 static void print_buffer(const char* buffer);
 static void print_full_board_line(char* buffer);
 static void print_empty_board_line(char* buffer);
-static void print_line(const int n, int grid[6][6], char* buffer);
+static void print_line(const int n, int** grid, char* buffer);
 
 static void prompt_user(struct s_exec* data_set);
-static void manage_move(const int nb_pc, struct s_exec* data_set);
+static void manage_piece(char* buffer, struct s_exec* data_set);
+static void manage_move(const int nb_pc, char* buffer, struct s_exec* data_set);
 
 static int is_dir(const char* buffer);
 static dir get_dir(const char* buffer);
+
+static inline void clear_tab(int** tab);
+
+static void actualise_tab(struct s_exec* data_set);
 
 static inline void xfree(char** ptr)
 {
@@ -62,6 +67,10 @@ void init_exec(struct s_exec* data_set, const int argc, const char** argv)
   (*data_set).g = NULL;
   if (argc > 1 && !is_opt(*(argv + argc - 1)))
     (*data_set).status = parse_game_data(*(argv + argc - 1), &((*data_set).g));
+  (*data_set).board = malloc(sizeof(*((*data_set).board)) * 6);
+  for (int j = 0; j < 6; ++j)
+    (*data_set).board[j] = malloc(sizeof(*((*data_set).board[j])) * 6);  
+  actualise_tab(data_set);
 }
 
 static inline int
@@ -142,7 +151,7 @@ static void printout_game(const struct s_exec* data_set)
   for (int i = 0; i < 6; ++i)
     {
       print_empty_board_line(buffer);
-      print_line(i, (*data_set).g->board, buffer);
+      print_line(i, (*data_set).board, buffer);
       print_empty_board_line(buffer);
       print_full_board_line(buffer);
     }
@@ -173,7 +182,7 @@ static void print_empty_board_line(char* buffer)
   print_buffer(buffer);
 }
 
-static void print_line(const int n, int grid[6][6], char* buffer)
+static void print_line(const int n, int** grid, char* buffer)
 {
   for (int i = 0; i < 6; ++i)
     {
@@ -197,6 +206,8 @@ void loop_exec(struct s_exec* data_set)
     prompt_user(data_set);
   if ((*data_set).status == 0)
     (*data_set).status = (game_over_hr((*data_set).g) == true) ? 1 : 0;
+  if ((*data_set).status == 0)
+    actualise_tab(data_set);
 }
 
 void end_exec(struct s_exec* data_set) { delete_game((*data_set).g); }
@@ -204,34 +215,37 @@ void end_exec(struct s_exec* data_set) { delete_game((*data_set).g); }
 static void prompt_user(struct s_exec* data_set)
 {
   char* buffer = malloc(sizeof(*buffer) * 32);
+  manage_piece((char*) buffer, data_set);
+  free(buffer);
+}
+
+static void manage_piece(char* buffer, struct s_exec* data_set)
+{
   char* buff_ret = NULL;
   fprintf(stdout, "Choose the number of the piece to move. ");
   buff_ret = fgets(buffer, 31, stdin);
-  if (buff_ret == NULL || (strlen(buff_ret) != 2) || (strncmp(buff_ret, "quit\n", 5) == 0))
+  if (buff_ret == NULL || (strlen(buff_ret) != 2))
     (*data_set).status = -1;
   else
     {
       *(buffer + 1) = '\0';
       int nb_pc = atoi(buffer);
-      if ((nb_pc < game_nb_pieces((*data_set).g)) && (nb_pc >= 0))
-	manage_move(nb_pc, data_set);
+      if (nb_pc < game_nb_pieces((*data_set).g) && nb_pc >= 0)
+	manage_move(nb_pc, buffer, data_set);
       else
 	{
 	  fprintf(stderr, "invalid piece number provided\n");
-	  xfree(&buffer);
-	  prompt_user(data_set);
+	  manage_piece(buffer, data_set);
 	}
     }
-  xfree(&buffer);
 }
 
-static void manage_move(const int nb_pc, struct s_exec* data_set)
+static void manage_move(const int nb_pc, char* buffer, struct s_exec* data_set)
 {
-  char* buffer = malloc(sizeof(*buffer) * 32);
   char* buff_ret = NULL;
   fprintf(stdout, "Choose a direction to move the piece. ");
   buff_ret = fgets(buffer, 31, stdin);
-  if (buff_ret == NULL || (strlen(buff_ret) < 3) || (strlen(buff_ret) > 6))
+  if (buff_ret == NULL)
     (*data_set).status = -1;
   else
     {
@@ -254,11 +268,9 @@ static void manage_move(const int nb_pc, struct s_exec* data_set)
 	{
 	  (*data_set).status = 0;
 	  fprintf(stderr, "invalid direction provided for movement\n");
-	  xfree(&buffer);
-	  manage_move(nb_pc, data_set);
+	  manage_move(nb_pc, buffer, data_set);
 	}
     }
-  xfree(&buffer);
 }
 
 static int is_dir(const char* buffer)
@@ -286,4 +298,38 @@ static dir get_dir(const char* buffer)
   if (strcmp(buffer, "DOWN") == 0)
     return DOWN;
   return LEFT;
+}
+
+static inline void
+clear_tab(int** tab)
+{
+  for (int i = 0; i < 6; ++i)
+    {
+      for (int j = 0; j < 6; ++j)
+	tab[i][j] = -1;
+    }
+}
+
+static void
+actualise_tab(struct s_exec* data_set)
+{
+  clear_tab((*data_set).board);
+  for (int i = 0; i < game_nb_pieces((cgame) (*data_set).g); ++i)
+    {
+      cpiece cpc = game_piece((cgame) (*data_set).g, i);
+      int x = get_x(cpc); int y = get_y(cpc);
+      int dim = 0;
+      if (is_horizontal(cpc))
+	{
+	  dim = get_width(cpc);
+	  for (int j = 0; j < dim; ++j)
+	    (*data_set).board[y][x + j] = i;
+	}
+      else
+	{
+	  dim = get_height(cpc);
+	for (int j = 0; j < dim; ++j)
+	  (*data_set).board[y + j][x] = i;
+	}
+    }
 }
