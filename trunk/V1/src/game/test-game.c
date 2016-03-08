@@ -62,7 +62,7 @@ bool test_allocation(void *ptr,char *name_ptr)
  *@brief change a "piece" table by  writting the cars' coodonates of the test configuration(see above) into it.
  *@param piece array of pieces.
  */
-void set_up_start(piece pieces[])
+void set_up_start(piece pieces[],int length)
 {
   pieces[0]=new_piece_rh(0,3,true,true);
   pieces[1]=new_piece_rh(2,2,false,false);
@@ -70,6 +70,15 @@ void set_up_start(piece pieces[])
   pieces[3]=new_piece_rh(4,3,false,false);
   pieces[4]=new_piece_rh(5,2,true,false);
 }
+
+void delete_set_up(piece pieces[],int length)
+{
+  for(int i=0;i<length;i++)
+    {
+      delete_piece(pieces[i]);
+    }
+}
+  
 
 /*winning configuration
 ..22..
@@ -79,6 +88,7 @@ void set_up_start(piece pieces[])
 ..1.34
 ..1.3.
 */
+
 
 /**
  *@brief change a "piece" table by  writting the cars' coodonates of the winning configuration(see above) into it.
@@ -94,30 +104,47 @@ void set_up_winning(piece pieces[])
 }
 
 /**
+ *@brief test if a game is correctly created.
+ */
+bool test_new_game()
+{
+  bool result=true;
+  piece tab[NB_PIECES];
+  set_up_start(tab,NB_PIECES);
+  game g=new_game_hr(NB_PIECES,tab);
+  result=result && test_equality_int(NB_PIECES,NB_PIECES,"new_game_hr nbPiece");
+  result=result && test_equality_int(0,g->nbMove,"new_game_hr nbMove");
+  for(int i=0;i<NB_PIECES;i++)
+    {
+      result = result && test_equality_int(get_height(tab[i]), get_height(g->piece[i]), "new_game get_height");
+      result = result && test_equality_int(get_width(tab[i]), get_width(g->piece[i]), "new_game get_width");
+      result = result && test_equality_int(tab[i], get_x(g->piece[i]), "new_game get_x");
+      result = result && test_equality_int(get_y(tab[i]), get_y(g->piece[i]), "new_game get_y");
+      result = result && test_equality_bool(is_horizontal(tab[i]), is_horizontal(g->piece[i]), "new_game is_horizontal");
+    }
+  return result;
+}
+
+/**
  *@brief test if the function "game_piece" return the good piece.
  */
 bool test_game_piece(cgame g)
 {
-  piece dst=malloc(sizeof(piece));
-  if(dst==NULL)
-  {
-    fprintf(stderr,"Allocation memory error!\n");
-    exit(EXIT_FAILURE);
-  }
-  cpiece cdst=dst;
+  cpiece dst;
   bool result=true;
   for(int i=0;i<NB_PIECES;i++)
     {
-      cdst=game_piece(g,i);
-      cpiece cpieceG;
-      copy_piece(g->pieces[i],cpieceG);
-      result = result && test_equality_int(get_height(cpieceG), get_height(cdst), "copy get_height");
-      result = result && test_equality_int(get_width(cpieceG), get_width(cdst), "copy get_width");
-      result = result && test_equality_int(get_x(cpieceG), get_x(cdst), "copy get_x");
-      result = result && test_equality_int(get_y(cpieceG), get_y(cdst), "copy get_y");
-      result = result && test_equality_bool(is_horizontal(cpieceG), is_horizontal(cdst), "copy is_horizontal");
+      dst=game_piece(g,i);
+      int a=g->nbPiece;
+      for(int i=0;i<NB_PIECES;i++)
+      piece pieceG=new_piece_rh(0,0,true,true);
+      copy_piece(g->piece[i],pieceG);
+      result = result && test_equality_int(get_height(pieceG), get_height(dst), "copy get_height");
+      result = result && test_equality_int(get_width(pieceG), get_width(dst), "copy get_width");
+      result = result && test_equality_int(get_x(pieceG), get_x(dst), "copy get_x");
+      result = result && test_equality_int(get_y(pieceG), get_y(dst), "copy get_y");
+      result = result && test_equality_bool(is_horizontal(pieceG), is_horizontal(dst), "copy is_horizontal");
     }
-  free(dst);
   return result;
 }
 
@@ -129,12 +156,8 @@ bool test_game_piece(cgame g)
 bool test_copy(cgame src)
 {
   bool result=true;
-  game dst=malloc(sizeof(game));
-  if(dst==NULL)
-    {
-      fprintf(stderr,"Allocation memory error!\n");
-      exit(EXIT_FAILURE);
-    }
+  piece tab[NB_PIECES];
+  game dst=new_game_hr(NB_PIECES,tab);
   copy_game(src,dst);
   result=result && test_equality_int(NB_PIECES,game_nb_pieces(dst),"test_copy");
   result=result && test_equality_int(0,game_nb_moves(src),"game_nb_moves\n");
@@ -146,7 +169,6 @@ bool test_copy(cgame src)
       result = result && test_equality_int(get_y(src->pieces[i]), get_y(dst->pieces[i]), "copy get_y");
       result = result && test_equality_bool(is_horizontal(src->pieces[i]), is_horizontal(dst->pieces[i]), "copy is_horizontal");
     }
-  free(dst);
   return result;
 }
 
@@ -187,19 +209,23 @@ int main(int argc,char * argv[])
 {
   bool result=true;
   piece pieces[NB_PIECES];
-  set_up_start(pieces);
+  set_up_start(pieces,NB_PIECES);
   game g;
   g=new_game_hr(NB_PIECES,pieces);
+  //test pour verifier que les membres de la structure game sont accessibles ->erreur de compilation!
+  int a=g->nbMove;
 
-  result=result && test_equality_bool(true,test_allocation(g,"g"),"test_allocation");
+  result=result && test_equality_bool(true,test_new_game(),"test_new_game");
   
-  cgame ptr_g=g;
+  cgame cg=g;
   
   result=result && test_equality_bool(false,game_over_hr(ptr_g),"game_over_hr");
   result=result && test_equality_bool(true,test_game_piece(ptr_g),"test_game_piece");
   result=result && test_equality_bool(true,test_copy(ptr_g),"test_copy");
   result=result && test_equality_bool(true,solve(g,ptr_g),"solve");
   result=result && test_equality_bool(false,game_over_hr(ptr_g),"game_over_hr");
+  delete_game(g);
+  delete_set_up(pieces,NB_PIECES);
   if(result==true)
     {
       printf("\"Game\" module is correct!\n");
