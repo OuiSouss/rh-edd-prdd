@@ -6,18 +6,6 @@
 #include <exec>
 
 
-#ifndef _GAME_S
-# define _GAME_S
-struct game_s {
-  int board[6][6];
-  int nbMove;
-  piece* piece;
-  int nbPiece;
-  piece redCar;
-} __attribute__((packed));
-#endif /* _GAME_S */
-
-
 #define TERM_F 0
 #define GUI_F 1
 #define IOCTL_F 2
