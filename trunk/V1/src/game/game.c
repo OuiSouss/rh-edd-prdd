@@ -12,7 +12,7 @@ struct game_s {
   piece* piece;
   int nbPiece;
   piece redCar;
-} __attribute__((packed));
+};
 #endif /* _GAME_S */
 
 

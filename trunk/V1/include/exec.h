@@ -15,9 +15,9 @@ struct s_exec
   int status;	/*!< The variable used to track current program state. */
   int flags;	/*!< The variable used to track input mode chosen by the user */
   game g;	/*!< A pointer to the kind of structure used to store game data */
+  int** board;
 };
 # endif /* _S_EXEC */
-
 
 /**
  * @fn void init_exec (struct s_exec* data_set, const int argc, const char** argv)
