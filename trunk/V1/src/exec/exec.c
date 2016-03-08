@@ -198,7 +198,13 @@ void loop_exec(struct s_exec* data_set)
     actualise_tab(data_set);
 }
 
-void end_exec(struct s_exec* data_set) { delete_game((*data_set).g); }
+void end_exec(struct s_exec* data_set)
+{
+  delete_game((*data_set).g);
+  for (int i = 0; i < 6; ++i)
+    free((*data_set).board[i]);
+  free((*data_set).board);
+}
 
 static void prompt_user(struct s_exec* data_set)
 {
@@ -212,7 +218,7 @@ static void manage_piece(char* buffer, struct s_exec* data_set)
   char* buff_ret = NULL;
   fprintf(stdout, "Choose the number of the piece to move. ");
   buff_ret = fgets(buffer, 31, stdin);
-  if (buff_ret == NULL || (strlen(buff_ret) != 2))
+  if (buff_ret == NULL)
     (*data_set).status = -1;
   else
     {
