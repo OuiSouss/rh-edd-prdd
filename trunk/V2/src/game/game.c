@@ -1,20 +1,55 @@
 #include "game.h"
-#include "piece.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-
-#ifndef _GAME_S
-# define _GAME_S
 struct game_s {
-  int board[6][6];
+  int** board;
+  int width;
+  int height;
   int nbMove;
   piece* piece;
   int nbPiece;
-  piece redCar;
 };
-#endif /* _GAME_S */
 
+game new_game (int width, int height, int nb_pieces, piece *pieces){
+  game newGame = (game) malloc (sizeof (*newGame));
+
+  if (newGame == NULL){
+    fprintf(stderr,"Problem in the alloc of newGame!!!");
+    exit(EXIT_FAILURE);
+  }
+
+  newGame->board = (int **) malloc (sizeof(*(newGame->board))*height);
+
+  if (newGame->board == NULL){
+    fprintf(stderr, "Problem in the alloc of newGame's board");
+    exit(EXIT_FAILURE);
+  }
+
+  for (int j= 0; j<height; ++j)
+    newGame->board[j] = (int *) malloc (sizeof(*(newGame->board[j]))*width);
+
+  //look if piece in parameter don't intersect
+  /* We put in comment for the moment waiting the correction of intersect in piece.c
+  for (int i= 0; i<nb_piece -2; ++i){
+    for (int j= i+1; j<nb_piece - 1; ++i){
+      if (intersect (piece[i], piece[j])){
+	fprintf (stderr," Conflict of intersect between pieces! Change parameter\n");
+	exit(EXIT_FAILURE);
+      }
+    }
+  }
+  */
+
+  newGame->width = width;
+  newGame->height = height;
+  newGame->nbMove = 0;
+  newGame->nbPiece = nb_pieces + 1;
+
+
+  
+  					   
+}
 
 game new_game_hr (int nb_piece, piece *piece){
   game newGame = (game) malloc (sizeof(*newGame));
@@ -35,20 +70,19 @@ game new_game_hr (int nb_piece, piece *piece){
     }
   }
 
-  newGame->nbMove=0;
-
   int x = 0;
   int y = 0;
   int width = 0;
   int height = 0;
 
+  // initialization of the board with -1
   for (int w = 0; w < 6; ++w)
     for (int h = 0; h < 6; ++h)
-      (*newGame).board[h][w] = -1;
+      newGame->board[h][w] = -1;
   newGame->redCar = new_piece_rh(0,3,true,true);
   newGame->board[3][0] = 0;
   newGame->board[3][1] = 0;
-
+  newGame->nbMove=0;
   if( piece != NULL){
     for (int i=0; i<nb_piece; ++i){
       x = get_x(piece[i]);
@@ -200,3 +234,8 @@ bool play_move(game g, int piece_num, dir d, int distance){
 int game_nb_moves(cgame g){
   return g->nbMove;
 }
+
+int game_width(cgame g){}
+
+int game_height(cgame g){}
+int game_square_piece (game g, int x, int y){}
