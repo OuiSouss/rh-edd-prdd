@@ -77,12 +77,12 @@ bool intersect(cpiece p1, cpiece p2)
   if (is_horizontal(p1)){
     if (is_horizontal(p2)){
       if (get_y(p1) != get_y(p2))
-  	return false;
+	return false;
       if ( (((get_x(p1)+get_width(p1)) > get_x(p2)) && (get_x(p1) < (get_x(p2)+get_width(p2))))  ||  (((get_x(p2)+get_width(p2)) > get_x(p1)) && (get_x(p2) < (get_x(p1)+get_width(p1)))) )
-  	return true;
+	return true;
       return false;
     }
-    if ( (get_y(p1) < get_y(p2))  ||  (get_y(p1) > (get_y(p2)+get_height(p2))) )
+    if ( (get_y(p1) < get_y(p2))  ||  (get_y(p1) > (get_y(p2)+get_height(p2)-1)) )
       return false;
     if ( (get_x(p1) <= get_x(p2)) && (get_x(p1)+get_width(p1) > get_x(p2)) )
       return true;
@@ -92,10 +92,10 @@ bool intersect(cpiece p1, cpiece p2)
     if (get_x(p1) != get_x(p2))
       return false;
     if ( (((get_y(p1)+get_height(p1)) > get_y(p2)) && (get_y(p1) < (get_y(p2)+get_height(p2))))  ||  (((get_y(p2)+get_height(p2)) > get_y(p1)) && (get_y(p2) < (get_y(p1)+get_height(p1)))) )
-  	return true;
+	return true;
     return false;
   }
-  if ( (get_y(p2) < get_y(p1))  ||  (get_y(p2) > (get_y(p1)+get_height(p1))) )
+  if ( (get_y(p2) < get_y(p1))  ||  (get_y(p2) > (get_y(p1)+get_height(p1)-1)) )
     return false;
   if ( (get_x(p2) <= get_x(p1)) && (get_x(p2)+get_width(p2) > get_x(p1)) )
     return true;
