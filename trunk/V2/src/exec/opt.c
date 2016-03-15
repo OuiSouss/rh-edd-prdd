@@ -15,6 +15,7 @@ struct s_data
 
   int index;
 
+  piece* pcs;
   int nb_pcs;
 
   // int lock;
@@ -130,6 +131,18 @@ static void parse_input_file(struct s_data* data)
 }
 
 
-static void parse_piece(struct s_data* data, const char* s)
+static void parse_piece(struct s_data* data, char* s)
 {
   int x, y;
+  int w, h;
+  char* token = NULL;
+  token = strtok(line, ", ");
+  x = atoi(token);
+  token = strtok(NULL, ", ");
+  y = atoi(token);
+  token = strtok(NULL, ", ");
+  w = atoi(token);
+  token = strtok(NULL, ", ");
+  h = atoi(token);
+  /* data->pcs[nb_pcs++] = *new_piece()* */
+}
