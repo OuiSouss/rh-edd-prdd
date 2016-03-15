@@ -252,7 +252,5 @@ int game_height(cgame g){
   return g->height;
 }
 int game_square_piece (game g, int x, int y){
-  if ( g->board[y][x] == -1)
-    return -1;
   return g->board[y][x];
 }
