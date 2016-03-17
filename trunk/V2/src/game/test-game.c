@@ -5,6 +5,8 @@
 #include "game.h"
 
 #define NB_PIECES 5
+#define WIDTH_GAME 6
+#define HEIGHT_GAME 6
 
 /**
  *@brief test if boolean value is equal to expected. If not, displays an error message indicating expected, value and name of the tested function.
@@ -96,16 +98,19 @@ bool test_new_game()
   bool result=true;
   piece tab[NB_PIECES];
   set_up_start(tab,NB_PIECES);
-  game g=new_game_hr(NB_PIECES,tab);
-  result=result && test_equality_int(NB_PIECES,game_nb_pieces(g),"new_game_hr nbPiece");
-  result=result && test_equality_int(0,game_nb_moves(g),"new_game_hr nbMove");
+  game g=new_game_hr(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
+  result=result && test_equality_int(WIDTH_GAME,game_width(g),"new_game game_width");
+  result=result && test_equality_int(HEIGHT_GAME,game_height(g),"new_game game_height");
+  result=result && test_equality_int(NB_PIECES,game_nb_pieces(g),"new_game nbPiece");
+  result=result && test_equality_int(0,game_nb_moves(g),"new_game nbMove");
   for(int i=0;i<NB_PIECES;i++)
     {
       result = result && test_equality_int(get_height(tab[i]), get_height(game_piece(g,i)), "new_game get_height");
       result = result && test_equality_int(get_width(tab[i]), get_width(game_piece(g,i)), "new_game get_width");
       result = result && test_equality_int(get_x(tab[i]), get_x(game_piece(g,i)), "new_game get_x");
       result = result && test_equality_int(get_y(tab[i]), get_y(game_piece(g,i)), "new_game get_y");
-      result = result && test_equality_bool(is_horizontal(tab[i]), is_horizontal(game_piece(g,i)), "new_game is_horizontal");
+      result = result && test_equality_bool(can_move_x(tab[i]), can_move_x(game_piece(g,i)), "new_game can_move_x");
+      result = result && test_equality_bool(can_move_y(tab[i]), can_move_y(game_piece(g,i)), "new_game can_move_y");
     }
   return result;
 }
@@ -120,7 +125,7 @@ bool test_copy(cgame src)
 {
   bool result=true;
   piece tab[NB_PIECES];
-  game dst=new_game_hr(NB_PIECES,tab);
+  game dst=new_game_hr(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
   copy_game(src,dst);
   result=result && test_equality_int(NB_PIECES,game_nb_pieces(dst),"test_copy");
   result=result && test_equality_int(0,game_nb_moves(src),"game_nb_moves\n");
@@ -130,7 +135,8 @@ bool test_copy(cgame src)
       result = result && test_equality_int(get_width(game_piece(src,i)), get_width(game_piece(dst,i)), "copy get_width");
       result = result && test_equality_int(get_x(game_piece(src,i)), get_x(game_piece(dst,i)), "copy get_x");
       result = result && test_equality_int(get_y(game_piece(src,i)), get_y(game_piece(dst,i)), "copy get_y");
-      result = result && test_equality_bool(is_horizontal(game_piece(src,i)), is_horizontal(game_piece(dst,i)), "copy is_horizontal");
+      result = result && test_equality_bool(can_move_x(game_piece(src,i)), can_move_x(game_piece(dst,i)), "copy can_move_x");
+      result = result && test_equality_bool(can_move_y(game_piece(src,i)), can_move_y(game_piece(dst,i)), "copy can_move_y");
     }
   return result;
 }
@@ -158,13 +164,31 @@ bool solve(game g,cgame cg)
   set_up_winning(verif);
   for(int i=0;i<NB_PIECES;i++)
     {
-      result = result && test_equality_int(get_height(game_piece(g,i)), get_height(verif[i]), "copy get_height");
-      result = result && test_equality_int(get_width(game_piece(g,i)), get_width(verif[i]), "copy get_width");
-      result = result && test_equality_int(get_x(game_piece(g,i)), get_x(verif[i]), "copy get_x");
-      result = result && test_equality_int(get_y(game_piece(g,i)), get_y(verif[i]), "copy get_y");
-      result = result && test_equality_bool(is_horizontal(game_piece(g,i)), is_horizontal(verif[i]), "copy is_horizontal");
+      result = result && test_equality_int(get_height(game_piece(g,i)), get_height(verif[i]), "solve get_height");
+      result = result && test_equality_int(get_width(game_piece(g,i)), get_width(verif[i]), "solve get_width");
+      result = result && test_equality_int(get_x(game_piece(g,i)), get_x(verif[i]), "solve get_x");
+      result = result && test_equality_int(get_y(game_piece(g,i)), get_y(verif[i]), "solve get_y");
+      result = result && test_equality_bool(can_move_x(game_piece(g,i)), can_move_x(verif[i]), "solve can_move_x");
+      result = result && test_equality_bool(can_move_y(game_piece(g,i)), can_move_y(verif[i]), "solve can_move_y");
       delete_piece(verif[i]);
     }
+  return result;
+}
+
+/**
+ *@brief test if the function "game_square_piece" return the good piece of the board.
+ *@param game
+ *@return true if there is no error with the returned results.
+ */
+bool test_game_square_piece(cgame g)
+{
+  bool result=true;
+  result=result && test_equality_int(-1,game_square_piece(g,0,0));
+  result=result && test_equality_int(0,game_square_piece(g,0,3));
+  result=result && test_equality_int(1,game_square_piece(g,2,0));
+  result=result && test_equality_int(2,game_square_piece(g,3,5));
+  result=result && test_equality_int(3,game_square_piece(g,4,5));
+  result=result && test_equality_int(4,game_square_piece(g,5,4));
   return result;
 }
 
@@ -176,9 +200,10 @@ int main(int argc,char * argv[])
 
   result=result && test_equality_bool(true,test_new_game(),"test_new_game");
 
-  game g=new_game_hr(NB_PIECES,pieces);
+  game g=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,pieces);
   cgame cg=(cgame)g;
   
+  result=result && test_equality_bool(true,test_game_square_piece(cg),"game_square_piece");
   result=result && test_equality_bool(false,game_over_hr(cg),"game_over_hr start");
   result=result && test_equality_bool(true,test_copy(cg),"test_copy");
   result=result && test_equality_bool(true,solve(g,cg),"solve");
