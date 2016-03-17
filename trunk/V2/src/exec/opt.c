@@ -1,27 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
-#ifndef _S_DATA
-# define _S_DATA
-
-struct s_data
-{
-  char** argv;
-  int argc;
-
-  int status;
-  int* flags;
-
-  int index;
-
-  piece* pcs;
-  int nb_pcs;
-
-  // int lock;
-};
-
-#endif /* _S_DATA */
+#include <data>
 
 #ifndef _ERRORS
 # define _ERRORS
@@ -51,12 +31,15 @@ struct s_data
 #define MAX_PIECES 9
 
 
-
 static inline int get_flag(const int f, const int* flags);
 static inline void set_flag(const int f, int* flags);
+
 static void parse_input_file(struct s_data* data, const int n);
 static void parse_piece(struct s_data* data, const char* s);
 
+static void parse_token(void* ptr, char* s, struct s_data* data);
+static inline void get_int(void** ptr, char* s);
+static inline void get_bool(void** ptr, char* s);
 
 
 int is_opt(const char* s)
@@ -135,14 +118,47 @@ static void parse_piece(struct s_data* data, char* s)
 {
   int x, y;
   int w, h;
+  bool move_x, move_y;
   char* token = NULL;
+
   token = strtok(line, ", ");
-  x = atoi(token);
+  parse_token(&x, token, ", ", data);
   token = strtok(NULL, ", ");
-  y = atoi(token);
+  parse_token(&y, token, ", ", data);
   token = strtok(NULL, ", ");
-  w = atoi(token);
+  parse_token(&w, token, ", ", data);
   token = strtok(NULL, ", ");
-  h = atoi(token);
-  /* data->pcs[nb_pcs++] = *new_piece()* */
+  parse_token(&h, token, ", ", data);
+  token = strtok(NULL, ", ");
+  parse_token(&move_x, token, ", ", data);
+  token = strtok(NULL, ", ");
+  parse_token(&move_y, token, ", ", data);
 }
+
+static void parse_token(void* ptr, char* s, struct s_data* data)
+{
+  static int step = 0;
+ // typedef void (*get_token)(void**, char*, struct s_data*);
+  void (*get_token[])(void**, char*, struct s_data*) = {get_int, get_int, get_int, get_int, get_bool, get_bool};
+  if (data->status > 0)
+    {
+      switch (step < 6)
+	{
+	case true :
+	  process[step++](&ptr, s);
+	  break;
+	default :
+	  step = 0;
+	}
+      if (!ptr)
+	data->status = OPT_ERROR;
+    }
+}
+
+static inline void
+get_int(void** ptr, char* s)
+{ **(int**)ptr = atoi(s); }
+
+static inline void
+get_bool(void** ptr, char* s)
+{ **(bool**)ptr = strcmp(s, "true"); }
