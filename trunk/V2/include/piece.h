@@ -1,4 +1,4 @@
-#ifndef _PIECE_H_
+ _PIECE_H_
 #define _PIECE_H_
 #include <stdbool.h> //The type bool is defined in this file
 

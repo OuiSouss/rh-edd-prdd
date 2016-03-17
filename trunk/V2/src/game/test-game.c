@@ -34,21 +34,6 @@ bool test_equality_int(int expected, int value, char *testF)
   return expected==value;
 }
 
-/**
- *@brief test if allocation of data was correctly made. If not, displays an error message indicating empty pointer.
- *@param ptr is the tested pointer.
- *@return true if pointer!=NULL.
- */
-bool test_allocation(void *ptr,char *name_ptr)
-{
-  if(ptr==NULL)
-    {
-      fprintf(stderr,"ERROR: pointer %s was not correctly allocated!",name_ptr);
-    }
-  return ptr!=NULL;
-}
-
-
 /*test configuration
 ..223.
 ....34
@@ -64,11 +49,11 @@ bool test_allocation(void *ptr,char *name_ptr)
  */
 void set_up_start(piece pieces[],int length)
 {
-  pieces[0]=new_piece_rh(0,3,true,true);
-  pieces[1]=new_piece_rh(2,0,false,false);
-  pieces[2]=new_piece_rh(2,5,true,true);
-  pieces[3]=new_piece_rh(4,3,false,false);
-  pieces[4]=new_piece_rh(5,3,true,false);
+  pieces[0]=new_piece(0,3,2,1,true,false);
+  pieces[1]=new_piece(2,0,1,3,false,true);
+  pieces[2]=new_piece(2,5,2,1,true,false);
+  pieces[3]=new_piece(4,3,1,3,false,true);
+  pieces[4]=new_piece(5,3,1,2,false,true);
 }
 
 void delete_set_up(piece pieces[],int length)
@@ -96,11 +81,11 @@ void delete_set_up(piece pieces[],int length)
  */
 void set_up_winning(piece pieces[])
 {
-  pieces[0]=new_piece_rh(3,3,true,true);
-  pieces[1]=new_piece_rh(2,0,false,false);
-  pieces[2]=new_piece_rh(2,5,true,true);
-  pieces[3]=new_piece_rh(4,0,false,false);
-  pieces[4]=new_piece_rh(5,1,true,false);
+  pieces[0]=new_piece(4,3,2,1,true,false);
+  pieces[1]=new_piece(2,0,1,3,false,true);
+  pieces[2]=new_piece(2,5,2,1,true,false);
+  pieces[3]=new_piece(4,0,1,3,false,true);
+  pieces[4]=new_piece(5,1,1,2,false,true);
 }
 
 /**

@@ -9,8 +9,10 @@ struct piece_s
 {
   int x;
   int y;
-  bool small;
-  bool horizontal;
+  int width;
+  int height;
+  bool move_x;
+  bool move_y;
 };
 
 
@@ -24,8 +26,22 @@ piece new_piece_rh(int x, int y, bool small, bool horizontal)
   }
   p->x = x;
   p->y = y;
-  p->small = small;
-  p->horizontal = horizontal;
+  if (horizontal){
+    p->width = 3;
+    p->height = 1;
+    p->move_x = true;
+    p->move_y = false;
+    if (small)
+      p->width -= 1;
+  }
+  else{
+    p->width = 1;
+    p->height = 3;
+    p->move_x = false;
+    p->move_y = true;
+    if (small)
+      p->height -= 1;
+  }
   return p;
 }
 
@@ -43,8 +59,10 @@ void copy_piece(cpiece src, piece dst)
   {
     dst->x = src->x;
     dst->y = src->y;
-    dst->small = src->small;
-    dst->horizontal = src->horizontal;
+    dst->width = src->width;
+    dst->height = src->height;
+    dst->move_x = src->move_x;
+    dst->move_y = src->move_y;
   }
   else
   {
@@ -54,14 +72,14 @@ void copy_piece(cpiece src, piece dst)
 
 void move_piece(piece p, dir d, int distance)
 {
-  if (is_horizontal(p))
+  if (can_move_x(p))
   {
     if (d == LEFT)
       p->x -= distance;
     else if (d == RIGHT)
       p->x += distance;
   }
-  else
+  if (can_move_y(p))
   {
     if (d == UP)
       p->y += distance;
@@ -111,29 +129,39 @@ int get_y(cpiece p){
 }
 
 int get_height(cpiece p){
-  if (is_horizontal(p))
-      return 1;
-  else{
-    if (p->small == true)
-      return 2;
-    else
-      return 3;
-  }
+  return p->height;
 }
 
 int get_width(cpiece p){
-  if (!is_horizontal(p))
-    return 1;
-  else{
-    if (p->small == true)
-      return 2;
-    else
-      return 3;
-  }
+  return p->width;
 }
 
 bool is_horizontal(cpiece p){
-  return p->horizontal;
+  return can_move_x(p);
+}
+
+bool can_move_x(cpiece p){
+  return p->move_x;
+}
+
+bool can_move_y(cpiece p){
+  return p->move_y;
+}
+
+piece new_piece(int x, int y, int width, int height, bool move_x, bool move_y){
+  piece p = (piece) malloc(sizeof(*p));
+  if (p==NULL)
+  {
+    fprintf(stderr, "Allocation probleme");
+    exit(EXIT_FAILURE);
+  }
+  p->x = x;
+  p->y = y;
+  p->width = width;
+  p->height = height;
+  p->move_x = move_x;
+  p->move_y = move_y;
+  return p;
 }
 
 
