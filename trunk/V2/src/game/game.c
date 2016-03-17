@@ -1,4 +1,5 @@
 #include "game.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -6,9 +7,9 @@ struct game_s {
   int** board;
   int width;
   int height;
-  int nbMove;
+  int nb_move;
   piece* piece;
-  int nbPiece;
+  int nb_piece;
 };
 
 
@@ -16,97 +17,111 @@ struct game_s {
 * In this Version, we are doing the hypothesis that the redPiece the
 * piece 0 is in *piece.
 * So, we are in need doing the test if the first piece is present.
-* We also supposed that *piece != NULL
 *
 *
  **/
 game new_game (int width, int height, int nb_pieces, piece *pieces){
-  game newGame = (game) malloc (sizeof (*newGame));
 
-  if (newGame == NULL){
-    fprintf(stderr,"Problem in the alloc of newGame!!!");
-    exit(EXIT_FAILURE);
-  }
+	if(pieces == NULL || nb_pieces <= 0 || pieces[0] == NULL || width <= 0 || height <= 0)
+		return NULL;
 
-  newGame->board = (int **) malloc (sizeof(*(newGame->board))*height);
+	game newGame = (game) malloc (sizeof (*newGame));
 
-  if (newGame->board == NULL){
-    fprintf(stderr, "Problem in the alloc of newGame's board");
-    exit(EXIT_FAILURE);
-  }
+	if (newGame == NULL){
+		fprintf(stderr,"Problem in the alloc of newGame!!!");
+		exit(EXIT_FAILURE);
+	}
 
-  for (int j= 0; j<height; ++j)
-    newGame->board[j] = (int *) malloc (sizeof(*(newGame->board[j]))*width);
+	newGame->board = (int **) malloc (sizeof(*(newGame->board))*height);
 
-  //look if piece in parameter don't intersect
-  for (int i= 0; i<nb_pieces -2; ++i){
-    for (int j= i+1; j<nb_pieces - 1; ++j){
-      if (intersect (pieces[i], pieces[j])){
-    	  fprintf(stderr," Conflict of intersect between pieces! Change parameter\n");
-    	  exit(EXIT_FAILURE);
-      }
-    }
-  }
+	if (newGame->board == NULL){
+		fprintf(stderr, "Problem in the alloc of newGame's board");
+		exit(EXIT_FAILURE);
+	}
 
-  newGame->width = width;
-  newGame->height = height;
-  newGame->nbMove = 0;
-  newGame->nbPiece = nb_pieces + 1;
+	for (int j= 0; j<height; ++j)
+		newGame->board[j] = (int *) malloc (sizeof(*(newGame->board[j]))*width);
 
-  // initialization of the board
-  for (int w = 0; w<width; ++w )
-	  for (int h = 0; h<height; ++h)
-		  newGame->board[h][w] = -1;
+	//look if piece in parameter don't intersect
+	for (int i= 0; i<nb_pieces -2; ++i){
+		for (int j= i+1; j<nb_pieces - 1; ++j){
+			if (intersect (pieces[i], pieces[j])){
+				fprintf(stderr," Conflict of intersect between pieces! Change parameter\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
 
-  //course of the board to place the pieces
-  int x = 0;
-  int y = 0;
-  int w= 0;
-  int h = 0;
+	newGame->width = width;
+	newGame->height = height;
+	newGame->nb_move = 0;
+	newGame->nb_piece = 0;
 
-  if( pieces != NULL){
-      for (int p=0; p<nb_pieces; ++p){
-        x = get_x((cpiece)pieces[p]);
-        y = get_y((cpiece)pieces[p]);
-        w = get_width((cpiece)pieces[p]);
-        h = get_height((cpiece)pieces[p]);
-        if ( w==0 || h==0 || x+w >= width || y+h>= height){
-        	fprintf (stderr, "Piece out of the size of the board");
-        	exit(EXIT_FAILURE);
-        }
-        if(h == 1){ //in this case we know that the piece is on horizontal line
-        	for (;x<w; ++x)
-        		newGame->board[y][x] = p;
-        }
-        if (w == 1){ // in this case we know that the piece is on vertical line
-        		for(;y<h;++y)
-        			newGame->board[y][x] = p;
-        }
-        else{ //in this case we know that the piece is at minimum a square 2*2
-        	for (;y<h;++y)
-        		for(int tmp_x = x;tmp_x<w;++tmp_x)
-        			newGame->board[y][tmp_x] = p;
-        }
-      }
-  }
-  newGame->piece = pieces;
+	// initialization of the board
+	for (int w = 0; w<width; ++w )
+		for (int h = 0; h<height; ++h)
+			newGame->board[h][w] = -1;
+
+	//course of the board to place the pieces
+	int x = 0;
+	int y = 0;
+	int w= 0;
+	int h = 0;
+
+	newGame->piece = malloc (nb_pieces * sizeof(*pieces));
+	if (newGame->piece == NULL){
+		fprintf(stderr,"Problem in alloc of piece in struct ");
+		exit(EXIT_FAILURE);
+	}
+
+	for (; (newGame->nb_piece < nb_pieces) && (pieces[newGame->nb_piece] != NULL); ++(newGame->nb_piece)){
+		newGame->piece[newGame->nb_piece] = new_piece(pieces[newGame->nb_piece]);
+
+		x = get_x((cpiece)pieces[newGame->nb_piece]);
+		y = get_y((cpiece)pieces[newGame->nb_piece]);
+		w = get_width((cpiece)pieces[newGame->nb_piece]);
+		h = get_height((cpiece)pieces[newGame->nb_piece]);
+
+		if ( w==0 || h==0 || x+w >= width || y+h>= height){
+			fprintf (stderr, "Piece out of the size of the board");
+			exit(EXIT_FAILURE);
+		}
+		if(h == 1){ //in this case we know that the piece is on horizontal line
+			for (;x<w; ++x)
+				newGame->board[y][x] = newGame->nb_piece;
+		}
+		if (w == 1){ // in this case we know that the piece is on vertical line
+			for(;y<h;++y)
+				newGame->board[y][x] = newGame->nb_piece;
+		}
+		else{ //in this case we know that the piece is at minimum a square 2*2
+			for (;y<h;++y)
+				for(int tmp_x = x;tmp_x<w;++tmp_x)
+					newGame->board[y][tmp_x] = newGame->nb_piece;
+		}
+	}
+	if (newGame->nb_piece != nb_pieces){ //clean game if newGame->piece not corresponding to the nb_pieces of *pîece
+		delete_game(newGame); // free of all we allocted before
+		newGame = NULL;
+	}
+
   return newGame;
 
 }
-
-game new_game_hr (int nb_piece, piece *piece){
-	//question demander taille
-
+/**
+ * Default case to create a game rush hour 6*6
+ */
+game new_game_hr (int nb_piece, piece *piece)
+{
 	return new_game(6,6,nb_piece,piece);
 }
 
 void delete_game (game g){
-  for (int i = 0; i < g->nbPiece; ++i)
+  for (int i = 0; i < g->nb_piece; ++i)
     delete_piece(g->piece[i]);
   free(g->piece);
   for (int h = 0; h< g->height; ++h)
-	  for (int w = 0; w< g->width; ++w)
-		  free (&(g->board[h][w]));
+	  free (g->board[h]);
   free(g->board);
 
   free(g);
@@ -114,8 +129,8 @@ void delete_game (game g){
 
 void copy_game(cgame src, game dst){
   if (src!=NULL && dst!=NULL){
-    dst->nbMove = src->nbMove;
-    dst->nbPiece = src->nbPiece;
+    dst->nb_move = src->nb_move;
+    dst->nb_piece = src->nb_piece;
     dst->width = src->width;
     dst->height = src->height;
 
@@ -124,7 +139,7 @@ void copy_game(cgame src, game dst){
     	  dst->board[h][w] = src->board[h][w];
       }
     }
-    for (int i=0; i<src->nbPiece; ++i)
+    for (int i=0; i<src->nb_piece; ++i)
       dst->piece[i] = src->piece[i];
 
     
@@ -132,11 +147,11 @@ void copy_game(cgame src, game dst){
 }
 
 int game_nb_pieces(cgame g){
-  return g->nbPiece;
+  return g->nb_piece;
 }
 
 cpiece game_piece(cgame g, int piece_num){
-  if (g->nbPiece <= piece_num)
+  if (g->nb_piece <= piece_num)
     return NULL;
   return (cpiece)g->piece[piece_num];
 }
@@ -146,6 +161,8 @@ bool game_over_hr(cgame g){
     return true;
   return false;
 }
+
+//game_over_ar in module i don't know
 
 bool play_move(game g, int piece_num, dir d, int distance){
   /*
@@ -231,7 +248,7 @@ bool play_move(game g, int piece_num, dir d, int distance){
 }
 
 int game_nb_moves(cgame g){
-  return g->nbMove;
+  return g->nb_move;
 }
 
 int game_width(cgame g){
