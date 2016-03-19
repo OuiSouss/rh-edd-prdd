@@ -18,7 +18,7 @@ struct piece_s
 
 piece new_piece_rh(int x, int y, bool small, bool horizontal)
 {
-  piece p = (piece) malloc(sizeof(*p));
+  piece p = malloc(sizeof(*p));
   if (p==NULL)
   {
     fprintf(stderr, "Allocation probleme");
@@ -26,7 +26,8 @@ piece new_piece_rh(int x, int y, bool small, bool horizontal)
   }
   p->x = x;
   p->y = y;
-  if (horizontal){
+  if (horizontal)
+  {
     p->width = 3;
     p->height = 1;
     p->move_x = true;
@@ -34,7 +35,8 @@ piece new_piece_rh(int x, int y, bool small, bool horizontal)
     if (small)
       p->width -= 1;
   }
-  else{
+  else
+  {
     p->width = 1;
     p->height = 3;
     p->move_x = false;
@@ -74,7 +76,7 @@ void move_piece(piece p, dir d, int distance)
 {
   if (can_move_x(p))
   {
-    if (d == LEFT)
+    if (d==LEFT)
       p->x -= distance;
     else if (d == RIGHT)
       p->x += distance;
@@ -88,12 +90,15 @@ void move_piece(piece p, dir d, int distance)
   }
 }
 
+/*
 bool intersect(cpiece p1, cpiece p2)
 {
   if (get_x(p1) == get_x(p2) && get_y(p1) == get_y(p2))
     return true;
-  if (is_horizontal(p1)){
-    if (is_horizontal(p2)){
+  if (is_horizontal(p1))
+  {
+    if (is_horizontal(p2))
+    {
       if (get_y(p1) != get_y(p2))
 	return false;
       if ( (((get_x(p1)+get_width(p1)) > get_x(p2)) && (get_x(p1) < (get_x(p2)+get_width(p2))))  ||  (((get_x(p2)+get_width(p2)) > get_x(p1)) && (get_x(p2) < (get_x(p1)+get_width(p1)))) )
@@ -106,7 +111,8 @@ bool intersect(cpiece p1, cpiece p2)
       return true;
     return false;
   }
-  if (!is_horizontal(p2)){
+  if (!is_horizontal(p2))
+  {
     if (get_x(p1) != get_x(p2))
       return false;
     if ( (((get_y(p1)+get_height(p1)) > get_y(p2)) && (get_y(p1) < (get_y(p2)+get_height(p2))))  ||  (((get_y(p2)+get_height(p2)) > get_y(p1)) && (get_y(p2) < (get_y(p1)+get_height(p1)))) )
@@ -119,37 +125,58 @@ bool intersect(cpiece p1, cpiece p2)
     return true;
   return false;
 }
+*/
+
+bool intersect (cpiece p1, cpiece p2)
+{
+  if (get_x(p1) == get_x(p2) && get_y(p1) == get_y(p2))
+    return true;
+  int x1=get_x(p1);
+  int x2=get_x(p2);
+  int y1=get_y(p1);
+  int y2=get_y(p2);
+  if ((x1 < x2+get_width(p2)) && (x1+get_width(p1) > x2))
+    if ((y1 < y2+get_height(p2)) && (y1+get_height(p1) > y2))
+      return true;
+  return false;
+}
   
-int get_x(cpiece p){
+int get_x(cpiece p)
+{
   return p->x;
 }
 
-int get_y(cpiece p){
+int get_y(cpiece p)
+{
   return p->y;
 }
 
-int get_height(cpiece p){
+int get_height(cpiece p)
+{
   return p->height;
 }
 
-int get_width(cpiece p){
+int get_width(cpiece p)
+{
   return p->width;
 }
 
-bool is_horizontal(cpiece p){
-  return can_move_x(p);
-}
+bool is_horizontal(cpiece p)
+{ return can_move_x(p) && !can_move_y(p); }
 
-bool can_move_x(cpiece p){
+bool can_move_x(cpiece p)
+{
   return p->move_x;
 }
 
-bool can_move_y(cpiece p){
+bool can_move_y(cpiece p)
+{
   return p->move_y;
 }
 
-piece new_piece(int x, int y, int width, int height, bool move_x, bool move_y){
-  piece p = (piece) malloc(sizeof(*p));
+piece new_piece(int x, int y, int width, int height, bool move_x, bool move_y)
+{
+  piece p = malloc(sizeof(*p));
   if (p==NULL)
   {
     fprintf(stderr, "Allocation probleme");
