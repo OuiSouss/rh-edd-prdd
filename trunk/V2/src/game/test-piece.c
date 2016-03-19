@@ -37,10 +37,10 @@ piece pieces[NB_PIECES];
  */
 void set_up() 
 {
-  pieces[0] = new_piece_rh(3, 3, true, true);
-  pieces[1] = new_piece_rh(3, 0, true, false);
-  pieces[2] = new_piece_rh(4, 1, true, true);
-  pieces[3] = new_piece_rh(5, 3, false, false);
+  pieces[0] = new_piece(3, 3, 2, 1, true, false);
+  pieces[1] = new_piece(3, 0, 1, 2, false, true);
+  pieces[2] = new_piece(4, 1, 2, 1, true, false);
+  pieces[3] = new_piece(5, 3, 1, 3, true, false);
 }
 void tear_down() 
 {
@@ -78,8 +78,8 @@ bool test_intersect()
     for (int j =0; j<NB_PIECES; j++)
       result = result && test_equality_bool(i==j, intersect(pieces[i], pieces[j]),"intersect");
 
-  piece pb_piece1 = new_piece_rh(3, 3, false, false);
-  piece pb_piece2 = new_piece_rh(3, 1, false, false);
+  piece pb_piece1 = new_piece(3, 3, 1, 3, false, true);
+  piece pb_piece2 = new_piece(3, 1, 1, 3, false, true);
   result = result && test_equality_bool(true, intersect(pieces[0], pb_piece1),"intersect pb1");
   result = result && test_equality_bool(true, intersect(pb_piece2, pb_piece1),"intersect pb2");
   tear_down();
@@ -89,32 +89,32 @@ bool test_intersect()
 bool test_move() 
 {
   bool result = true;
-  piece p = new_piece_rh(0, 0, true, true);
+  piece p = new_piece(0, 0, 2, 1, true, false);
   set_up();
   for (int dist = 1; dist < NB_PIECES; dist++)
     for (int i=0; i < NB_PIECES; i++) 
       {
       copy_piece(pieces[i],p);
       move_piece(p, LEFT, dist);
-      if (is_horizontal(pieces[i]))
+      if (can_move_x(pieces[i]))
         result = result && test_equality_int(get_x(pieces[i])-dist,get_x(p),"move LEFT");
       else
         result = result && test_equality_int(get_x(pieces[i]),get_x(p),"move LEFT");
       copy_piece(pieces[i],p);
       move_piece(p, RIGHT, dist);
-      if (is_horizontal(pieces[i]))
+      if (can_move_x(pieces[i]))
         result = result && test_equality_int(get_x(pieces[i])+dist,get_x(p),"move RIGHT");
       else
         result = result && test_equality_int(get_x(pieces[i]),get_x(p),"move RIGHT");
       copy_piece(pieces[i],p);
       move_piece(p, UP, dist);
-      if (!is_horizontal(pieces[i]))
+      if (can_move_y(pieces[i]))
         result = result && test_equality_int(get_y(pieces[i])+dist,get_y(p),"move UP");
       else
         result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move UP");
       copy_piece(pieces[i],p);
       move_piece(p, DOWN, dist);
-      if (!is_horizontal(pieces[i]))
+      if (can_move_y(pieces[i]))
         result = result && test_equality_int(get_y(pieces[i])-dist,get_y(p),"move DOWN");
       else
         result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move DOWN");
@@ -128,7 +128,7 @@ bool test_move()
 
 bool test_copy() 
 {
-  piece p = new_piece_rh(0, 0, true, true);
+  piece p = new_piece(0, 0, 2, 1, true, false);
   bool result = true;
   set_up();
   for (int i = 0 ; i < NB_PIECES; i++) 
@@ -138,7 +138,8 @@ bool test_copy()
     result = result && test_equality_int(get_width(pieces[i]), get_width(p), "copy get_width");
     result = result && test_equality_int(get_x(pieces[i]), get_x(p), "copy get_x");
     result = result && test_equality_int(get_y(pieces[i]), get_y(p), "copy get_y");
-    result = result && test_equality_bool(is_horizontal(pieces[i]), is_horizontal(p), "copy is_horizontal");
+    result = result && test_equality_bool(can_move_x(pieces[i]), can_move_x(p), "copy can_move_x");
+    result = result && test_equality_bool(can_move_y(pieces[i]), can_move_y(p), "copy can_move_y");
   }
   tear_down();
   delete_piece(p);
