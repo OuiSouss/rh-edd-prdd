@@ -98,7 +98,7 @@ bool test_new_game()
   bool result=true;
   piece tab[NB_PIECES];
   set_up_start(tab,NB_PIECES);
-  game g=new_game_hr(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
+  game g=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
   result=result && test_equality_int(WIDTH_GAME,game_width(g),"new_game game_width");
   result=result && test_equality_int(HEIGHT_GAME,game_height(g),"new_game game_height");
   result=result && test_equality_int(NB_PIECES,game_nb_pieces(g),"new_game nbPiece");
@@ -125,7 +125,7 @@ bool test_copy(cgame src)
 {
   bool result=true;
   piece tab[NB_PIECES];
-  game dst=new_game_hr(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
+  game dst=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
   copy_game(src,dst);
   result=result && test_equality_int(NB_PIECES,game_nb_pieces(dst),"test_copy");
   result=result && test_equality_int(0,game_nb_moves(src),"game_nb_moves\n");
@@ -180,15 +180,15 @@ bool solve(game g,cgame cg)
  *@param game
  *@return true if there is no error with the returned results.
  */
-bool test_game_square_piece(cgame g)
+bool test_game_square_piece(game g)
 {
   bool result=true;
-  result=result && test_equality_int(-1,game_square_piece(g,0,0));
-  result=result && test_equality_int(0,game_square_piece(g,0,3));
-  result=result && test_equality_int(1,game_square_piece(g,2,0));
-  result=result && test_equality_int(2,game_square_piece(g,3,5));
-  result=result && test_equality_int(3,game_square_piece(g,4,5));
-  result=result && test_equality_int(4,game_square_piece(g,5,4));
+  result=result && test_equality_int(-1,game_square_piece(g,0,0),"test_game_square_piece -1");
+  result=result && test_equality_int(0,game_square_piece(g,0,3),"test_game_square_piece 0");
+  result=result && test_equality_int(1,game_square_piece(g,2,0),"test_game_square_piece 1");
+  result=result && test_equality_int(2,game_square_piece(g,3,5),"test_game_square_piece 2");
+  result=result && test_equality_int(3,game_square_piece(g,4,5),"test_game_square_piece 3");
+  result=result && test_equality_int(4,game_square_piece(g,5,4),"test_game_square_piece 4");
   return result;
 }
 
@@ -203,7 +203,7 @@ int main(int argc,char * argv[])
   game g=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,pieces);
   cgame cg=(cgame)g;
   
-  result=result && test_equality_bool(true,test_game_square_piece(cg),"game_square_piece");
+  result=result && test_equality_bool(true,test_game_square_piece(g),"game_square_piece");
   result=result && test_equality_bool(false,game_over_hr(cg),"game_over_hr start");
   result=result && test_equality_bool(true,test_copy(cg),"test_copy");
   result=result && test_equality_bool(true,solve(g,cg),"solve");
