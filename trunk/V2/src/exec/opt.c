@@ -100,12 +100,12 @@ get_grid_size(struct s_data* data)
 {
   int size = 0;
   ++(data->index);
-  for (int i = 0; (i < (int)strlen(data->av[data->index])) && (data->status > END_STATUS); ++i)
+  for (int i = 0; (i < (int)strlen(data->av[data->index])) && (data->status > END_STEP); ++i)
     {
       if (!isdigit(data->av[data->index][i]))
 	data->status = OPT_ERROR;
     }
-  if (data->status > END_STATUS)
+  if (data->status > END_STEP)
     size = atoi(data->av[data->index]);
   return size;
 }

@@ -32,8 +32,12 @@ struct s_data
 # ifndef _T_STATUS
 #  define _T_STATUS
 
-# define START_STATUS 1
-# define END_STATUS 0
+# define END_STEP 0
+# define START_STEP 1
+# define LOOP_STEP 2
+# define PIECE_STEP 4
+# define MOVE_STEP 5
+# define INPUT_ERROR_STEP 6
 
 # endif /* _T_STATUS */
 

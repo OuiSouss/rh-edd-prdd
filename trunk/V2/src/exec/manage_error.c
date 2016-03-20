@@ -10,39 +10,44 @@ static void format();
 
 void manage_error(struct s_data* data)
 {
-  fprintf(stderr, "A critical error occured : ");
-  switch (data->status)
+  if (data->status == WRONG_USAGE_ERROR)
+    usage(data->av[0]);
+  else
     {
-    case ALLOC_ERROR :
-      fprintf(stderr, "the program was unable to allocate enough memory\n");
-      break;
-    case OPT_ERROR :
-      fprintf(stderr, "at least one option was not recognised properly\n");
-      usage(data->av[0]);
-      break;
-    case TERM_GUI_ERROR :
-      fprintf(stderr, "multiple output options specified\n");
-      usage(data->av[0]);
-      break;
-    case IOCTL_TERM_ERROR :
-      fprintf(stderr, "conflict between output mode and terminal control mode\n");
-      usage(data->av[0]);
-      break;
-    case SOLVER_GAME_ERROR :
-      fprintf(stderr, "conflict between game modes requested\n");
-      usage(data->av[0]);
-      break;
-    case FILE_INPUT_ERROR :
-      fprintf(stderr, "wrong input file format\n");
-      format();
-      usage(data->av[0]);
-      break;
-    case FILE_ACCESS_ERROR :
-      fprintf(stderr, "unable to open input file\n");
-      break;
-    case MULTIPLE_SIZE_ERROR :
-      fprintf(stderr, "too many sizes specified as options\n");
-      break;
+      fprintf(stderr, "A critical error occured : ");
+      switch (data->status)
+	{
+	case ALLOC_ERROR :
+	  fprintf(stderr, "the program was unable to allocate enough memory\n");
+	  break;
+	case OPT_ERROR :
+	  fprintf(stderr, "at least one option was not recognised properly\n");
+	  usage(data->av[0]);
+	  break;
+	case TERM_GUI_ERROR :
+	  fprintf(stderr, "multiple output options specified\n");
+	  usage(data->av[0]);
+	  break;
+	case IOCTL_TERM_ERROR :
+	  fprintf(stderr, "conflict between output mode and terminal control mode\n");
+	  usage(data->av[0]);
+	  break;
+	case SOLVER_GAME_ERROR :
+	  fprintf(stderr, "conflict between game modes requested\n");
+	  usage(data->av[0]);
+	  break;
+	case FILE_INPUT_ERROR :
+	  fprintf(stderr, "wrong input file format\n");
+	  format();
+	  usage(data->av[0]);
+	  break;
+	case FILE_ACCESS_ERROR :
+	  fprintf(stderr, "unable to open input file\n");
+	  break;
+	case MULTIPLE_SIZE_ERROR :
+	  fprintf(stderr, "too many sizes specified as options\n");
+	  break;
+	}
     }
 }
 

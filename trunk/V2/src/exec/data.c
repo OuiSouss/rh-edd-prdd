@@ -4,6 +4,7 @@
 #include <game.h>
 
 #include <data>
+#include <error_flags>
 #include <opt>
 #include <xfunc>
 
@@ -12,7 +13,10 @@ void init_data(struct s_data* data, int *argc, char** argv, bool (*game_over)(cg
 {
   data->ac = *argc;
   data->av = argv;
-  data->status = START_STATUS;
+  if (data->ac < 3)
+    data->status = END_STEP;
+  else
+    data->status = START_STEP;
   data->flags = xmalloc(sizeof(*(data->flags)) * NB_FLAGS, &(data->status));
   data->index = 1;
   data->width = -1;
@@ -30,5 +34,4 @@ void delete_data(struct s_data* data)
   for (;data->nb_pcs > 0;)
     delete_piece(data->pcs[--(data->nb_pcs)]);
   xfree((void**) &(data->pcs));
-  data->status = END_STATUS;
 }
