@@ -8,7 +8,6 @@
 #include <opt>
 #include <xfunc>
 
-
 void init_data(struct s_data* data, int *argc, char** argv, bool (*game_over)(cgame))
 {
   data->ac = *argc;

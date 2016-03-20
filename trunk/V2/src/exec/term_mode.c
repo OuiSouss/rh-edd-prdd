@@ -3,13 +3,16 @@
 #include <data>
 #include <xfunc>
 
-
 static void print_buffer(const int len, const char* buffer);
 static void print_full_board_line(struct s_data* data, char* buffer);
 static void print_empty_board_line(struct s_data* data, char* buffer);
 static void print_line(struct s_data* data, const int n, char* buffer);
 
-
+/**
+ * @fn void printout_game (struct s_data* data)
+ * @brief Wrapper used to print the game grid on a terminal.
+ * @param[in,out] data The encapsulating field for needed informations.
+ */
 void printout_game(struct s_data* data)
 {
   unsigned int size = data->width * 6 + 2;
@@ -27,9 +30,21 @@ void printout_game(struct s_data* data)
   xfree((void**) &buffer);
 }
 
+/**
+ * @fn static void print_buffer (const int len, const char* buffer)
+ * @brief Local wrapper used to print parsed grid lines on a terminal.
+ * @param[in] len The size of the whole line.
+ * @param[in] buffer The array containing the line to print on the terminal.
+ */
 static void print_buffer(const int len, const char* buffer)
 { fwrite(buffer, len, 1, stdout); fwrite("\n", 1, 1, stdout); }
 
+/**
+ * @fn static void print_full_board_line (struct s_data* data, char* buffer)
+ * @brief Local function called to print a board line on a terminal.
+ * @param[in] data The field containing needed data.
+ * @param[in] buffer The area used to store the line to print.
+ */
 static void print_full_board_line(struct s_data* data, char* buffer)
 {
   for (int i = 0; i < (data->width * 6 + 1); ++i)
@@ -37,6 +52,12 @@ static void print_full_board_line(struct s_data* data, char* buffer)
   print_buffer(data->width * 6 + 1, buffer);
 }
 
+/**
+ * @fn static void print_empty_board_line (struct s_data* data, char* buffer)
+ * @brief Local function called to print an empty board line on a terminal.
+ * @param[in] data The field containing needed data.
+ * @param[in] buffer The area used to store the line to print.
+ */
 static void print_empty_board_line(struct s_data* data, char* buffer)
 {
   for (int i = 0; i < data->width; ++i)
@@ -51,6 +72,12 @@ static void print_empty_board_line(struct s_data* data, char* buffer)
   print_buffer(data->width * 6 + 1, buffer);
 }
 
+/**
+ * @brief Local function called to print a grid line on a terminal.
+ * @param[in] data The field containing needed data.
+ * @param[in] n The number of the grid line that will be print.
+ * @param[in] buffer The area used to store the line to print.
+ */
 static void print_line(struct s_data* data, const int n, char* buffer)
 {
   for (int i = 0; i < data->width; ++i)

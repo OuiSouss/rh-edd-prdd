@@ -3,11 +3,15 @@
 #include <data>
 #include <error_flags>
 
-
 static void usage(const char* name);
 static void format();
 
-
+/**
+ * @fn void manage_error (struct s_data* data)
+ * @brief Function used to provide backup informations to
+ * the user when an error occur.
+ * @param[in] data A pointer to the program data.
+ */
 void manage_error(struct s_data* data)
 {
   if (data->status == WRONG_USAGE_ERROR)
@@ -51,6 +55,11 @@ void manage_error(struct s_data* data)
     }
 }
 
+/**
+ * @fn static void usage (const char* name)
+ * @brief Local call that will tell the user how to properly call the program.
+ * @param[in] name A pointer to the field associated with the call path of the program.
+ */
 static void usage(const char* name)
 {
   fprintf(stderr, "usage : %s -f <path-to-file> -w <size> -h <size> -{g/t/s} -i\n", name);
@@ -59,6 +68,10 @@ static void usage(const char* name)
   fprintf(stderr, "-i requires -t to work properly.\n");
 }
 
+/**
+ * @fn static void format()
+ * @brief Local function used to tell the user how should look the input configuration file.
+ */
 static void format()
 {
   fprintf(stderr, "Input file format :\n");

@@ -10,7 +10,11 @@ static void manage_dir(struct s_data* data, const int nb_pc, char* buffer);
 static int is_dir(const char* buffer);
 static dir get_dir(const char* buffer);
 
-
+/**
+ * @fn void manage_move (struct s_data* data)
+ * @brief Wrapper used to prompt the user about the next move.
+ * @param[in,out] data A pointer to the field containing program data.
+ */
 void manage_move(struct s_data* data)
 {
   char* buffer = xmalloc((sizeof(*buffer) * BUFFER_SIZE), &(data->status));
@@ -18,6 +22,12 @@ void manage_move(struct s_data* data)
   xfree((void**) &buffer);
 }
 
+/**
+ * @fn static void manage_piece (struct s_data* data, char* buffer)
+ * @brief Local wrapper called to get the piece the player wants to move.
+ * @param[in,out] data A pointer to the field containing program data.
+ * @param[in,out] buffer A pointer to a dynamic array used to store input data.
+ */
 static void manage_piece(struct s_data* data, char* buffer)
 {
   char* buff_ret = NULL;
@@ -40,6 +50,14 @@ static void manage_piece(struct s_data* data, char* buffer)
     }
 }
 
+/**
+ * @fn static void manage_dir (struct s_data* data, const int nb_pcs, char* buffer)
+ * @brief Local wrapper called to get and parse the direction where the player wants
+ * to move the chosen piece.
+ * @param[in,out] A pointer to the field containing program data.
+ * @param[in] n The number of the piece to move, 0 being for the red car / ane rouge.
+ * @param[in,out] The dynamic area used to perform string formatting operations.
+ */
 static void manage_dir(struct s_data* data, const int nb_pc, char* buffer)
 {
   char* buff_ret = NULL;
@@ -67,6 +85,11 @@ static void manage_dir(struct s_data* data, const int nb_pc, char* buffer)
     }
 }
 
+/**
+ * @fn static int is_dir (const char* buffer)
+ * @brief Local function checking if the given move exists.
+ * @param[in] buffer The array containing the player chosen direction.
+ */
 static int is_dir(const char* buffer)
 {
   switch (strlen(buffer))
@@ -83,6 +106,12 @@ static int is_dir(const char* buffer)
   return 0;
 }
 
+/**
+ * @fn static dir get_dir (const char* buffer)
+ * @brief Local call used to convert the direction in input to an appropriate format.
+ * @param[in] buffer The array associated with the direction requested by the player.
+ * @return a dir type associated with the direction in input.
+ */
 static dir get_dir(const char* buffer)
 {
   if (strlen(buffer) == 2)
