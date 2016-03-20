@@ -88,16 +88,8 @@ static void game_loop(struct s_data* data)
       data->status = LOOP_STEP;
       break;
     case LOOP_STEP :
-      if (data->game_over(data->g))
-	{
-	  
-
-	}
-      else
-	{
-	  printout_game(data);
-	  manage_move(data);
-	}
+      printout_game(data);
+      manage_move(data);
       break;
     case INPUT_ERROR_STEP :
       fprintf(stderr, "\nunknown keyboard entry\n");

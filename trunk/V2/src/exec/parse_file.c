@@ -36,11 +36,13 @@ void parse_input_file(struct s_data* data)
       data->pcs = xmalloc((sizeof(*(data->pcs)) * MAX_PIECES), &(data->status));
       char buffer[BUFFER_SIZE];
       char* line = buffer;
-      for (int i = 0; (data->status > END_STEP) && (i < MAX_PIECES) && (line != NULL); ++i)
+      for (int i = 0; (data->status > END_STEP) && (line != NULL) && (i < MAX_PIECES); ++i)
 	{
 	  line = fgets(buffer, BUFFER_SIZE - 1, fstream);
 	  if (line && (strlen(line) == LINE_SIZE))
 	    parse_piece(data, line);
+	  else
+	    line = NULL;
 	}
       fclose(fstream);
     }
@@ -71,15 +73,6 @@ static void parse_piece(struct s_data* data, char* s)
   parse_token(&move_x, token);
   token = strtok(NULL, ", ");
   parse_token(&move_y, token);
-  fprintf(stdout, "\n\n\n x='%d', y='%d', w='%d', h='%d'", x, y, w, h);
-  if (move_x == true)
-    fprintf(stdout, ", move_x = true");
-  else
-    fprintf(stdout, ", move_x = false");
-  if (move_y == true)
-    fprintf(stdout, ", move_y = true");
-  else
-    fprintf(stdout, ", move_y = false");
   data->pcs[(data->nb_pcs)++] = new_piece(x, y, w, h, move_x, move_y);
 }
 
