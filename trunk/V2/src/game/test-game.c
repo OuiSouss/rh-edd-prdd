@@ -192,7 +192,7 @@ bool test_game_square_piece(game g)
   return result;
 }
 
-int main(int argc,char * argv[])
+int main()
 {
   bool result=true;
   piece pieces[NB_PIECES];

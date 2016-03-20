@@ -1,0 +1,4 @@
+#ifndef _OPT
+# define _OPT
+# include <opt.h>
+#endif /* _OPT */

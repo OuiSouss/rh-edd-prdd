@@ -1,4 +1,0 @@
-#ifndef _RUSH_HOUR
-# define _RUSH_HOUR
-# include <rush-hour.h>
-#endif /* _RUSH_HOUR */

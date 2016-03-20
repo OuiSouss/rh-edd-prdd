@@ -58,7 +58,7 @@ bool test_new_piece()
 	  for (bool move_x= false; !move_x ; move_x= !move_x)
 	    for (bool move_y= false; !move_y ; move_y= !move_y)
 	      {
-		piece p = new_piece_rh(x, y, w, h, move_x, move_y);
+		piece p = new_piece(x, y, w, h, move_x, move_y);
 		result = result && test_equality_int(x, get_x(p),"get_x");
 		result = result && test_equality_int(y, get_y(p),"get_y");
 		result = result && test_equality_int(w, get_width(p),"get_width");
@@ -146,7 +146,7 @@ bool test_copy()
   return result;
 }
 
-int main (int argc, char *argv[])
+int main ()
 {
   bool result= true;
 

@@ -1,4 +1,0 @@
-#ifndef _EXEC
-# define _EXEC
-# include <exec.h>
-#endif /* _EXEC */

@@ -1,0 +1,4 @@
+#ifndef _X_FUNC
+# define _X_FUNC
+# include <xfunc.h>
+#endif /* _X_FUNC */
