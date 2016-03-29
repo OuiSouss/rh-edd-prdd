@@ -50,6 +50,7 @@ void tear_down()
 
 bool test_new_piece() 
 {
+  printf("Test of the function \"new_piece\".\n");
   bool result = true;
   for (int x= 0 ; x < 5; x++)
     for (int y= 0 ; y < 5; y++)
@@ -67,72 +68,85 @@ bool test_new_piece()
 		result = result && test_equality_bool(move_y,can_move_y(p),"can_move_y");
 		delete_piece(p);
 	      }
+  printf("Done.\n");
   return result;
 }
 
 bool test_intersect() 
 {
+  printf("Test of the function \"intersect\".\n");
   bool result = true;
   set_up();
+  printf("Does each piece intesects with itself ?\n");
   for (int i=0; i < NB_PIECES; i++)
     for (int j =0; j<NB_PIECES; j++)
       result = result && test_equality_bool(i==j, intersect(pieces[i], pieces[j]),"intersect");
 
   piece pb_piece1 = new_piece(3, 3, 1, 3, false, true);
   piece pb_piece2 = new_piece(3, 1, 1, 3, false, true);
+  printf("Test of particular intersection case.\n");
   result = result && test_equality_bool(true, intersect(pieces[0], pb_piece1),"intersect pb1");
   result = result && test_equality_bool(true, intersect(pb_piece2, pb_piece1),"intersect pb2");
   tear_down();
+  printf("Done.\n");
   return result;
 }
 
 bool test_move() 
 {
+  printf("Test of the function \"move_piece\".\n");
   bool result = true;
   piece p = new_piece(0, 0, 2, 1, true, false);
   set_up();
   for (int dist = 1; dist < NB_PIECES; dist++)
     for (int i=0; i < NB_PIECES; i++) 
       {
-      copy_piece(pieces[i],p);
-      move_piece(p, LEFT, dist);
-      if (can_move_x(pieces[i]))
-        result = result && test_equality_int(get_x(pieces[i])-dist,get_x(p),"move LEFT");
-      else
-        result = result && test_equality_int(get_x(pieces[i]),get_x(p),"move LEFT");
-      copy_piece(pieces[i],p);
-      move_piece(p, RIGHT, dist);
-      if (can_move_x(pieces[i]))
-        result = result && test_equality_int(get_x(pieces[i])+dist,get_x(p),"move RIGHT");
-      else
-        result = result && test_equality_int(get_x(pieces[i]),get_x(p),"move RIGHT");
-      copy_piece(pieces[i],p);
-      move_piece(p, UP, dist);
-      if (can_move_y(pieces[i]))
-        result = result && test_equality_int(get_y(pieces[i])+dist,get_y(p),"move UP");
-      else
-        result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move UP");
-      copy_piece(pieces[i],p);
-      move_piece(p, DOWN, dist);
-      if (can_move_y(pieces[i]))
-        result = result && test_equality_int(get_y(pieces[i])-dist,get_y(p),"move DOWN");
-      else
-        result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move DOWN");
+	printf("Try to move the piece %d\n");
+	copy_piece(pieces[i],p);
+	printf("\t-left;\n");
+	move_piece(p, LEFT, dist);
+	if (can_move_x(pieces[i]))
+	  result = result && test_equality_int(get_x(pieces[i])-dist,get_x(p),"move LEFT");
+	else
+	  result = result && test_equality_int(get_x(pieces[i]),get_x(p),"move LEFT");
+	copy_piece(pieces[i],p);
+	printf("\t-right;\n");
+	move_piece(p, RIGHT, dist);
+	if (can_move_x(pieces[i]))
+	  result = result && test_equality_int(get_x(pieces[i])+dist,get_x(p),"move RIGHT");
+	else
+	  result = result && test_equality_int(get_x(pieces[i]),get_x(p),"move RIGHT");
+	copy_piece(pieces[i],p);
+	printf("\t-up;\n");
+	move_piece(p, UP, dist);
+	if (can_move_y(pieces[i]))
+	  result = result && test_equality_int(get_y(pieces[i])+dist,get_y(p),"move UP");
+	else
+	  result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move UP");
+	copy_piece(pieces[i],p);
+	printf("\t-down.\n");
+	move_piece(p, DOWN, dist);
+	if (can_move_y(pieces[i]))
+	  result = result && test_equality_int(get_y(pieces[i])-dist,get_y(p),"move DOWN");
+	else
+	  result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move DOWN");
       }
   tear_down();
   delete_piece(p);
+  printf("Done.\n");
   return result;
-  return false;
 }
 
 
 bool test_copy() 
 {
+  printf("Test of the function \"copy_piece\".\n");
   piece p = new_piece(0, 0, 2, 1, true, false);
   bool result = true;
   set_up();
   for (int i = 0 ; i < NB_PIECES; i++) 
   {
+    printf("Copy of the piece number %d.\n",i);
     copy_piece(pieces[i],p);
     result = result && test_equality_int(get_height(pieces[i]), get_height(p), "copy get_height");
     result = result && test_equality_int(get_width(pieces[i]), get_width(p), "copy get_width");
@@ -143,6 +157,7 @@ bool test_copy()
   }
   tear_down();
   delete_piece(p);
+  printf("Done.\n");
   return result;
 }
 
