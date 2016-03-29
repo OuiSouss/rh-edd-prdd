@@ -4,6 +4,12 @@
 
 #include "piece.h"
 
+/**
+ *@file piece.c
+ *
+ *@brief Fonctions relating to pieces.
+ *
+ **/
 
 struct piece_s
 {
@@ -16,6 +22,7 @@ struct piece_s
 };
 
 
+// Version only available for Rush Hour
 piece new_piece_rh(int x, int y, bool small, bool horizontal)
 {
   piece p = malloc(sizeof(*p));
@@ -26,6 +33,7 @@ piece new_piece_rh(int x, int y, bool small, bool horizontal)
   }
   p->x = x;
   p->y = y;
+  // Set width/height at the maximum value before diminushing it if the piece is set as "samll"
   if (horizontal)
   {
     p->width = 3;
@@ -91,6 +99,8 @@ void move_piece(piece p, dir d, int distance)
 }
 
 /*
+Former version of the fonction intersect 
+
 bool intersect(cpiece p1, cpiece p2)
 {
   if (get_x(p1) == get_x(p2) && get_y(p1) == get_y(p2))
@@ -129,12 +139,15 @@ bool intersect(cpiece p1, cpiece p2)
 
 bool intersect (cpiece p1, cpiece p2)
 {
-  if (get_x(p1) == get_x(p2) && get_y(p1) == get_y(p2))
+  // Test if pieces have the same bottom-left coordonate
+  if (get_x(p1) == get_x(p2) && get_y(p1) == get_y(p2)) 
     return true;
   int x1=get_x(p1);
   int x2=get_x(p2);
   int y1=get_y(p1);
   int y2=get_y(p2);
+  // Test if the left coordonate of p1 is at the left of the right of p2 and if the right coordonate of p1 is at the right of left coordonate of p2
+  // Also test if the bottom coordonate of p1 is at the bottom of the top coordonate of p2 and if the top coordonate of p1 is at the top of the bottom coordonate of p2
   if ((x1 < x2+get_width(p2)) && (x1+get_width(p1) > x2))
     if ((y1 < y2+get_height(p2)) && (y1+get_height(p1) > y2))
       return true;
@@ -162,7 +175,9 @@ int get_width(cpiece p)
 }
 
 bool is_horizontal(cpiece p)
-{ return can_move_x(p) && !can_move_y(p); }
+{
+  return can_move_x(p) && !can_move_y(p);
+}
 
 bool can_move_x(cpiece p)
 {
@@ -174,6 +189,7 @@ bool can_move_y(cpiece p)
   return p->move_y;
 }
 
+// Version of new_piece available for the game Ane Rouge
 piece new_piece(int x, int y, int width, int height, bool move_x, bool move_y)
 {
   piece p = malloc(sizeof(*p));
