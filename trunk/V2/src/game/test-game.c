@@ -102,11 +102,11 @@ bool test_new_game()
   game g=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
   printf("Good width?\n");
   result=result && test_equality_int(WIDTH_GAME,game_width(g),"new_game game_width");
-  printf("Good height?\n")
+  printf("Good height?\n");
   result=result && test_equality_int(HEIGHT_GAME,game_height(g),"new_game game_height");
-  printf("Good number of pieces?\n")
+  printf("Good number of pieces?\n");
   result=result && test_equality_int(NB_PIECES,game_nb_pieces(g),"new_game nbPiece");
-  printf("Good number of moves?\n")
+  printf("Good number of moves?\n");
   result=result && test_equality_int(0,game_nb_moves(g),"new_game nbMove");
   printf("Good pieces?\n");
   for(int i=0;i<NB_PIECES;i++)
@@ -120,7 +120,7 @@ bool test_new_game()
       result = result && test_equality_bool(can_move_y(tab[i]), can_move_y(game_piece(g,i)), "new_game can_move_y");
     }
   return result;
-  printf("Done.\n");
+  printf("Done.\n\n");
 }
 
 
@@ -144,7 +144,7 @@ bool test_copy(cgame src)
   printf("Same pieces?\n");
   for(int i=0;i<NB_PIECES;i++)
     {
-      printf("\tChecking piece number %d.\n");
+      printf("\tChecking piece number %d.\n",i);
       result = result && test_equality_int(get_height(game_piece(src,i)), get_height(game_piece(dst,i)), "copy get_height");
       result = result && test_equality_int(get_width(game_piece(src,i)), get_width(game_piece(dst,i)), "copy get_width");
       result = result && test_equality_int(get_x(game_piece(src,i)), get_x(game_piece(dst,i)), "copy get_x");
@@ -152,7 +152,7 @@ bool test_copy(cgame src)
       result = result && test_equality_bool(can_move_x(game_piece(src,i)), can_move_x(game_piece(dst,i)), "copy can_move_x");
       result = result && test_equality_bool(can_move_y(game_piece(src,i)), can_move_y(game_piece(dst,i)), "copy can_move_y");
     }
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -189,7 +189,7 @@ bool solve(game g,cgame cg)
   printf("Check if the pieces did the good moves.\n");
   for(int i=0;i<NB_PIECES;i++)
     {
-      printf("\tChecking the piece number %d\n");
+      printf("\tChecking the piece number %d\n",i);
       result = result && test_equality_int(get_height(game_piece(g,i)), get_height(verif[i]), "solve get_height");
       result = result && test_equality_int(get_width(game_piece(g,i)), get_width(verif[i]), "solve get_width");
       result = result && test_equality_int(get_x(game_piece(g,i)), get_x(verif[i]), "solve get_x");
@@ -198,7 +198,7 @@ bool solve(game g,cgame cg)
       result = result && test_equality_bool(can_move_y(game_piece(g,i)), can_move_y(verif[i]), "solve can_move_y");
       delete_piece(verif[i]);
     }
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -223,7 +223,7 @@ bool test_game_square_piece(game g)
   result=result && test_equality_int(3,game_square_piece(g,4,5),"test_game_square_piece 3");
   printf("\t(5;4).\n");
   result=result && test_equality_int(4,game_square_piece(g,5,4),"test_game_square_piece 4");
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -234,12 +234,13 @@ int main()
   printf("Initialisation of the table \"pieces\" with the pieces :\n");
   set_up_start(pieces,NB_PIECES);
   for(int i = 0; i < NB_PIECES ; i++)
-    printf("Piece number %d : coordonates ( %d ; %d) , width = %d , height = %d , can move x? %s , can move y? %s\n",get_x(pieces[i]) , get_y(pieces[i] , get_width(pieces[i]) , get_height(pieces[i]) , can_move_x(pieces[i])? "yes":"no",can_move_y(pieces[i])? "yes":"no"));
+    printf("Piece number %d : coordonates ( %d ; %d) , width = %d , height = %d , can move x? %s , can move y? %s\n",i,get_x(pieces[i]) , get_y(pieces[i]) , get_width(pieces[i]) , get_height(pieces[i]) , can_move_x(pieces[i])? "yes":"no",can_move_y(pieces[i])? "yes":"no");
+  printf("\n");
 
   result=result && test_equality_bool(true,test_new_game(),"test_new_game");
 
   game g=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,pieces);
-  printf("Initialisation of the game \"g\" :\nwidth = %d , height = %d , number of pieces = %d , table used : pieces\n");
+printf("Initialisation of the game \"g\" :\nwidth = %d , height = %d , number of pieces = %d , table used : pieces\n",game_width(g),game_height(g),game_nb_pieces(g));
   cgame cg=(cgame)g;
   
   result=result && test_equality_bool(true,test_game_square_piece(g),"game_square_piece");

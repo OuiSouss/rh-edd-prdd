@@ -68,7 +68,7 @@ bool test_new_piece()
 		result = result && test_equality_bool(move_y,can_move_y(p),"can_move_y");
 		delete_piece(p);
 	      }
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -88,7 +88,7 @@ bool test_intersect()
   result = result && test_equality_bool(true, intersect(pieces[0], pb_piece1),"intersect pb1");
   result = result && test_equality_bool(true, intersect(pb_piece2, pb_piece1),"intersect pb2");
   tear_down();
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -101,7 +101,7 @@ bool test_move()
   for (int dist = 1; dist < NB_PIECES; dist++)
     for (int i=0; i < NB_PIECES; i++) 
       {
-	printf("Try to move the piece %d\n");
+	printf("Try to move the piece %d with distance = %d\n",i,dist);
 	copy_piece(pieces[i],p);
 	printf("\t-left;\n");
 	move_piece(p, LEFT, dist);
@@ -133,7 +133,7 @@ bool test_move()
       }
   tear_down();
   delete_piece(p);
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -157,7 +157,7 @@ bool test_copy()
   }
   tear_down();
   delete_piece(p);
-  printf("Done.\n");
+  printf("Done.\n\n");
   return result;
 }
 
@@ -176,5 +176,6 @@ int main ()
     return EXIT_SUCCESS;
   }
   else
+    printf("Snif, toujours des erreurs!\n");
     return EXIT_FAILURE;
 }
