@@ -29,11 +29,21 @@ game new_game (int width, int height, int nb_pieces, piece *pieces)
 
      game new_g = malloc (sizeof (*new_g));
 
-     if (new_g==NULL){
+     if (new_g==NULL)
 	  fprintf(stderr,"Problem in the allocation of newGame!!!");
-     }
+
+     for (int j= 0; j<height; ++j)
+       new_g->board[j] = (int *) malloc (sizeof(*(new_g->board[j]))*width);
 
      new_g->board = malloc (sizeof(*(new_g->board))*height);
+
+     if (new_g->board == NULL)
+       fprintf(stderr, "Problem in the allocation of newGame's board");
+
+     new_g->width = width;
+     new_g->height = height;
+     new_g->nb_move = 0;
+     new_g->nb_piece = 0;
 
      // initialization of the board
      for (int w= 0; w<width; ++w )

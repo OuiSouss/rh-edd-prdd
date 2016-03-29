@@ -49,7 +49,7 @@ bool test_equality_int(int expected, int value, char *testF)
  *@brief change a "piece" table by  writting the cars' coodonates of the test configuration(see above) into it.
  *@param piece array of pieces.
  */
-void set_up_start(piece pieces[],int length)
+void set_up_start(piece pieces[])
 {
   pieces[0]=new_piece(0,3,2,1,true,false);
   pieces[1]=new_piece(2,0,1,3,false,true);
@@ -98,7 +98,7 @@ bool test_new_game()
   printf("Test of the function \"new_game\".\n");
   bool result=true;
   piece tab[NB_PIECES];
-  set_up_start(tab,NB_PIECES);
+  set_up_start(tab);
   game g=new_game(WIDTH_GAME,HEIGHT_GAME,NB_PIECES,tab);
   printf("Good width?\n");
   result=result && test_equality_int(WIDTH_GAME,game_width(g),"new_game game_width");
@@ -232,7 +232,7 @@ int main()
   bool result=true;
   piece pieces[NB_PIECES];
   printf("Initialisation of the table \"pieces\" with the pieces :\n");
-  set_up_start(pieces,NB_PIECES);
+  set_up_start(pieces);
   for(int i = 0; i < NB_PIECES ; i++)
     printf("Piece number %d : coordonates ( %d ; %d) , width = %d , height = %d , can move x? %s , can move y? %s\n",i,get_x(pieces[i]) , get_y(pieces[i]) , get_width(pieces[i]) , get_height(pieces[i]) , can_move_x(pieces[i])? "yes":"no",can_move_y(pieces[i])? "yes":"no");
   printf("\n");
