@@ -47,13 +47,13 @@ bool test_equality_null(void *p, char *testF)
 }
 
 //This function is used instead the argument "delete" in the function delete_list, because the integer we are working with are not allocated with malloc, so they don't have to be freed with a function.
-void noth(void *e)
+void d(void *e)
 {
-  return;
+  e=NULL;
 }
 
-typedef void(*useless)(void*);
-useless nothing=noth;
+typedef void(*delete)(void*);
+delete del=d;
 
 int tab[3]={1,2,3};
 list l1;
@@ -74,7 +74,7 @@ void set_up()
  **/
 void tear_down(list l)
 {
-  delete_list(l2,nothing);
+  delete_list(l2,del);
 }
 
 
@@ -124,7 +124,7 @@ bool test_erase_first()
   while(!empty_list(l))
     {
       list tmp=next(l);
-      erase_first(l,nothing);
+      erase_first(l,del);
       l=tmp;
     }
   result= result && test_equality_null(l,"erase_first");
@@ -139,7 +139,7 @@ bool test_erase_after()
   printf("Creation...\n");
   set_up();
   printf("Try to erase the second list.\n");
-  erase_after(l2,nothing);
+  erase_after(l2,del);
   result= result && test_equality_null(next(l2),"erase_after");
   printf("Freeing memory...\n");
   tear_down(l2);
