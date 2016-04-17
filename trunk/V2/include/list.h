@@ -63,7 +63,7 @@ void add_after(list _list, void* data);
  * @param Pointer on a list
  * @return Pointer on the modified list
  **/
-list erase_first(list _list);
+void erase_first(list _list, void(*delete)(void *));
 
 /**
  * @brief Permit to erase a element after a position on the list.
@@ -71,12 +71,12 @@ list erase_first(list _list);
  * @param index position on a list where the next need to be erase
  * @return Pointer on the modified list
  **/
-list erase_after(list _list, int index);
+void erase_after(list _list, void(*delete)(void *));
 
 /**
  * @brief Permit to delete all the list
  * @param Pointer on a list
- * @param Function pointer which permit to erase every type of data
+ * @param Function pointer which permit to erase every type of data. If the type of the data pointer is not a type or a structure allocated thanks to malloc, the function has to do nothing, because this data will be free at the end of the programm.
  **/
 void delete_list(list _list, void(*delete)(void *));
 

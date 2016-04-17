@@ -10,11 +10,13 @@ struct list_s{
 list create_list(void* data, list n_list)
 {
   list _list = malloc (sizeof(*_list));
-  if(_list!=NULL)
+  if(_list==NULL)
   {
-    _list->data = data;
-    _list->next = n_list; 
+      fprintf(stderr,"Error of memory allocation!\n");
+      exit(EXIT_FAILURE);
   }
+  _list->data = data;
+  _list->next = n_list; 
   return _list;
 }
 
@@ -46,40 +48,30 @@ void add_after(list _list, void* data)
     _list->next = create_list(data, NULL);
 }
 
-list erase_first(list _list)
+void erase_first(list _list,void (*delete)(void *))
 {
   if (!has_next(_list)){
     free(_list);
-    return NULL;
+    delete(get_data(_list));
   }
-  list first = _list ;
-  _list = _list->next;
-  free(first);
-  return _list;
-  
+  else{
+    list first = _list ;
+    _list = _list->next;
+    delete(get_data(first));
+    free(first);
+  }
 }
 
-list erase_after(list _list, int index)
+void erase_after(list _list, void(*delete)(void *))
 {
-  if (index==0)
-    return erase_first(_list);
-  list tmp = _list;
-  int current_index = 0;
-  while((!empty_list(tmp)) && current_index<=index)
-  {
-    tmp = next(tmp);
-    current_index++;
-  }
-  if(empty_list(tmp))
-    printf("Your index in parameters is out of length list");
-    return _list;
-  if(!has_next(tmp))
-     return _list;
-  list next_to_erase = next(tmp);
-  tmp->next = next_to_erase->next;
-  free(next_to_erase);    
-  return _list;
+  if(empty_list(_list) || !has_next(_list))
+    return;
+  list tmp=next(_list);
+  _list->next=next(tmp);
+  delete(get_data(tmp));
+  free(tmp);
 }
+  
 
 void delete_list(list _list, void (*delete)(void *))
 {
