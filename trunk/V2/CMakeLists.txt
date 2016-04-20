@@ -12,4 +12,6 @@ add_definitions(-std=c99 -Wall -Wextra)
 # set(CMAKE_POSITION_INDEPENDENT_CODE 1)
 # set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/lib")
 # set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 add_subdirectory(src)
+
