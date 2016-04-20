@@ -1,32 +1,32 @@
 \select@language {french}
-\contentsline {section}{\numberline {1}Le projet}{3}
-\contentsline {subsection}{\numberline {1.1}Premi\IeC {\`e}re version}{3}
-\contentsline {subsection}{\numberline {1.2}Deuxi\IeC {\`e}me version}{3}
-\contentsline {subsection}{\numberline {1.3}Le solveur}{3}
-\contentsline {section}{\numberline {2}Notre conception du projet}{3}
-\contentsline {subsection}{\numberline {2.1}Architecture du projet}{3}
-\contentsline {subsection}{\numberline {2.2}Les modules}{3}
-\contentsline {section}{\numberline {3}Les tests}{3}
-\contentsline {section}{\numberline {4}Le solveur}{3}
-\contentsline {subsection}{\numberline {4.1}Premi\IeC {\`e}re approche}{3}
-\contentsline {subsection}{\numberline {4.2}Deuxi\IeC {\`e}me approche}{3}
-\contentsline {section}{\numberline {5}Analyse m\IeC {\'e}moire}{3}
-\contentsline {subsection}{\numberline {5.1}Valgrind}{3}
-\contentsline {subsection}{\numberline {5.2}Couverture de code}{3}
-\contentsline {section}{\numberline {6}Organisation}{3}
-\contentsline {subsection}{\numberline {6.1}R\IeC {\'e}partition des t\IeC {\^a}ches}{3}
-\contentsline {subsubsection}{\numberline {6.1.1}Module piece}{3}
-\contentsline {subsubsection}{\numberline {6.1.2}Module game}{3}
-\contentsline {subsubsection}{\numberline {6.1.3}Module affichage}{3}
-\contentsline {subsubsection}{\numberline {6.1.4}Le solveur}{3}
-\contentsline {subsubsection}{\numberline {6.1.5}Les structures de donn\IeC {\'e}es}{3}
-\contentsline {subsubsection}{\numberline {6.1.6}Les tests}{3}
-\contentsline {subsection}{\numberline {6.2}R\IeC {\'e}partition dans le temps et en espace}{3}
-\contentsline {section}{\numberline {7}Les difficult\IeC {\'e}s rencontr\IeC {\'e}es}{3}
-\contentsline {subsection}{\numberline {7.1}Au niveau de la V1}{3}
-\contentsline {subsection}{\numberline {7.2}Au niveau de la V2}{3}
-\contentsline {subsection}{\numberline {7.3}Au niveau du solveur}{3}
-\contentsline {section}{\numberline {8}Pour aller plus loin}{3}
-\contentsline {subsection}{\numberline {8.1}Analyse des probl\IeC {\`e}mes rencontr\IeC {\'e}s}{3}
-\contentsline {subsection}{\numberline {8.2}Les am\IeC {\'e}liorations \IeC {\`a} apporter au projet}{3}
-\contentsline {subsection}{\numberline {8.3}Ce que nous \IeC {\`a} apporter le projet}{3}
+\contentsline {part}{I\hspace {1em}Le projet}{3}
+\contentsline {chapter}{\numberline {1}Premi\IeC {\`e}re version}{4}
+\contentsline {chapter}{\numberline {2}Deuxi\IeC {\`e}me version}{5}
+\contentsline {chapter}{\numberline {3}Le solveur}{6}
+\contentsline {part}{II\hspace {1em}Notre conception du projet}{7}
+\contentsline {chapter}{\numberline {1}Architecture du projet}{8}
+\contentsline {chapter}{\numberline {2}Les modules}{9}
+\contentsline {part}{III\hspace {1em}Les tests}{10}
+\contentsline {part}{IV\hspace {1em}Le solveur}{11}
+\contentsline {chapter}{\numberline {1}Premi\IeC {\`e}re approche}{12}
+\contentsline {chapter}{\numberline {2}Deuxi\IeC {\`e}me approche}{13}
+\contentsline {part}{V\hspace {1em}Analyse m\IeC {\'e}moire}{14}
+\contentsline {chapter}{\numberline {1}Valgrind}{15}
+\contentsline {chapter}{\numberline {2}Couverture de code}{16}
+\contentsline {part}{VI\hspace {1em}Organisation}{17}
+\contentsline {chapter}{\numberline {1}R\IeC {\'e}partition des t\IeC {\^a}ches}{18}
+\contentsline {chapter}{\numberline {2}Module piece}{19}
+\contentsline {chapter}{\numberline {3}Module game}{22}
+\contentsline {chapter}{\numberline {4}Module affichage}{23}
+\contentsline {chapter}{\numberline {5}Le solveur}{24}
+\contentsline {chapter}{\numberline {6}Les structures de donn\IeC {\'e}es}{25}
+\contentsline {chapter}{\numberline {7}Les tests}{26}
+\contentsline {chapter}{\numberline {8}R\IeC {\'e}partition dans le temps et en espace}{27}
+\contentsline {part}{VII\hspace {1em}Les difficult\IeC {\'e}s rencontr\IeC {\'e}es}{28}
+\contentsline {chapter}{\numberline {1}Au niveau de la V1}{29}
+\contentsline {chapter}{\numberline {2}Au niveau de la V2}{30}
+\contentsline {chapter}{\numberline {3}Au niveau du solveur}{31}
+\contentsline {part}{VIII\hspace {1em}Pour aller plus loin}{32}
+\contentsline {chapter}{\numberline {1}Analyse des probl\IeC {\`e}mes rencontr\IeC {\'e}s}{33}
+\contentsline {chapter}{\numberline {2}Les am\IeC {\'e}liorations \IeC {\`a} apporter au projet}{34}
+\contentsline {chapter}{\numberline {3}Ce que nous \IeC {\`a} apporter le projet}{35}

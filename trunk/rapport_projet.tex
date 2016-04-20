@@ -1,87 +1,144 @@
-\documentclass{article}
+\documentclass{report}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
 \title{Rapport projet de programmation 2016}
+\author{Groupe A1\_2\\Gautier DELACOUR\\Anthony DELASALLE\\Alexis PICHON\\Amélie RISI}
+\date{22 Avril 2016}
 
-\author{Groupe A1\_2}
 \begin{document}
 \maketitle
 \tableofcontents
 
-\section{Le projet}%dans cette section ne faire qu'une petite description seulemnt
+\part{Le projet}%dans cette section ne faire qu'une petite description seulemnt
 %ici faut parler du projet rush hour
 % dans quel but
 %ce qu'il doit faire
 %dans le cadre de la v1
 %et dans le cadre de la v2
 %et le solveur
-\subsection{Première version}
-\subsection{Deuxième version}
+\chapter{Première version}
+
+\chapter{Deuxième version}
 %le caprice du client
-\subsection{Le solveur}
+
+\chapter{Le solveur}
 
 
-\section{Notre conception du projet}
+
+\part{Notre conception du projet}
+\setcounter{chapter}{0}
 %décrire notre projet
-\subsection{Architecture du projet}
+\chapter{Architecture du projet}
 %décrire l'architecture du projet
 %que décrit chaque dossier
-\subsection{Les modules}
+
+\chapter{Les modules}
 %donner tous les modules que l'on a fait et a quoi il serve
 %ceux pour game piece affichage et list
 
 
-\section{Les tests}%pour Gautier tu sera content comme ça
+
+\part{Les tests}
+\setcounter{chapter}{0}
+%pour Gautier tu sera content comme ça
 %decrit tes tests parle de ceux de la V1 et de la V2 ainsi que les derniers de la list chaine seulement car tu as seulement ci ceux la
 %explique pourquoi maintenant tu mets des phrases avant chaque action pour dire ce que tu fais à chaque moment
 %en gros parle de l'evolution de ton écriture de code
 %tu peux sur la fin parler de la tab de hash mais pas trop vu que tu ne l'a pas commit tu en reparlera après
 
-\section{Le solveur}
+
+
+\part{Le solveur}
+\setcounter{chapter}{0}
 %on peut parler ici de la premiere approche que l'on a eu: table de hash et list
-\subsection{Première approche}
+\chapter{Première approche}
 %je laisse le soin a ALexis de remplir cette partie
-\subsection{Deuxième approche}
+\chapter{Deuxième approche}
 %la je vais écrire cette partie
 
 
-\section{Analyse mémoire}
 
-\subsection{Valgrind}
+\part{Analyse mémoire}
+\setcounter{chapter}{0}
+\chapter{Valgrind}
 %faire une analyse fuite mémoire sur tout notre projet et mettre en annexe capture d'écran
 %y a t-il des problèmes de free et tout ça
 
-\subsection{Couverture de code}
+\chapter{Couverture de code}
 %pareil pour ça
 
-\section{Organisation}
 
-\subsection{Répartition des tâches}
+
+\part{Organisation}
+\setcounter{chapter}{0}
+\chapter{Répartition des tâches}
 %ici faut parler de qui a fait quoi je vous laisse remplir vous saurez a qui correspond chaque partie
-\subsubsection{Module piece}
-\subsubsection{Module game}
-\subsubsection{Module affichage}
-\subsubsection{Le solveur}
-\subsubsection{Les structures de données}
-\subsubsection{Les tests}
 
-\subsection{Répartition dans le temps et en espace}
+\chapter{Module piece}
+\section*{Structure d'une pièce}
+Chaque pièce du jeu est défine par les coordonnées (x,y) de son angle bas-gauche, sa hauteur et sa largeur sur le plateau ainsi que par sa faculté à se déplacer de manère verticale et/ou horizontale.
+On a donc une structure à six champs qui sont:
+\begin{itemize}
+\item \textbf{x} un entier correspondant à la coordonnée de l'angle bas-gauche de la pièce sur l'axe des abscisses
+\item \textbf{y} un entier correspondant à la coordonnée de l'angle bas-gauche de la pièce sur l'axe des ordonnées
+\item \textbf{width} un entier correspondant à la largeur de la pièce
+\item \textbf{height} un entier correspondant à la hauteur de la pièce
+\item \textbf{move\_x} un booléen indiquant si la pièce peut etre déplacée horizontalement
+\item \textbf{move\_y} un booléen indiquant si la pièce peut etre déplacée verticalement
+\end{itemize} 
+\section*{La fonction \textit{new\_piece\_rh(int x, int y, bool small, bool horizontal)}}
+Cette fonction nous permet de créer une pièce de jeu initialisée aux coordonnées (x,y) entrées en paramètres. Les deux booléens \textit{small} et \textit{horizontal} vont nous permettre à eux deux de déterminer les valeurs des champs \textit{width}, \textit{height}, \textit{move\_x} et \textit{move\_y}. En effet cette fonction n'est valable que dans le cas d'un jeu Rush Hour où les pièces ne peuvent effectuer qu'un seul type de movement et dont la taille (largeur ou hauteur en fonction de son inclinaison) est de 2 ou de 3, le second champs étant à 1. Par exemple une pièce initialisé avec un \textit{small} à \textit{false} et un \textit{horizontal} à \textit{true} aura une largeur de 3 et une hauteur de 2. De plus étant horizontale elle aura \textit{move\_x} à \textit{true} et \textit{move\_y} à \textit{false}.
+
+On se contente ici d'allouer dynamiquement un espace mémoire à cette nouvelle pièce avant de lui attribuer les valeurs souhaitées.
+\section*{La fonction \textit{new\_piece(int x, int y, int width, int height, bool move\_x, bool move\_y)}}
+Le principe est le même que la fonction précédante hormis le fait qu'on initialise ici nous-même les valeurs de \textit{width}, \textit{height}, \textit{move\_x} et \textit{move\_y} afin de convenir aux possibilités offertes par un jeu de même type que l'Ane Rouge. Dans ce jeu les pièces n'ont pas de restrictions de dimension en dehors de celles imposées par le plateau de jeu et peuvent se déplacer à la fois en abscisse et en ordonnée.
+\section*{La fonction \textit{delete\_piece(piece p)}}
+Simple fonction permettant de supprimer une pièce créée. On se contente de vérifier si la pièce passée en paramètre n'est pas \textit{null} avant de faire un \textit{free} de cette pièce.
+\section*{La fonction \textit{copy\_piece(cpiece src, piece dst)}}
+Cette fonction prend deux pièce en paramètre et vérifie si elle ne sont pas \textit{null}. Si le test passe on copie les valeurs de la pièce \textit{src} dans la pièce \textit{dst}. Dans le cas contraire un message d'erreur est affiché pour avertir qu'au moins une des pièces entrées en paramètre ne convient pas.
+\section*{La fonction \textit{move\_piece(piece p, dir d, int distance)}}
+Cette fonction nous permet de décaler les coordonnées (x,y) de la pièce entrée en paramètre de \textit{distance} dans la direction \textit{d} choisi. Si on veut bouger la pièce verticalement on modifie la coordonée \textit{y} sinon la coordonnée \textit{x}. La \textit{distance} est additionnée ou soustraite en fonction de la direction. Bien évidemment on vérifie avant toute modification que les champs de la pièce sont en accord avec le déplacement souhaité.
+\section*{La fonction \textit{intersect(cpiece p1, cpiece p2)}}
+Dans cette fonction on test si deux pièces entrées en paramètres se croisent, c'est-à-dire si elles occupent une même place sur la plateau, auquel cas elle retourne \textit{true}. Afin de savoir si il y a effectivement intersection ou pas on commence par tester si les deux pièces ont les mêmes coordonnées (x,y): si oui la fonction retourne \textit{true} dès maintenant. Sinon on poursuit en comparant les angles des pièces. Si l'angle de la bas-gauche de la première pièce et situé avant l'angle haut-droit de la seconde pièce et si l'angle haut-droit de la première pièce est aussi situé après l'angle bas-gauche de la seconde pièce alors il y a intersection.
+
+\chapter{Module game}
+
+\chapter{Module affichage}
+
+\chapter{Le solveur}
+
+\chapter{Les structures de données}
+
+\chapter{Les tests}
+
+\chapter{Répartition dans le temps et en espace}
 %ici il faut estimer le temps que l'on a passé sur le projet et estimer si la repartion en charge de travail était bien répartie sur tous les membres de groupe
 %cette partie est censée emmenée sur les difficultés
 
-\section{Les difficultés rencontrées}
-%mettre toutes les difficultés que vous avez rencontrés
-\subsection{Au niveau de la V1}
-\subsection{Au niveau de la V2}
-\subsection{Au niveau du solveur}
 
-\section{Pour aller plus loin}
-\subsection{Analyse des problèmes rencontrés}
+
+\part{Les difficultés rencontrées}
+\setcounter{chapter}{0}
+%mettre toutes les difficultés que vous avez rencontrés
+\chapter{Au niveau de la V1}
+
+\chapter{Au niveau de la V2}
+
+\chapter{Au niveau du solveur}
+
+
+
+\part{Pour aller plus loin}
+\setcounter{chapter}{0}
+\chapter{Analyse des problèmes rencontrés}
 %est-ce qu'il ont été facile a résoudre?
-\subsection{Les améliorations à apporter au projet}
+
+\chapter{Les améliorations à apporter au projet}
 %qu'auriez vous envie de refaire?
-\subsection{Ce que nous à apporter le projet}
+
+\chapter{Ce que nous à apporter le projet}
+
 \end{document}
