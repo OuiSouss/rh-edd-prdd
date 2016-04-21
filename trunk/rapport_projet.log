@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2016.3.22)  20 APR 2016 19:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2016.3.22)  21 APR 2016 13:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -277,33 +277,70 @@ Package babel Info: Making ? an active character on input line 247.
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks16
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count92
+\lst@gtempboxa=\box26
+\lst@token=\toks17
+\lst@length=\count93
+\lst@currlwidth=\dimen106
+\lst@column=\count94
+\lst@pos=\count95
+\lst@lostspace=\dimen107
+\lst@width=\dimen108
+\lst@newlines=\count96
+\lst@lineno=\count97
+\lst@maxwidth=\dimen109
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
+\c@lstnumber=\count98
+\lst@skipnumbers=\count99
+\lst@framebox=\box27
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2013/08/26 1.5b listings configuration
+))
+Package: listings 2013/08/26 1.5b (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2013/08/26 1.5b listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
+)
 (./rapport_projet.aux)
 \openout1 = `rapport_projet.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Info: Redefining \degres on input line 11.
-LaTeX Info: Redefining \dots on input line 11.
-LaTeX Info: Redefining \up on input line 11.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Info: Redefining \degres on input line 14.
+LaTeX Info: Redefining \dots on input line 14.
+LaTeX Info: Redefining \up on input line 14.
+\c@lstlisting=\count100
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 12.
+(Font)              <12> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 12.
+(Font)              <8> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 12.
+(Font)              <6> on input line 15.
  [1
 
-] (./rapport_projet.toc [1
+] (./rapport_projet.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 18.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 18.
+ [1
 
 ])
 \tf@toc=\write3
@@ -359,78 +396,62 @@ Chapitre 2.
 
 ]
 Chapitre 1.
+
+Overfull \hbox (4.37424pt too wide) in paragraph at lines 95--96
+[]\T1/cmr/m/n/10 Equitablement ré-
+ []
+
 [18
 
 ]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 116.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 116.
+ [19] [20]
+[21]
 Chapitre 2.
-[19
-
-]
-Overfull \hbox (2.59213pt too wide) in paragraph at lines 102--102
-[]\T1/cmr/bx/n/14.4 La fonc-tion \T1/cmr/bx/it/14.4 move_piece(piece p, dir d, 
-int dis-tance) 
- []
-
-[20] [21]
-Chapitre 3.
 [22
 
-]
-Chapitre 4.
-[23
+] [23
 
 ]
-Chapitre 5.
+Chapitre 1.
 [24
 
 ]
-Chapitre 6.
+Chapitre 2.
 [25
 
 ]
-Chapitre 7.
+Chapitre 3.
 [26
 
-]
-Chapitre 8.
-[27
-
-] [28
+] [27
 
 ]
 Chapitre 1.
+[28
+
+]
+Chapitre 2.
 [29
 
 ]
-Chapitre 2.
+Chapitre 3.
 [30
-
-]
-Chapitre 3.
-[31
-
-] [32
-
-]
-Chapitre 1.
-[33
-
-]
-Chapitre 2.
-[34
-
-]
-Chapitre 3.
-[35
 
 ] (./rapport_projet.aux) ) 
 Here is how much of TeX's memory you used:
- 1564 strings out of 495000
- 18789 string characters out of 6180254
- 78791 words of memory out of 5000000
- 4806 multiletter control sequences out of 15000+600000
- 16249 words of font info for 36 fonts, out of 8000000 for 9000
+ 3371 strings out of 495000
+ 42444 string characters out of 6180254
+ 135944 words of memory out of 5000000
+ 6590 multiletter control sequences out of 15000+600000
+ 17796 words of font info for 38 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 23i,6n,23p,877b,259s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 26i,6n,49p,877b,1642s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on rapport_projet.dvi (36 pages, 12548 bytes).
+Output written on rapport_projet.dvi (31 pages, 20420 bytes).
