@@ -9,35 +9,52 @@
 
 \title{Rapport projet de programmation 2016}
 \author{Groupe A1\_2\\Gautier DELACOUR\\Anthony DELASALLE\\Alexis PICHON\\Amélie RISI}
-\date{22 Avril 2016}
+
 
 \begin{document}
 \maketitle
 \tableofcontents
 
 \chapter{Le projet}
+Ce projet a été réalisé dans le cadre d'une UE. Le but était de créer un jeu Rush Hour ou similaire à celui-ci à l'aide du langage de programmation C. 
 \section{Première version}
-Le projet consistait en l'implémentation de plusieurs modules permettant de jouer à jeu de type Rush Hour dont le principe est simple: on dispose d'un tableau de jeu sur lequel sont présentes plusieurs pièces de forme rectangulaire. L'une de ces pièces est la pièce maîtraisse du jeu et il faut déplacer les autres pièces pour amener celle-ci au bord du plateau et ainsi résoudre le puzzle. Cependant chaque pièce ne peu se déplacer soit que horizontalement soit que verticalement.
-Dans un premier temps on nous demandait seulement de rendre un version sur terminal du jeu.
+Le projet consistait en l'implémentation de plusieurs modules permettant de jouer à un jeu de type Rush Hour dont le principe est simple: on dispose d'un tableau de jeu sur lequel sont présentes plusieurs pièces de forme rectangulaire. L'une de ces pièces est la pièce maîtresse du jeu. Il faut donc faire sortir celle-ci en déplaçant toutes les pièces qui la gène. Cependant, chaque pièce ne peut se déplacer uniquement dans un seul type de direction, soit horizontalement, soit verticalement.
+Dans cette première version, il nous était demandé de fournir seulement une interface pour un terminal.
 
 \section{Deuxième version}
-Par la suite des contraintes se sont ajoutéesau développement du projet. En effet on nous demandait en plus que notre code implémenté pour le Rush Hour soit aussi valable pour un jeu de type Ane Rouge. Ici les pièces peuvent aussi être de forme carrée et n'ont pas forcément de restrictions sur le type de mouvement. De plus, à la différence d'un jeu Rush Hour ou la pièce maîtraisse doit rejoindre le côté droit du plateau pour gagner, la pièce maîtraisse doit ici rejoindre le bas du plateau de jeu pour gagner.
-Une fois encore le jeu doit être jouable sur une version terminale mais une interface graphique de base peut maintenant être implémentée, mais elle reste optionnelle.
+Par la suite, des contraintes se sont ajoutées au développement du projet. En effet, on nous a spécifié que notre code devait désormais être valable aussi pour un jeu de type Ane Rouge. Sur ce type de jeu, les pièces peuvent aussi être de forme carrée et n'ont pas forcément de restrictions sur le type de mouvement. De plus, à la différence d'un jeu Rush Hour où la pièce maîtresse doit rejoindre le côté droit du plateau pour gagner, la pièce maîtresse doit ici rejoindre le bas du plateau de jeu pour gagner.
+Une fois encore le jeu doit être jouable sur une version terminal mais une interface graphique de base peut maintenant être implémentée, mais elle reste optionnelle.
 
 \section{Le solveur}
-Pour terminer un solveur est attendu, permettant bien évidemment de résoudre tout niveau de Rush Hour ou de l'Anne Rouge en fonction des paramètres entrés. Le but est de trouver un algorithme pour résoudre tout jeu de la manière la plus rapide et optimisée possible.
+Pour terminer un solveur est attendu, permettant bien évidemment de résoudre tout niveau de Rush Hour ou de l'Ane Rouge en fonction des paramètres entrés. Le but est de trouver un algorithme pour résoudre tout jeu de la manière la plus rapide et optimisée possible.
 
 
 \chapter{Notre conception du projet}
 \setcounter{section}{0}
-%décrire notre projet
+Lors de notre conception du projet, nous avons eu pour but d'essayer de respecter les réglementations au niveau, par exemple des headers initiaux que l'on avait pas le droit de modifiés et de test unitaires  à créer. De plus, nous avions décidés de créer une interface terminal qui soit protéger au niveau des erreurs de saisies d'argument par exemple. Néanmoins, suite à certain problème, nous n'avons pas pu délivré notre travail de la V1 dans les temps impartit avec tous les objectifs remplit. De même, lors de la réalisation de la deuxième version du projet, nous avons aussi eu des problèmes pour créer des exécutables pour l'âne rouge et le rush hour qui soit fonctionnels. Pour finir, notre solveur est complément néant suite à un manque d'organisation dans le groupe.
+
+Pour ce projet, nous avons décidé d'utiliser un dépôt svn et cmake pour compiler notre projet.
 \section{Architecture du projet}
-%décrire l'architecture du projet
-%que décrit chaque dossier
+Notre projet s'articule autour de la V1 et de la V2. Nous avons séparé les deux versions suite à la modification des headers \textit{piece} et \textit{game} lors du changement des spécifications.
+
+Voici la structure de la V1:
+
+\begin{itemize}
+\item[Build :]Dossier qui permet de créer tous les fichiers liés à cmake et la compilation.
+\item[Include :]Dossier pour tous les headers.
+\item[Lib :]Dossier où toutes les libs sont après leur création
+\item[Src :]Dossier où se trouvent tous nos .c. Ce dossier est organisé comme suit :
+  \begin{itemize}
+  \item[Game :]Ce dossier décrit toutes foctionnnalité liée à un jeu de Rush Hour, c'est-à-dire les pièces et le game ainsi que les tests unitaires de ces modules.
+  \item[Rush Hour :]Ce dossier décrit le rush hour, c'est-à-dire il n'y a qu'un main dans le fichiers .c qui crée un jeu de rush hour. 
+  \item[Exec :]Ce dossier décrit l'excution d'un jeu.
+  \item[Io\_interface :]Ce dossier décrit l'interface sur le terminal.
+  \end{itemize}
+\end{itemize}
 
 \section{Les modules}
 \subsection*{Module piece.c}
-Ce module contient la structure d'une pièce ainsi que toutes les fonctions relatives à ces dernières. C'est ce module qui va nus permettre de créer les pièces de notre jeu, de les modifier (déplacer) ou de les supprimer.
+Ce module contient la structure d'une pièce ainsi que toutes les fonctions relatives à ces dernières. C'est ce module qui va nous permettre de créer les pièces de notre jeu, de les modifier (déplacer) ou de les supprimer.
 \subsection*{Module game.c}
 Ce module contient la structure d'un jeu ainsi que toutes les fonctions qui s'y appliquent. Il nous permet de créer le plateau de jeu, d'y placer les pièces dedans et de les déplacer non plus dans le simple cadre d'une pièce comme pour le module précédant mais dans un envirronement de jeu avec d'autres pièces autour et des limites imposées par les dimensions du plateau.
 %Les modules piece et game sont brièvement expliqués, n'hésitais pas ajouter des infos qui vous semblent importantes
