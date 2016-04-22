@@ -9,54 +9,54 @@
 
 \title{Rapport projet de programmation 2016}
 \author{Groupe A1\_2\\Gautier DELACOUR\\Anthony DELASALLE\\Alexis PICHON\\Amélie RISI}
-
+\date{22 Avril 2016}
 
 \begin{document}
 \maketitle
 \tableofcontents
 
 \chapter{Le projet}
-Ce projet a été réalisé dans le cadre d'une UE. Le but était de créer un jeu Rush Hour ou similaire à celui-ci à l'aide du langage de programmation C. 
 \section{Première version}
-Le projet consistait en l'implémentation de plusieurs modules permettant de jouer à un jeu de type Rush Hour dont le principe est simple: on dispose d'un tableau de jeu sur lequel sont présentes plusieurs pièces de forme rectangulaire. L'une de ces pièces est la pièce maîtresse du jeu. Il faut donc faire sortir celle-ci en déplaçant toutes les pièces qui la gène. Cependant, chaque pièce ne peut se déplacer uniquement dans un seul type de direction, soit horizontalement, soit verticalement.
-Dans cette première version, il nous était demandé de fournir seulement une interface pour un terminal.
+Le projet consistait en l'implémentation de plusieurs modules permettant de jouer à jeu de type Rush Hour dont le principe est simple: on dispose d'un tableau de jeu sur lequel sont présentes plusieurs pièces de forme rectangulaire. L'une de ces pièces est la pièce maîtraisse du jeu et il faut déplacer les autres pièces pour amener celle-ci au bord du plateau et ainsi résoudre le puzzle. Cependant chaque pièce ne peu se déplacer soit que horizontalement soit que verticalement.
+Dans un premier temps on nous demandait seulement de rendre un version sur terminal du jeu.
 
 \section{Deuxième version}
-Par la suite, des contraintes se sont ajoutées au développement du projet. En effet, on nous a spécifié que notre code devait désormais être valable aussi pour un jeu de type Ane Rouge. Sur ce type de jeu, les pièces peuvent aussi être de forme carrée et n'ont pas forcément de restrictions sur le type de mouvement. De plus, à la différence d'un jeu Rush Hour où la pièce maîtresse doit rejoindre le côté droit du plateau pour gagner, la pièce maîtresse doit ici rejoindre le bas du plateau de jeu pour gagner.
-Une fois encore le jeu doit être jouable sur une version terminal mais une interface graphique de base peut maintenant être implémentée, mais elle reste optionnelle.
+Par la suite des contraintes se sont ajoutéesau développement du projet. En effet on nous demandait en plus que notre code implémenté pour le Rush Hour soit aussi valable pour un jeu de type Ane Rouge. Ici les pièces peuvent aussi être de forme carrée et n'ont pas forcément de restrictions sur le type de mouvement. De plus, à la différence d'un jeu Rush Hour ou la pièce maîtraisse doit rejoindre le côté droit du plateau pour gagner, la pièce maîtraisse doit ici rejoindre le bas du plateau de jeu pour gagner.
+Une fois encore le jeu doit être jouable sur une version terminale mais une interface graphique de base peut maintenant être implémentée, mais elle reste optionnelle.
 
 \section{Le solveur}
-Pour terminer un solveur est attendu, permettant bien évidemment de résoudre tout niveau de Rush Hour ou de l'Ane Rouge en fonction des paramètres entrés. Le but est de trouver un algorithme pour résoudre tout jeu de la manière la plus rapide et optimisée possible.
+Pour terminer un solveur est attendu, permettant bien évidemment de résoudre tout niveau de Rush Hour ou de l'Anne Rouge en fonction des paramètres entrés. Le but est de trouver un algorithme pour résoudre tout jeu de la manière la plus rapide et optimisée possible.
+
 
 
 \chapter{Notre conception du projet}
 \setcounter{section}{0}
-Lors de notre conception du projet, nous avons eu pour but d'essayer de respecter les réglementations au niveau, par exemple des headers initiaux que l'on avait pas le droit de modifiés et de test unitaires  à créer. De plus, nous avions décidés de créer une interface terminal qui soit protéger au niveau des erreurs de saisies d'argument par exemple. Néanmoins, suite à certain problème, nous n'avons pas pu délivré notre travail de la V1 dans les temps impartit avec tous les objectifs remplit. De même, lors de la réalisation de la deuxième version du projet, nous avons aussi eu des problèmes pour créer des exécutables pour l'âne rouge et le rush hour qui soit fonctionnels. Pour finir, notre solveur est complément néant suite à un manque d'organisation dans le groupe.
-
-Pour ce projet, nous avons décidé d'utiliser un dépôt svn et cmake pour compiler notre projet.
+%décrire notre projet
 \section{Architecture du projet}
-Notre projet s'articule autour de la V1 et de la V2. Nous avons séparé les deux versions suite à la modification des headers \textit{piece} et \textit{game} lors du changement des spécifications.
-
-Voici la structure de la V1 et de la V2 à une exception tous ce qui est lié à l'affichage terminal est dans exec:
-
-\begin{itemize}
-\item[Build :]Dossier qui permet de créer tous les fichiers liés à cmake et la compilation.
-\item[Include :]Dossier pour tous les headers.
-\item[Lib :]Dossier où toutes les libs sont après leur création
-\item[Src :]Dossier où se trouvent tous nos .c. Ce dossier est organisé comme suit :
-  \begin{itemize}
-  \item[Game :]Ce dossier décrit toutes foctionnnalité liée à un jeu de Rush Hour, c'est-à-dire les pièces et le game ainsi que les tests unitaires de ces modules.
-  \item[Rush Hour :]Ce dossier décrit le rush hour, c'est-à-dire il n'y a qu'un main dans le fichiers .c qui crée un jeu de rush hour. 
-  \item[Exec :]Ce dossier décrit l'excution d'un jeu.
-  \item[Io\_interface :]Ce dossier décrit l'interface sur le terminal.
-  \end{itemize}
-\end{itemize}
+%décrire l'architecture du projet
+%que décrit chaque dossier
 
 \section{Les modules}
 \subsection*{Module piece.c}
-Ce module contient la structure d'une pièce ainsi que toutes les fonctions relatives à ces dernières. C'est ce module qui va nous permettre de créer les pièces de notre jeu, de les modifier (déplacer) ou de les supprimer.
+Ce module contient la structure d'une pièce ainsi que toutes les fonctions relatives à ces dernières. C'est ce module qui va nus permettre de créer les pièces de notre jeu, de les modifier (déplacer) ou de les supprimer.
 \subsection*{Module game.c}
 Ce module contient la structure d'un jeu ainsi que toutes les fonctions qui s'y appliquent. Il nous permet de créer le plateau de jeu, d'y placer les pièces dedans et de les déplacer non plus dans le simple cadre d'une pièce comme pour le module précédant mais dans un envirronement de jeu avec d'autres pièces autour et des limites imposées par les dimensions du plateau.
+\subsection*{Module play}
+Le rôle rempli par le module \textbf{play} est d'effectuer les branchements avec les modules permettant l'initialisation de la partie, le déroulement de celle-ci et la gestion des erreurs pouvant survenir au cours de l'exécution.
+\subsection*{Module data}
+Le module \textbf{data.c} est dédié à une encapsulation des informations qui seront necéssaires tout au long de l'exécution pour en assurer le bon déroulement.
+\subsection*{Module manage\_error}
+Le module \textbf{manage\_error.c} a pour vocation de prendre en charge la gestion des erreurs critiques afin d'effectuer le retour d'informations auprès de l'utilisateur.
+\subsection*{Module move}
+Le module \textbf{move.c} encapsule la récupération, l'analyse des instructions de l'utilisateur au cours de la partie et la décision à prendre selon la nature de ces instructions.
+\subsection*{Module opt}
+Le module \textbf{opt.c} est dédié à l'analyse syntaxique des options passées en tant que paramètres au programme lors de son lancement.
+\subsection*{Module parse\_file}
+Ce module est dédié à la lecture d'un fichier de configuration de la partie passé en paramètre.
+\subsection*{Module term\_mode}
+Ce module encapsule le service d'affichage de la partie à l'utilisateur sur le terminal.
+\subsection*{Module xfunc}
+Le module \textbf{xfunc.c} sépare des autres modules des fonctions dont le rôle est l'encapsulation d'appels systèmes dont le temps d'exécution est coûteux.
 %Les modules piece et game sont brièvement expliqués, n'hésitais pas ajouter des infos qui vous semblent importantes
 %Pour les modules suivant je ne pense pas les maîtriser suffisemment pour en parler, je vous laisse donc le faire
 
@@ -77,10 +77,10 @@ Ce module contient la structure d'un jeu ainsi que toutes les fonctions qui s'y 
 \section{Première approche}
 Dans un premier temps, notre approche de la conception du solveur s'est orientée vers l'encadrement du problème.
 Il s'agit de trouver une méthode de résolution d'un problème dans l'espace et le temps, le jeu étant en deux dimensions et se déroulant en étapes successives.
-Pour ce faire, il a été indispensable de s'interroger sur les structures de données susceptibles de convenir pour le stockage des tours d'une partie.
+Pour ce faire, il a été indispensable de s'interroger sur les structures de données susceptibles de convenir pour le stockage des tours d'une partie.\\
 Les contraintes du jeu imposaient de s'intéresser aux structures de données ordonnées, telles que les listes chaînées ou les arbres.
 Toutefois, il ne faut pas négliger de prendre en considération que pour un tour donné dans une partie, il existe plusieurs actions possibles.
-Cela élimine la possibilité d'utiliser des listes chaînées.
+Cela élimine la possibilité d'utiliser des listes chaînées.\\
 L'autre information importante dégagée est relative à la recherche d'un plus court chemin : si un tour donné de la partie permet plusieurs choix, il est également vrai que différents choix de mouvements peuvent mener à une même configuration des pièces.
 Parce que ces chemins peuvent être de taille différente, la structure de données choisie est celle d'une table de hachage à adressage chaîné.
 L'utilisation d'une table de hachage permet de trier les configurations des pièces indépendament d'un avancement dans le temps.
@@ -121,7 +121,7 @@ La première étape du projet nous demandait d'implémenter les modules \textbf{
 \begin{description}
 \item [Gautier:] implémentation du test unitaire sur game
 \item [Anthony:] implémentation du module piece
-\item [Alexis:] implémentation du module d'affichage du jeu
+\item [Alexis:] implémentation du module d'affichage du jeu et liaisons inter modules
 \item [Amélie:] implémentation du module game
 \end{description}
 Par la suite Alexis s'est occupé de structurer notre projet pour un repérage plus facile des fichiers et de faire les Makelists permettant d'obtenir un exécutable.
@@ -130,7 +130,7 @@ L'évolution du projet vers la v2 nous demandait de faire en sorte que notre cod
 \begin{description}
 \item [Mise à niveau de module game] Amélie
 \item [Mise à niveau du module piece] Anthony
-\item [Implémentation des tests unitaires sur game et piece] Equitablement réparti entre Gautier et Anthony
+\item [Implémentation des tests unitaires] Répartis entre Gautier et Anthony
 \item [Implémentation du module d'affichage de l'Ane Rouge] Alexis
 \end{description}
 
@@ -147,7 +147,8 @@ On a donc une structure à six champs qui sont:
 \item \textbf{move\_y} un booléen indiquant si la pièce peut etre déplacée verticalement
 \end{itemize} 
 \subsubsection*{La fonction \textit{new\_piece\_rh(int x, int y, bool small, bool horizontal)}}
-Cette fonction nous permet de créer une pièce de jeu initialisée aux coordonnées (x,y) entrées en paramètres. Les deux booléens \textit{small} et \textit{horizontal} vont nous permettre à eux deux de déterminer les valeurs des champs \textit{width}, \textit{height}, \textit{move\_x} et \textit{move\_y}. En effet cette fonction n'est valable que dans le cas d'un jeu Rush Hour où les pièces ne peuvent effectuer qu'un seul type de movement et dont la taille (largeur ou hauteur en fonction de son inclinaison) est de 2 ou de 3, le second champs étant à 1. Par exemple une pièce initialisé avec un \textit{small} à \textit{false} et un \textit{horizontal} à \textit{true} aura une largeur de 3 et une hauteur de 2. De plus étant horizontale elle aura \textit{move\_x} à \textit{true} et \textit{move\_y} à \textit{false}.
+Cette fonction nous permet de créer une pièce de jeu initialisée aux coordonnées (x,y) entrées en paramètres. Les deux booléens \textit{small} et \textit{horizontal} vont nous permettre à eux deux de déterminer les valeurs des champs \textit{width}, \textit{height}, \textit{move\_x} et \textit{move\_y}. En effet cette fonction n'est valable que dans le cas d'un jeu Rush Hour où les pièces ne peuvent effectuer qu'un seul type de movement et dont la taille (largeur ou hauteur en fonction de son inclinaison) est de 2 ou de 3, le second champs étant à 1.\\
+Par exemple une pièce initialisé avec un \textit{small} à \textit{false} et un \textit{horizontal} à \textit{true} aura une largeur de 3 et une hauteur de 2. De plus étant horizontale elle aura \textit{move\_x} à \textit{true} et \textit{move\_y} à \textit{false}.
 \begin{lstlisting}
 piece new_piece_rh(int x, int y, bool small, bool horizontal)
 {
@@ -209,7 +210,8 @@ bool intersect (cpiece p1, cpiece p2)
 
 \subsection{Module game}
 \subsubsection{Structure d'un jeu}
-Le plateau de jeu est définie par ses dimensions hauteur*largeur et l'ensemble de pièces qui le compose. Sa structure est donc composée des champs \textit{board} un tableau 2D représentant le plateau de jeu, les entiers \textit{width} et \textit{height} correspondants respectivement aux dimensions en largeur et en hauteur du plateau ainsi que du champs \textit{piece} qui va contenir toutes pièces qui seront présentes sur le jeu. On dispose également du champs \textit{nb\_piece} pour connaître le nombre exact de pièces présentes en jeu et d'un dernier champs \textit{nb\_move} pour savoir combien de mouvement de pièces ont été réalisé depuis le début du jeu. Ce dernier champs est inclus dans la structure car il est propre à chaque jeu.
+Le plateau de jeu est définie par ses dimensions hauteur*largeur et l'ensemble de pièces qui le compose. Sa structure est donc composée des champs \textit{board} un tableau 2D représentant le plateau de jeu, les entiers \textit{width} et \textit{height} correspondants respectivement aux dimensions en largeur et en hauteur du plateau ainsi que du champs \textit{piece} qui va contenir toutes pièces qui seront présentes sur le jeu. \\
+On dispose également du champs \textit{nb\_piece} pour connaître le nombre exact de pièces présentes en jeu et d'un dernier champs \textit{nb\_move} pour savoir combien de mouvement de pièces ont été réalisé depuis le début du jeu. Ce dernier champs est inclus dans la structure car il est propre à chaque jeu.
 \subsubsection{La fonction \textit{new\_game (int width, int height, int nb\_pieces, piece *pieces)}}
 Pour créer un nouveau plateau de jeu on initialise un tableau 2D par allocation dynamique de dimension \textit{width} et \textit{height}. On copie ensuite chaque pièces du tableau de pièces passé en paramètre dans le champs \textit{piece} après s'être assuré qu'elle ne soit pas en dehors du plateau. Une fois ces deux étapes effectuées on place les pièces sur le plateau en attribuant à chaque case du plateau le numéro de la pièce qu'il l'occupe ou -1 si aucune pièce n'est présente.
 \begin{lstlisting}
@@ -266,7 +268,7 @@ Il s'agit d'un simple appel à la fonction \textit{new\_game} avec les dimension
 \subsubsection{La fonction \textit{void delete\_game (game g)}}
 Elle nous permet de supprimer un jeu en libérant l'espace mémoire qu'il occupait. On supprime chaque pièce du champs \textit{piece} puis la plateau lui-même.
 \subsubsection{La fonction \textit{play\_move(game g, int piece\_num, dir d, int distance)}}
-Cette fonction tente de déplacer la pièce de numéro \textit{piece\_num} de \textit{distance} cases vers la direction \textit{d}. Si le mouvement est valide, c'est-à-dire qu'à l'issue de son déplacement elle est toujours dans la plateau, qu'elle ne vient pas occuper une case déja prise et que la direction de mouvement lui est permise, alors la pièce est déplacée et le nombre de mouvement effectué est incrémenté. Dans le cas où une des conditions ne serait pas valide, la fonction renvoie \textit{false} et la pièce n'est pas bougée.
+Cette fonction tente de déplacer la pièce de numéro \textit{piece\_num} de \textit{distance} cases vers la direction \textit{d}. Si le mouvement est valide, c'est-à-dire qu'à l'issue de son déplacement elle est toujours dans la plateau, qu'elle ne vient pas occuper une case déja prise et que la direction de mouvement lui est permise, alors la pièce est déplacée et le nombre de mouvement effectué est incrémenté. Dans le cas où une des conditions ne serait pas valide, la fonction renvoie \textit{false} et la pièce n'est pas bougée.\\
 On créé donc une autre pièce initialisé avec les valeurs que prendrait la pièce \textit{piece\_num} si elle était déplacée maisqui ne sera pas placée sur le plateau. Elle nous sert à vérifier que la position qu'occuperait la pièce \textit{piece\_num} après déplacement est valide ou non. Si elle est valide on modifie les valeurs de la pièce \textit{piece\_num} et on actualise la numérotation des cases du tableau.
 \begin{lstlisting}
 bool play_move(game g, int piece_num, dir d, int distance)
@@ -347,26 +349,122 @@ Au lancement du programme, l'unité fonctionnelle intitulée "play" prend en cha
 \subsubsection*{Flux d'exécution}
 En suite du point d'entrée, la gestion de la partie est transmise à l'unité fonctionnelle "move" qui se chargera de récupérer les instructions utilisateurs, d'effectuer les branchements avec le module "game" et de renvoyer à l'utilisateur la confirmation des modifications par le biais de l'affichage, ce passant par le module "term\_mode", qui prend en charge l'affichage sur terminal en fournissant des outils de lecture/écriture sur celui-ci.
 
+\subsection{Module play}
+\subsubsection*{Point d'entrée}
+Dans un premier temps, le main, notre point d'entrée dans le programme, voit son contenu varier suivant l'exécutable généré : des macros sont présentes pour que la compilation utilise le bon code pour générer l'exécutable du rush-hour ou de l'âne rouge.
+Ensuite, le main effectue dans les deux cas les étapes suivantes :
+\begin{itemize}
+\item branchement avec le module \textbf{data.c} pour initialiser les champs de la structure associée qui permettra la transmission des informations utiles au cours de l'exécution 
+\item appel de la fonction \textit{parse\_argv} pour la gestion des paramètres du programme 
+\item branchement conditionnel sous la forme d'une boucle avec la fonction \textit{game\_loop} dédiée à la gestion du flux d'exécution tout au long de la partie 
+\item en cas d'erreur critique, un branchement est effectué avec le module \textbf{manage\_error.c} 
+\item avant la fin du programme, un second branchement est effectué avec le module \textbf{data.c} afin de libérer la mémoire allouée dynamiquement au cours de l'initialisation
+\end{itemize}
+\subsubsection*{La fonction \textit{parse\_argv(struct s\_data* data)}}
+La fonction \textit{parse\_argv} est une encapsulation du parseur des arguments passés au programme lors de son lancement.
+Elle va de ce fait analyser les arguments passés au programme afin d'en extraire les informations utiles au déroulement de la partie.
+Ceci est effectué par le biais de branchements avec le module \textbf{opt.c}, dont l'objectif est de détecter et récupérer les paramètres necéssaires.
+\subsubsection*{La fonction \textit{game\_loop(struct s\_data* data)}}
+La fonction intitulée \textit{game\_loop} a pour vocation d'encapsuler le flux d'exécution lié au déroulement de la partie.\\
+Le principe est le suivant :
+\begin{itemize}
+\item lors du premier appel se produit l'étape finale d'initialisation, à savoir un branchement au module \textbf{game.c} effectué par un appel de la fonction \textit{new\_game}
+\item les appels à cette fonction au cours de la boucle d'exécution correspondent à un branchement avec le module d'affichage \textbf{term\_mode} (appel de \textit{printout\_game}) qui sera suivi d'un branchement avec le module \textbf{move.c} pour récupérer les instructions de déplacement de l'utilisateur sur le tour en cours.
+\end{itemize}
+
+\subsection{Module data}
+\subsubsection*{La fonction \textit{init\_data(struct s\_data* data, int *argc, char** argv, bool (*game\_over)(cgame))}}
+La fonction \textit{init\_data} permet d'initialiser les champs de la structure qui conservera la garde des informations necéssaires au programme pour son bon fonctionnement.
+Cela correspond aux paramètres du programme, mais également à la fonction qui permettra au programme de savoir si une partie est terminée ou non.
+\subsubsection*{La fonction \textit{delete\_data(struct s\_data* data)}}
+Cette fonction est destinée à être appelée lorsque le programme est en fin de vie, ce afin de libérer la mémoire allouée dynamiquement au cours de l'exécution.
+
+\subsection{Module manage\_error}
+\subsubsection{La fonction \textit{manage\_error(struct s\_data* data)}}
+La fonction \textit{manage\_error} synthétise ce service et affichera donc un message d'erreur approprié pour informer l'utilisateur de la nature d'une erreur critique survenue.
+De plus, ce module fournit des macros permettant à l'utilisateur de différencier les erreurs critiques entre elles (erreur de paramètre du programme, erreur d'allocation mémoire, ...).
+
+\subsection{Module move}
+\subsubsection*{La fonction \textit{manage\_move(struct s\_data* data)}}
+La fonction \textit{manage\_move} encapsule la récupération de ces instructions en invoquant la fonction \textit{manage\_piece}.
+\subsubsection*{La fonction \textit{manage\_piece(struct s\_data* data, char* buffer)}}
+La fonction \textit{manage\_piece} récupère le numéro de la pièce que l'utilisateur souhaite déplacer.
+Si un numéro de pièce invalide est entré ou si la lecture sur l'entrée standard de ce numéro a échoué, elle transmet cette information à l'utilisateur et se termine.
+Lorsqu'un numéro valide est récupéré, la fonction "manage\_dir" est alors appélée.
+\subsubsection*{La fonction \textit{manage\_dir(struct s\_data* data, const int nb\_pc, char* buffer)}}
+La fonction \textit{manage\_dir} a pour vocation la récupération de la direction du mouvement de la pièce choisie par l'utilisateur.
+En cas de mouvement invalide ou si la récupération de cette information échoue, cette fonction se termine.
+Dans le cas d'un mouvement valide, la fonction effectue un branchement avec le module \textbf{game.c} en appelant la fonction \textit{play\_move} avec les paramètres récupérés précédement.
+
+\subsection{Module opt}
+\subsubsection*{Les fonctions \textit{is\_opt(const char* s)} et \textit{parse\_opt(struct s\_data* data)}}
+Dans un premier temps, la fonction \textit{is\_opt} tente de détecter si le paramètre en cours d'analyse est une option du programme.
+Ultérieurement à cette vérification, la fonction \textit{parse\_opt} va récupérer le paramètre et le traiter de façon appropriée (appel de la fonction \textit{parse\_input\_file} du module \textbf{parse\_file.c} par exemple).
+
+\subsection{Module parse\_file}
+\subsubsection*{La fonction \textit{parse\_input\_file(struct s\_data* data)}}
+La fonction \textit{parse\_input\_file} encapsule le service rendu par le module \textbf{parse\_file.c}.
+Elle va se contenter de lire le fichier passé en paramètre afin de récupérer les informations qu'il contient.
+
+\subsection{Module term\_mode}
+\subsubsection*{La fonction \textit{printout\_game(struct s\_data* data)}}
+La fonction \textit{printout\_game} synthétise le service rendu par le module d'affichage en utilisant les données qui lui sont transmises au sein de notre structure globale de stockage des informations.
+
+\subsection{Module xfunc}
+Le module \textbf{xfunc.c} sépare des autres modules des fonctions dont le rôle est l'encapsulation d'appels systèmes dont le temps d'exécution est coûteux.
+\subsubsection*{Fonction \textit{xmalloc(const unsigned int size, int* status)}}
+Cette fonction fournit une encapsulation de l'appel système \textit{malloc} et réduit les branchements effectués avec celui-ci, en l'occurence en évitant l'appel lorsque la taille du bloc mémoire à allouer dynamiquement est nulle.
+De plus, cette fonction a également l'avantage de fournir un second retour à l'utilisateur lorsqu'une erreur survient. En effet, un second paramètre est présent pour qu'à l'adresse qu'il renseigne il soit possible de spécifier qu'il y a eu une erreur.
+\subsubsection*{Fonction \textit{xfree(void** ptr)}}
+La fonction \textit{xfree} encapsule l'appel système \textit{free} qui n'est alors effectué que lorsque l'on passe l'adresse d'une adresse mémoire valide.
+De plus, le passage de l'adresse où est stocké l'adresse du bloc mémoire à libérer permet de sécuriser ce traitement en modifiant l'adresse où est stockée cette information, qui contiendra alors en sortie de fonction l'adresse du pointeur nul.
+L'objectif de ce double traitement est de réduire au maximum les branchements avec le noyau (invocation de l'appel système \textit{free}) ainsi que de supprimer le besoin de traitement supplémentaire en dehors de cette fonction (la variable qui contenait l'adresse de la mémoire à libérer contient donc l'adresse du pointeur nul après libération).
+
 \subsection{Le solveur}
+% A faire
 
 \subsection{Les structures de données}
+% A faire
 
 \subsection{Les tests}
+% A faire
 
 \section{Répartition dans le temps et en espace}
-%ici il faut estimer le temps que l'on a passé sur le projet et estimer si la repartion en charge de travail était bien répartie sur tous les membres de groupe
-%cette partie est censée emmenée sur les difficultés
+\subsection*{Alexis}
+La répartition du travail que j'ai effectué au cours du projet est la suivante :\\
+- en espace :
+\begin{itemize}
+\item implémentation du squelette du programme : point d'entrée, initialisation et fin de vie du programme, branchements avec les modules \textbf{game.c} et \textbf{piece.c}
+\item implémentation de l'interation avec l'utilisateur : gestion des paramètres, interaction sur l'entrée pour récupérer les instructions utilisateur
+\item implémentation de l'affichage.
+\end{itemize}
+- en temps :
+\begin{itemize}
+\item
+- le travail requis pour l'implémentation des parties mentionnées ci-dessus représente un volume horaire compris entre 30 et 40 heures 
+\item
+- le volume de travail necéssaire pour parvenir à concevoir cette structure représente quand à lui un volume horaire situé entre 10 et 20 heures 
+\item
+- le volume de travail ayant conduit à l'élaboration des branchements entre les différents modules (en dehors des branchements déjà proposés entre les modules \textbf{game.c} et \textbf{piece.c}) se situe entre 10 et 20 heures.
+\end{itemize}
 
 
 
 \chapter{Les difficultés rencontrées}
 \setcounter{section}{0}
-%mettre toutes les difficultés que vous avez rencontrés
 \section{Au niveau de la V1}
+De problèmes au niveau du raisonnement sur l'algorithme de la fonction \textit{intersect (cpiece p1, cpiece p2)} du module \textbf{piece.c} ont demandé un certain temps avant d'être réglés, nécessitant de revoir à plusieurs reprise l'approche de cet algorithme. Ce n'était au final que de simples erreurs de raisonnement où certains cas dans lesquels deux pièces se chevauchaient n'étaient pas pris en compte, faussant le résultat.\\
+Des problèmes au niveau du module \textbf{game.c} ont aussi été observés, notamment des fuites mémoires dues à des allocations dynamiques mal gérées.\\
+L'absence d'une option permettant de savoir si une pièce se trouve sur une case donnée du tableau en connaissant uniquement les coordonnées de la case a rendu très difficile l'implémentation de l'affichage.
+De plus, cela a également requis de conserver en dehors de la structure de données associée au module \textbf{game.c} les informations relatives au plateau, à savoir quelle pièce se trouve à telle case.\\
+L'absence d'une configuration proposée pour la prise en charge d'un fichier de configuration a également ralenti le développement du programme.
 
 \section{Au niveau de la V2}
+L'absence d'un formatage proposé pour les fichiers de configuration a rendu laborieux l'implémentation des modifications.
+De plus, le caractère statique de la bibliothèque associé au module \textbf{game.c} a requis d'en extraire la différentiation entre le rush-hour et l'âne rouge et de l'intégrer ailleurs.
 
 \section{Au niveau du solveur}
+% A faire
 
 
 
@@ -376,9 +474,13 @@ En suite du point d'entrée, la gestion de la partie est transmise à l'unité f
 
 %est-ce qu'il ont été facile a résoudre?
 
-\section{Les améliorations à apporter au projet}
-%qu'auriez vous envie de refaire?
+\section{Les améliorations a apporter au projet}
+Il est raisonnable de penser que préférer la programmation Objet à la programmation Fonctionnelle aurait notablement réduit la quantité de travail nécessaire pour parvenir à un même résultat.
+Le paradigme Objet est très bien illustré par les modules \textbf{game.c} et \textbf{piece.c} dont l'encapsulation des données et les services rendus par les fonctions qu'ils contiennent correspondent au fonctionnement d'un Objet.
+De plus, le maintient et la portabilité du code produit auraient été facilités.\\
+Dans cette optique d'optimisation, il aurait également été envisageable de choisir une implémentation Objet pour les modules \textbf{game.c} et \textbf{piece.c} tout en conservant une approche fonctionnelle pour le reste du programme (point d'entrée du programme, interactions entrée/sortie et branchements avec les modules \textbf{game.c} et \textbf{piece.c}).
 
-\section{Ce que nous à apporter le projet}
+\section{Ce que nous a apporté le projet}
+% A faire
 
 \end{document}
