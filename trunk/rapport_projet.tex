@@ -16,13 +16,14 @@
 \tableofcontents
 
 \chapter{Le projet}
-Ce projet a été réalisé dans le cadre d'une UE. Le but était de créer un jeu Rush Hour ou similaire à celui-ci à l'aide du langage de programmation C. 
+Ce projet a été réalisé dans le cadre d'une UE. Le but était de créer un jeu Rush Hour ou similaire à celui-ci à l'aide du langage de programmation C.
 \section{Première version}
-Le projet consistait en l'implémentation de plusieurs modules permettant de jouer à un jeu de type Rush Hour dont le principe est simple: on dispose d'un tableau de jeu sur lequel sont présentes plusieurs pièces de forme rectangulaire. L'une de ces pièces est la pièce maîtresse du jeu. Il faut donc faire sortir celle-ci en déplaçant toutes les pièces qui la gène. Cependant, chaque pièce ne peut se déplacer uniquement dans un seul type de direction, soit horizontalement, soit verticalement.
+Le projet consistait en l'implémentation de plusieurs modules permettant de jouer à jeu de type Rush Hour dont le principe est simple: on dispose d'un tableau de jeu sur lequel sont présentes plusieurs pièces de forme rectangulaire. L'une de ces pièces est la pièce maîtraisse du jeu et il faut déplacer les autres pièces pour amener celle-ci au bord du plateau et ainsi résoudre le puzzle. Cependant chaque pièce ne peut se déplacer soit que horizontalement soit que verticalement.\\
 Dans cette première version, il nous était demandé de fournir seulement une interface pour un terminal.
 
 \section{Deuxième version}
-Par la suite, des contraintes se sont ajoutées au développement du projet. En effet, on nous a spécifié que notre code devait désormais être valable aussi pour un jeu de type Ane Rouge. Sur ce type de jeu, les pièces peuvent aussi être de forme carrée et n'ont pas forcément de restrictions sur le type de mouvement. De plus, à la différence d'un jeu Rush Hour où la pièce maîtresse doit rejoindre le côté droit du plateau pour gagner, la pièce maîtresse doit ici rejoindre le bas du plateau de jeu pour gagner.
+Par la suite des contraintes se sont ajoutéesau développement du projet. En effet on nous demandait en plus que notre code implémenté pour le Rush Hour soit aussi valable pour un jeu de type Ane Rouge. Ici les pièces peuvent aussi être de forme carrée et n'ont pas forcément de restrictions sur le type de mouvement. De plus, à la différence d'un jeu Rush Hour ou la pièce maîtraisse doit rejoindre le côté droit du plateau pour gagner, la pièce maîtraisse doit ici rejoindre le bas du plateau de jeu pour gagner.\\
+Une fois encore le jeu doit être jouable sur une version terminale mais une interface graphique de base peut maintenant être implémentée, mais elle reste optionnelle.
 
 Une fois encore le jeu doit être jouable sur une version terminal mais une interface graphique de base peut maintenant être implémentée, mais elle reste optionnelle.
 
@@ -33,28 +34,26 @@ Pour terminer un solveur est attendu, permettant bien évidemment de résoudre t
 
 \chapter{Notre conception du projet}
 \setcounter{section}{0}
-Lors de notre conception du projet, nous avons eu pour but d'essayer de respecter les réglementations au niveau, par exemple des headers initiaux que l'on avait pas le droit de modifiés et de test unitaires  à créer. De plus, nous avions décidés de créer une interface terminal qui soit protéger au niveau des erreurs de saisies d'argument par exemple. Néanmoins, suite à certain problème, nous n'avons pas pu délivré notre travail de la V1 dans les temps impartit avec tous les objectifs remplit. De même, lors de la réalisation de la deuxième version du projet, nous avons aussi eu des problèmes pour créer des exécutables pour l'âne rouge et le rush hour qui soit fonctionnels. Pour finir, notre solveur est complément néant suite à un manque d'organisation dans le groupe.
-
+Lors de notre conception du projet, nous avons eu pour but d'essayer de respecter les réglementations au niveau, par exemple, des headers initiaux que l'on avait pas le droit de modifiés et de test unitaires  à créer. De plus, nous avions décidés de créer une interface terminal qui soit protéger au niveau des erreurs de saisies d'argument par exemple. Néanmoins, suite à certain problème, nous n'avons pas pu délivré notre travail de la V1 dans les temps impartit avec tous les objectifs remplit. De même, lors de la réalisation de la deuxième version du projet, nous avons aussi eu des problèmes pour créer des exécutables pour l'âne rouge et le rush hour qui soit fonctionnels. Pour finir, notre solveur est complément néant suite à un manque d'organisation dans le groupe.\\
 Pour ce projet, nous avons décidé d'utiliser un dépôt svn et cmake pour compiler notre projet.
+
 \section{Architecture du projet}
-Notre projet s'articule autour de la V1 et de la V2. Nous avons séparé les deux versions suite à la modification des headers \textit{piece} et \textit{game} lors du changement des spécifications.
-
+Notre projet s'articule autour de la V1 et de la V2. Nous avons séparé les deux versions suite à la modification des headers \textbf{piece.h} et \textbf{game.h} lors du changement des spécifications.\\
 Voici la structure de la V1:
-
-\begin{itemize}
-\item[Build :]Dossier qui permet de créer tous les fichiers liés à cmake et la compilation.
-\item[Include :]Dossier pour tous les headers.
-\item[Lib :]Dossier où toutes les libs sont après leur création
-\item[Src :]Dossier où se trouvent tous nos .c. Ce dossier est organisé comme suit :
+\begin{description}
+\item [Build :] Dossier qui permet de créer tous les fichiers liés à cmake et la compilation.
+\item [Include :] Dossier pour tous les headers.
+\item [Lib :] Dossier où toutes les libs sont après leur création
+\item [Src :] Dossier où se trouvent tous nos .c. Ce dossier est organisé comme suit :
   \begin{itemize}
-  \item[Game :]Ce dossier décrit toutes foctionnnalité liée à un jeu de Rush Hour, c'est-à-dire les pièces et le game ainsi que les tests unitaires de ces modules.
-  \item[Rush Hour :]Ce dossier décrit le rush hour, c'est-à-dire il n'y a qu'un main dans le fichiers .c qui crée un jeu de rush hour. 
-  \item[Exec :]Ce dossier décrit l'excution d'un jeu.
-  \item[Io\_interface :]Ce dossier décrit l'interface sur le terminal.
+  \item [Game :] Ce dossier décrit toutes foctionnnalité liée à un jeu de Rush Hour, c'est-à-dire les pièces et le game ainsi que les tests unitaires de ces modules.
+  \item [Rush Hour :] Ce dossier décrit le rush hour, c'est-à-dire il n'y a qu'un main dans le fichiers .c qui crée un jeu de rush hour. 
+  \item [Exec :] Ce dossier décrit l'excution d'un jeu.
+  \item [Io\_interface :] Ce dossier décrit l'interface sur le terminal.
   \end{itemize}
-\end{itemize}
+\end{description}
 
-Dans la V2, la structure est similaire pour cette version mise à part que l'on a regroupé tout ce que est pour l'interface terminal dans un dossier exec et pour le solveur, nous avons ajouté un dossier dans src, data, qui contient toutes les structures de données pour notre solveur.
+Dans la V2, la structure est similaire pour cette version mise à part que l'on a regroupé tout ce que est pour l'interface terminal dans un dossier exec et nous avons ajouté pour le solveur un dossier data, inclut dans le dossier src, qui contient toutes les structures de données pour notre solveur.
 
 \section{Les modules}
 \subsection*{Module piece}
@@ -76,19 +75,9 @@ Le module \textbf{parse file} est dédié à la lecture d'un fichier de configur
 \subsection*{Module term\_mode}
 Le module \textbf{term mode} encapsule le service d'affichage de la partie à l'utilisateur sur le terminal.
 \subsection*{Module xfunc}
-Le module \textbf{xfunc} sépare des autres modules des fonctions dont le rôle est l'encapsulation d'appels systèmes dont le temps d'exécution est coûteux.
+Le module \textbf{xfunc.c} sépare des autres modules des fonctions dont le rôle est l'encapsulation d'appels systèmes dont le temps d'exécution est coûteux.
 \subsection*{Module list}
-Le module \textbf{list} est dédié au solveur. Son but est de définir les fonctions utiles pour l'utilisation d'une liste simplement chainée.
-
-
-\chapter{Les tests}
-\setcounter{section}{0}
-%pour Gautier tu sera content comme ça
-%decrit tes tests parle de ceux de la V1 et de la V2 ainsi que les derniers de la list chaine seulement car tu as seulement ci ceux la
-%explique pourquoi maintenant tu mets des phrases avant chaque action pour dire ce que tu fais à chaque moment
-%en gros parle de l'evolution de ton écriture de code
-%tu peux sur la fin parler de la tab de hash mais pas trop vu que tu ne l'a pas commit tu en reparlera après
-
+Le module \textbf{list.c} est dédié au solveur. Son but est de définir les fonctions utiles pour l'utilisation d'une liste simplement chainée.
 
 
 \chapter{Le solveur}
@@ -117,7 +106,22 @@ Les cellules sont organisées de la façon suivante :
 \end{itemize}
 
 \section{Deuxième approche}
-Dans un deuxième temps, suite à un manque de temps, nous avons réfléchit à une nouvelle approche plus algorithmique cette fois-ci. Néanmoins, cet algorithme n'a pas été fini d'écrire dans les temps imparti et ne semblait fonctionné que sur un jeu de Rush Hour.
+Dans un deuxième temps, suite à un manque de temps, nous avons réfléchit à une nouvelle approche plus algorithmique cette fois-ci. Néanmoins, cet algorithme n'a pas été fini d'écrire dans les temps imparti et ne semblait fonctionné que sur un jeu de Rush Hour.\\
+Notre algorithme était donc :
+\begin{itemize}
+\item d'abord on regarde si le pièce 0 est bloquée pour sortir ou  non si elle est bloquée, l'ajoute à une liste chainée. Sinon, on la fait sortir.
+\item on regarde toutes les pièces qui bloquent la ligne de la sortie pour la pièce maîtresse et on les place dans un tableau, on fait ceci jusqu'à ce qu'il n'y ai plus de pièce qui bloque la sortie de la pièce maîtresse.
+\item on sélectionne la plus proche de la sortie.
+\item on regarde si elle est bloqué ou non, c'est-à-dire peut-on la déplacée assez pour qu'elle ne bouche plus la sortie.
+\item si elle n'est pas bloquée, on l'a bouge
+\item si elle est bloquée, on la marque, c'est-à-dire que dans un tableau de la taille du nombre de pièce du jeu, on met un marqueur a true à la place du numéro de la  pièce pour signaler que la pièce est bloquée et qu'on l'a déjà visitée.
+\item ensuite, on insère la pièce bloquée dans la liste simplement chainée ou une pile (mais pour cela il aurait fallut implémenté une pile), avec le type de déplacement qu'il faut effectuer, et le nombre de case pour débloqué la situation. A chaque fois, qu'une pièce est bloquée, on l'insère en tête de la liste chainée c'est pour cela qu'une pile serait plus judicieuse.
+\item maintenant comme cette pièce est bloquée, on doit sélectionner une pièce qui est sur la ligne horizontale ou verticale selon l'orientation de la pièce bloquée. Pour cela, il faut regarder tous les numéros de pièces les plus proches .
+\item si on trouve une pièce proche et qui n'est pas marquée alors on va regarder si elle est bloquée, la déplacée si possible et la marquée sinon et l'ajouter en tête à la liste chaînée.
+\item dès qu'une pièce bouge, on regarde le premier élément de la liste chaînée et on essaye de le déplacé à l'aide des informations stockée dans celle-ci.
+\item si elle peut bouger, on la déplace, on la démarque et on enlève le premier élément de la liste chaînée.
+\item et on fait comme ça jusqu'à ce qu'il ne reste plus que le pièce 0 dans la liste simplement chaînée et que l'on puisse la sortir. Si elle ne peut pas sortir, on retourne au deuxième tiret. 
+\end{itemize}
 
 Notre algorithme était donc :
 \begin{itemize}
@@ -138,11 +142,16 @@ Notre algorithme était donc :
 \chapter{Analyse mémoire}
 \setcounter{section}{0}
 \section{Valgrind}
-%faire une analyse fuite mémoire sur tout notre projet et mettre en annexe capture d'écran
-%y a t-il des problèmes de free et tout ça
+Suite à l'analyse \textbf{Valgrind} de nos exécutables, il en ressort que nos jeux \textbf{rush-hour-v2} et \textbf{ane-rouge} n'ont aucunes fuites mémoires.\\
+En revanche, nos tests unitaires sur les modules \textbf{game.c} et \textbf{piece.c} ont des fuites mémoires dues aux variables créées pour les besoins des test qui ne sont pas libérées après leur utilisation. Ces fuites sont plus présentes dans les test unitaires sur \textbf{game.c} que sur \textbf{piece.c}.\\
+La dernière analyse \textbf{Valgrind} est réalisée sur l'exécutable du module \textbf{test-list.c}. Celui-ci n'a pas de fuites mémoires mais semble en revanche pointer une erreur sur la fonction \textit{earase\_first} du module \textbf{list.c}.\\
+Ces erreurs sont analysées plus bas, dans la partie \textbf{Analyse des problèmes rencontrés} et des capture de chaque analyse effectuée sont disponibles en annexe.
 
 \section{Couverture de code}
-%pareil pour ça
+Une couvertue de code à été réalisée avec \textbf{Gcov}, nous informant que notre code est convenablement couvert.\\
+L'ensemble de nos lignes de code des modules \textbf{game.c} et \textbf{piece.c} ainsi que celles des tests unitaires sur ces modules sont lues à l'exécution, il n'y a donc pas de morceaux de code inutiles. Les seules lignes de codes de codes n'étant pas lues sont celles traitant les cas d'erreurs.\\
+Il y a toutefois une exception dans le cas du module \textbf{game.c} et de son test unitaire pour la fonction \textit{copy\_game}. En effet celle-ci ne passait pas le test mit en place dans le module \textbf{test\_game.c}. La partie du test sur cette fonction à donc été mise en commentaire afin d'effectuer les tests suivant, ce qui explique le fait que les lignes de code correspondant à cette fonction et àa son test ne soit pas lues.\\
+Les couvertures de code réalisées sont fournies en annexe de ce rapport.
 
 
 
@@ -165,6 +174,15 @@ L'évolution du projet vers la V2 nous demandait de faire en sorte que notre cod
 \item [Mise à niveau du module piece] Anthony
 \item [Implémentation des tests unitaires] Répartis entre Gautier et Anthony
 \item [Implémentation du module d'affichage de l'Ane Rouge] Alexis
+\end{description}
+\subsubsection*{Après la V2 et le Solveur}
+Suite au rendu de la V2, certaine partie n'étant pas au point, nous avons décidé de résoudre les problèmes et de nous attaquer au solveur donc voici comment nous nous sommes répartit les tâches:
+\begin{description}
+\item [Résolution des problèmes de la V2 au niveau de game] Anthony
+\item [Résolution petit problémes dans les tests unitaires de game] Gautier
+\item [Implémentation de structure de données pour le solveur] Amélie: Liste simplement chaînée et Gautier: Table de hachage
+\item [Tests unitaire pour les structures de données] Gautier
+\item[Tentative de solveur]Amélie
 \end{description}
 
 \subsubsection*{Après la V2 et Solveur}
@@ -254,60 +272,11 @@ bool intersect (cpiece p1, cpiece p2)
 
 \subsection{Module game}
 \subsubsection{Structure d'un jeu}
-Le plateau de jeu est défini par ses dimensions hauteur*largeur et l'ensemble de pièces qui le compose. Sa structure est donc composée des champs \textit{board} un tableau 2D représentant le plateau de jeu, les entiers \textit{width} et \textit{height} correspondants respectivement aux dimensions en largeur et en hauteur du plateau ainsi que du champs \textit{piece}, un tableau qui va contenir toutes pièces qui seront présentes sur le jeu. \\
+Le plateau de jeu est définie par ses dimensions hauteur*largeur et l'ensemble de pièces qui le compose. Sa structure est donc composée des champs \textit{board} un tableau 2D représentant le plateau de jeu, les entiers \textit{width} et \textit{height} correspondants respectivement aux dimensions en largeur et en hauteur du plateau ainsi que du champs \textit{piece} qui va contenir toutes pièces qui seront présentes sur le jeu. \\
 On dispose également du champs \textit{nb\_piece} pour connaître le nombre exact de pièces présentes en jeu et d'un dernier champs \textit{nb\_move} pour savoir combien de mouvement de pièces ont été réalisé depuis le début du jeu. Ce dernier champs est inclus dans la structure car il est propre à chaque jeu.\\
-
 Dans la V1, comme notre jeu était fixé à un Rush Hour, nous avions décidé d'ajouter un champ dans notre structure qui était RedCar. En effet, on avait considére cette pièce comme capitale pour un jeu, alors nous l'avions mise à part. Néanmoins, lors de la réalisation de la V2, nous avons réalisé que cette pièce indépendante nous gênait pour créer un jeu complétement modulaire. C'est pourquoi, nous l'avons supprimé de notre structure.
 \subsubsection{La fonction \textit{new\_game (int width, int height, int nb\_pieces, piece *pieces)}}
 Pour créer un nouveau plateau de jeu, on initialise un tableau 2D par allocation dynamique de dimension \textit{width} et \textit{height}. On copie ensuite chaque pièces du tableau de pièces passé en paramètre dans le champs \textit{piece} après s'être assuré qu'elle ne soit pas en dehors du plateau. Une fois ces deux étapes effectuées, on place les pièces sur le plateau en attribuant à chaque case du plateau le numéro de la pièce qu'il l'occupe ou -1 si aucune pièce n'est présente.
-\begin{lstlisting}
-game new_game (int width, int height, int nb_pieces, piece *pieces)
-{
-  if(pieces==NULL || nb_pieces<=0 || pieces[0]==NULL || width<=0 || height<=0)
-      return NULL;
-
-  game new_g = malloc (sizeof (*new_g));
-  if (new_g==NULL)
-      fprintf(stderr,"Problem in the allocation of newGame!!!\n");
-
-  new_g->board = malloc (sizeof(*(new_g->board))*height);
-  if (new_g->board==NULL)
-      fprintf(stderr, "Problem in the allocation of newGame's board (height)\n");
-  for (int j= 0; j<height; ++j)
-  {
-      new_g->board[j] = (int *) malloc (sizeof(*(new_g->board[j]))*width);
-    if (new_g->board[j]==NULL)
-      fprintf(stderr, "Probleme in the allocation of newGame's board (width)\n");
-  }
-
-  new_g->width = width;
-  new_g->height = height;
-  new_g->nb_move = 0;
-  new_g->nb_piece = 0;
-
-  new_g->piece = malloc (nb_pieces * sizeof(*pieces));
-  if (new_g->piece==NULL)
-      fprintf(stderr,"Problem in allocation of piece in structure\n");
-     
-  for (int i=0; i<nb_pieces; ++i)
-  {
-      if (!is_in_grid(new_g, pieces[i]))
-	fprintf(stderr, "Piece %d out of board\n", i);
-
-      new_g->piece[i] = new_piece(get_x(pieces[i]), get_y(pieces[i]), get_width(pieces[i]), get_height(pieces[i]), can_move_x(pieces[i]), can_move_y(pieces[i]));
-      new_g->nb_piece += 1;
-  }
-
-  positionning(new_g, (cpiece*)new_g->piece);
-
-  if (new_g->nb_piece != nb_pieces)
-  {
-      delete_game(new_g); // free of all we allocated before
-      new_g = NULL;
-  }
-  return new_g;
-}
-\end{lstlisting}
 \subsubsection{La fonction \textit{game new\_game\_hr (int nb\_piece, piece *piece)}}
 Dans ce cas, on crée un jeu dont les conditions sont propres à Rush Hour.
 Il s'agit d'un simple appel à la fonction \textit{new\_game} avec les dimensions d'un plateau de Rush Hour.
@@ -316,84 +285,20 @@ Elle nous permet de supprimer un jeu en libérant l'espace mémoire qu'il occupa
 \subsubsection{La fonction \textit{play\_move(game g, int piece\_num, dir d, int distance)}}
 Cette fonction tente de déplacer la pièce de numéro \textit{piece\_num} de \textit{distance} cases vers la direction \textit{d}. Si le mouvement est valide, c'est-à-dire qu'à l'issue de son déplacement elle est toujours dans la plateau, qu'elle ne vient pas occuper une case déja prise et que la direction de mouvement lui est permise, alors la pièce est déplacée et le nombre de mouvement effectué est incrémenté. Dans le cas où une des conditions ne serait pas valide, la fonction renvoie \textit{false} et la pièce n'est pas bougée.\\
 On créé donc une autre pièce initialisé avec les valeurs que prendrait la pièce \textit{piece\_num} si elle était déplacée mais qui ne sera pas placée sur le plateau. Elle nous sert à vérifier que la position qu'occuperait la pièce \textit{piece\_num} après déplacement est valide ou non. Si elle est valide on modifie les valeurs de la pièce \textit{piece\_num} et on actualise la numérotation des cases du tableau.
-\begin{lstlisting}
-bool play_move(game g, int piece_num, dir d, int distance)
-{
-     if(piece_num>=g->nb_piece || piece_num<0)
-	 return false;
-  
-     int x = get_x(game_piece((cgame)g, piece_num));
-     int y = get_y(game_piece((cgame)g, piece_num));
-     int p_height = get_height(game_piece((cgame)g, piece_num));
-     int p_width = get_width(game_piece((cgame)g, piece_num));
-
-     if(can_move_y((cpiece)g->piece[piece_num]) && (d==UP || d==DOWN))
-     {
-         int new_h = 0;
-         if (d==DOWN)
-	 {
-	     new_h = y - distance;
-	 }
-         else
-	 {
-  	     new_h = y + distance;
-	 }
-         piece tmp_p = new_piece (x, new_h, p_width, p_height, false, true);
-         if (is_in_grid((cgame)g, (cpiece)tmp_p))
-	 {
-	     for (int i=0; i<game_nb_pieces(g); ++i)
-	     {
-	         if (piece_num!=i && intersect(tmp_p, g->piece[i]))
-		     return false;
-	     }
-	     move_piece(g->piece[piece_num],d,distance);
-	     g->nb_move += distance;
-	     positionning(g, (cpiece*)g->piece);
-	     return true;
-	 }
-     }
-     if(can_move_x((cpiece)g->piece[piece_num]) && (d==LEFT || d==RIGHT))
-     {
-         int new_w = 0;
-         if (d==LEFT)
-	 {
-	     new_w = x - distance;
-	 }
-         else 
-	 {
-	     new_w = x + distance;
-	 }
-         piece tmp_p = new_piece (new_w, y, p_width, p_height, true, false);
-         if (is_in_grid((cgame)g, (cpiece)tmp_p))
-	 {
-	     for (int i=0; i<game_nb_pieces(g); ++i)
-	     {
-	         if (piece_num!=i && intersect(tmp_p, g->piece[i]))
-		     return false;
-	     }
-	     move_piece(g->piece[piece_num],d,distance);
-	     g->nb_move += distance;
-	     positionning(g, (cpiece*)g->piece);
-	     return true;
-	 }
-     }
-     return false;
-}
-\end{lstlisting}
 
 \subsection{Module affichage}
 \subsubsection*{Gestion des erreurs}
-En parallèle du découpage effectué, la gestion des erreurs s'est voulue effectuée de façon fluide. Ainsi, un module "manage\_error" regroupe des informations caractéristiques des erreurs (usage de macros pour différents types d'erreurs, de façon la plus précise possible) et une encapsulation pour l'affichage de messages récapitulatifs des erreurs en question lors de leur apparition.
+En parallèle du découpage effectué, la gestion des erreurs s'est voulue effectuée de façon fluide. Ainsi, un module \textbf{manage\_error.c} regroupe des informations caractéristiques des erreurs (usage de macros pour différents types d'erreurs, de façon la plus précise possible) et une encapsulation pour l'affichage de messages récapitulatifs des erreurs en question lors de leur apparition.
 De plus, afin de minimiser l'exécution de sections potentiellement critiques du programme, lorsque cela a été possible les branchements conditionnels ont été effectués afin de prévenir l'exécution de code qui serait compromise par une erreur.
 \subsubsection*{Point d'entrée}
-Au lancement du programme, l'unité fonctionnelle intitulée "play" prend en charge l'initialisation du programme de la façon suivante :
+Au lancement du programme, l'unité fonctionnelle intitulée \textbf{play.c} prend en charge l'initialisation du programme de la façon suivante :
 \begin{itemize}
-\item branchement avec le module "data" pour initialiser les champs de la structure qui conservera les données utiles au fil de l'exécution
-\item appel du parseur des arguments passés en entrée au programme ("parse\_argv")
-\item le parseur effectue un branchement avec le module "opt" dédié à la détection des paramètres en entrée
+\item branchement avec le module \textbf{data.c} pour initialiser les champs de la structure qui conservera les données utiles au fil de l'exécution
+\item appel du parseur des arguments passés en entrée au programme (\textit{parse\_argv})
+\item le parseur effectue un branchement avec le module \textbf{opt.c} dédié à la détection des paramètres en entrée
 \end{itemize}
 \subsubsection*{Flux d'exécution}
-En suite du point d'entrée, la gestion de la partie est transmise à l'unité fonctionnelle "move" qui se chargera de récupérer les instructions utilisateurs, d'effectuer les branchements avec le module "game" et de renvoyer à l'utilisateur la confirmation des modifications par le biais de l'affichage, ce passant par le module "term\_mode", qui prend en charge l'affichage sur terminal en fournissant des outils de lecture/écriture sur celui-ci.
+En suite du point d'entrée, la gestion de la partie est transmise à l'unité fonctionnelle \textbf{move.c} qui se chargera de récupérer les instructions utilisateurs, d'effectuer les branchements avec le module \textbf{game.c} et de renvoyer à l'utilisateur la confirmation des modifications par le biais de l'affichage, ce passant par le module \textbf{term\_mode.c}, qui prend en charge l'affichage sur terminal en fournissant des outils de lecture/écriture sur celui-ci.
 
 \subsection{Module play}
 \subsubsection*{Point d'entrée}
@@ -466,19 +371,87 @@ La fonction \textit{xfree} encapsule l'appel système \textit{free} qui n'est al
 De plus, le passage de l'adresse où est stocké l'adresse du bloc mémoire à libérer permet de sécuriser ce traitement en modifiant l'adresse où est stockée cette information, qui contiendra alors en sortie de fonction l'adresse du pointeur nul.
 L'objectif de ce double traitement est de réduire au maximum les branchements avec le noyau (invocation de l'appel système \textit{free}) ainsi que de supprimer le besoin de traitement supplémentaire en dehors de cette fonction (la variable qui contenait l'adresse de la mémoire à libérer contient donc l'adresse du pointeur nul après libération).
 
-\subsection{Le solveur}
-
 
 \subsection{Les structures de données}
-\subsubsection*{Liste simplement chaînée}
-Pour la liste simplement chaînée, nous avons décidé de nous inspiré de notre UE d'algorithmique et structure de donnée. C'est pourquoi, nous avons implémenté les fonctions caractéristiques d'une liste simplement chainée avec des types génériques le plus possible. Ainsi, on a décidé que cette liste serait utilisable pour n'importe quel type de donnée.
+\subsubsection{Liste simplement chaînée}
+Pour la liste simplement chaînée, nous avons décidé de nous inspiré de notre UE d'algorithmique et structure de donnée. C'est pourquoi, nous avons implémenté les fonctions caractéristiques d'une liste simplement chainée avec des types génériques le plus possible. Ainsi, on a décidé que cette liste serait utilisable pour n'importe quel type de donnée.\\
+La fonction qui semble importante a détaillé est celle qui crée une list: \textit{create\_list(void* data, list n\_list)}.
+Cette fonction a une double fonctionnalité, c'est-à-dire qu'elle peut être utilisable aussi bien pour créer une list que pour ajouter un élément en tête d'une liste chaînée déjà créée. En effet, n\_list peut être simplement NULL s'il n'existe pas de list auparavant ou être une liste qui exitait avant.
+\subsubsection{Les tables de hachage}
+Pour la création du solveur, il a été décidé d'utiliser des tables de hachages. Les fonctions de bases d'une structure de données ont donc été implémentées, ainsi que des accesseurs des différents champs de la structure. De plus, des définitions de pointeurs de fonctions ont été créé. Ces fonctions et ces défintions, ainsi que la structure des tables de hachages, sont décrites ci-dessous.
+\subsubsection*{Structure d'une table de hachage}
+Chaque table de hachage est définie par:
+\begin{itemize}
+\item \textbf{tab} un tableau de listes contenant les éléments ajoutés
+\item \textbf{length} la taille du tableau
+\item \textbf{hf} la fonction de hachage permettant de placer des éléments dans le tableau
+\end{itemize}
+\textit{hashTab} est un pointeur sur une structure d'une table de hachage.
+\subsubsection*{Le type \textit{chashTab}}
+\textit{chashTab} est un pointeur constant sur une structure d'une table de hachage. Ainsi, aucune modification ne pourra etre apportée à la structure via ce pointeur.
+\subsubsection*{Le type \textit{hashFunction}}
+Une fonction de type \textit{hashFunction} est une fonction de hachage. Elle prend en paramètre un pointeur du type de l'élément à insérer dans la table de hachage et renvoie un pointeur sur l'indice où l'élément doit etre inséré.
+\subsubsection*{Le type \textit{equalsFunction}}
+Une fonction de type \textit{equalsFunction} est une fonction permettant de tester l'égalité de deux éléments à travers le pointeur. Elle gère elle-meme la conversion de type des pointeurs des éléments à comparer. Elle prend en paramètre deux pointeurs des éléments à comparer, et renvoie un booléen, \textit{true} si les éléments sont égaux, \textit{false} sinon.
+\subsubsection*{La fonction \textit{create\_hash\_tab(int n, hashFunction f)}}
+Cette fonction permet la création d'une table de hachage. Les paramètre \textit{n} et \textit{f} correspondent respectivement à la taille du tableau de listes qui va etre créé, et à la fonction de hachage qui sera utilisée pour mettre des éléments dans la table. Cette dernière est allouée dynamiquement. La fonction renvoie un un pointeur sur la structure nouvellement créée.
+\subsubsection*{La fonction \textit{delete\_hash\_tab(hashTab h,void (*delete)(void *))}}
+Cette fonction permet de libérer la mémoire qui a été allouée dynamiquement lors de la création d'une table de hachage, et donc de détruire cette dernière. Le paramètre \textit{h} passé en paramètre est un pointeur sur la table de hachage à détruire. Le paramètre \textit{delete} est un pointeur de fonction permettant, si les éléments ajoutés dans la table de hachage ont été créés dynamiquement, de détruire correctement ces éléments.
+\subsubsection*{La fonction \textit{add\_hash\_tab(hashTab h,void* e,equalsFunction f)}}
+Cette fonction permet d'ajouter l'élément donné par le pointeur \textit{e} dans la table de hachage \textit{h}, si l'élément n'a pas déjà été ajouté auparavant. Sinon, aucun ajout n'est effectué. \textit{f} est un pointeur sur la fonction permettant de tester l'égalité de deux éléments, et donc de vérifier si un élément a déjà été placé dans la table de hachage ou non.
+\subsubsection*{La fonction \textit{delete\_hash\_tab(hashTab h,void* e,equalsFunction f,void (*delete)(void *))}}
+Cette fonction permet de supprimer l'élément donné par le pointeur \textit{e} dans la table de hachage \textit{h}. \textit{f} est un pointeur sur la fonction permettant de vérifier si l'élément existe dans la table de hachage, et \textit{delete} est un pointeur sur la fonction permettant de libérer la mémoire occupée par l'élément s'il a été alloué dynamiquement.
+\subsubsection*{La fonction \textit{get\_hash\_tab(chashTab h, void* e,equalsFunction f)}}
+Cette fonction renvoie un pointeur sur l'élément pointé par \textit{e} s'il est contenu dans la table de hachage \textit{h}. \textit{f} est pointeur sur la fonction permettant de tester l'égalité entre l'élément recherché et les éléments contenus dans \textit{h}.
+\subsubsection*{La fonction \textit{get\_length(chashTab h)}}
+Cette fonction renvoie la taille du tableau contenant les éléments de la table de hachage.
+\subsubsection*{La fonction \textit{get\_tab\_index(hashTab h, int index)}}
+Cette fonction renvoie un pointeur sur le champ \textit{tab} à l'index indiqué en paramètre.
 
 La fonction qui semble importante a détaillé est celle qui crée une list: \textit{create\_list(void* data, list n\_list)}
 
 Cette fonction a une double fonctionnalité, c'est-à-dire qu'elle peut être utilisable aussi bien pour créer une list que pour ajouter un élément en tête d'une liste chaînée déjà créée. En effet, n\_list peut être simplement NULL s'il n'existe pas de list auparavant ou être une liste qui exitait avant. 
 
 \subsection{Les tests}
-% A faire
+Les fonction booléennes \textit{test\_equality\_...} testent l'égalité entre un élément attendu et un élément donné, renvoie \textit{true} s'il y a égalité, \textit{false} sinon. Dans ce dernier cas, un message d'erreur est envoyé, dont une partie est donnée en paramètre de ces fonctions. Cas particulier, la fonction \textit{test\_equality\_null} ne prend pas d'élément attendu en paramètre, car \textit{null} est l'élément attendu.\\
+Toutes les fonctions de test sont booléennes, c'est-à-dire qu'elle renvoie \textit{true} si le test est réussi, \textit{false} sinon.
+A noter que les accesseurs des champs des structures ne sont pas testés.
+\subsubsection{Les tests de \textit{piece}}
+\subsubsection*{La fonction \textit{test\_new\_piece}}
+Cette fonction crée des structures \textit{piece} et vérifie que leurs champs sont correctement définis.
+\subsubsection*{La fonction \textit{test\_intersect}}
+Cette fonction teste deux cas d'intersection: l'intersection d'une pièce avec elle-meme, et un cas particulier d'intersection entre deux pièces.
+\subsubsection*{La fonction \textit{test\_move}}
+Cette fonction teste le changement de coordonnées d'une pièce après un déplacement, et vérifie donc si le déplacement a bien été effectuéé, ou pas, si le cas ne s'y pretait pas.
+\subsubsection*{La fonction \textit{test\_copy}}
+Cette fonction teste la copie d'une pièce en vérifiant l'égalité entre les champs de différentes pièces avec celles de leurs copies.
+\subsubsection{Les tests de \textit{game}}
+\subsubsection*{La fonction \textit{test\_new\_game}}
+Cette fonction crée une structure \textit{game} et vérifie que ses champs sont correctement définis ou initialisés.
+\subsubsection*{La fonction \textit{test\_copy}}
+Cette fonction teste la copie d'un jeu en vérifiant l'égalité entre les champs de de la structure et celles de sa copie. Elle effectue notamment une vérification de la copie des pièces du jeu.
+\subsubsection*{La fonction \textit{solve}}
+Cette fonction tente de résoudre un jeu donné, et vérifie que les mouvements de pièces sont bien effectués, si et seulement si ils sont autorisés. Elle vérifie aussi que le champ \textit{nb\_moves} est bien mis à jour.
+\subsubsection*{La fonction \textit{test\_game\_square\_piece}}
+Cette fonction vérifie que le retour de la fonction \textit{game\_square\_piece} est correct dans plusieurs cas particuliers.
+\subsubsection{Les tests de \textit{list}}
+\subsubsection*{La fonction \textit{test\_create}}
+Cette fonction teste si la création simpe d'une liste et la création en-tete d'une liste est correctement effectuée en vérifiant les champs de chaque liste.
+\subsubsection*{La fonction \textit{test\_add\_after}}
+Cette fonction teste l'ajout d'une liste après une première en vérifiant l'accessibilité de la liste créée par la liste déjà existante.
+\subsubsection*{La fonction \textit{test\_erase\_first}}
+Cette fonction teste la suppression d'une série de listes avec des suppressions en en-tete successives.
+\subsubsection*{La fonction \textit{test\_erase\_after}}
+Cette fonction teste la suppression d'une liste suivant une première en vérifiant le champ \textit{next} de la première, normallement mis à \textit{NULL}.
+\subsubsection{Les tests de \textit{hashTab}}
+\subsubsection*{La fonction \textit{test\_create}}
+Cette fonction crée une structure \textit{hashTab} et vérifie que ses champs sont correctement définis ou initialisés.
+\subsubsection*{La fonction \textit{test\_add}}
+Cette fonction test l'ajout d'éléments dans une table de hachage en comparant le tableau de la table de hachage avec un tableau prédit.
+\subsubsection*{La fonction \textit{test\_get}}
+Cette fonction vérifie que le retour de la fonction \textit{test\_get} est correct dans plusieurs cas particuliers.
+\subsubsection*{La fonction \textit{test\_delete}}
+Cette fonction teste la supression d'éléments dans une table de hachage, en vérifiant que la fonction \textit{test\_get} renvoie \textit{NULL} pour différents éléments  après leur suppression.
 
 \section{Répartition dans le temps et en espace}
 \subsection*{Alexis}
@@ -491,13 +464,24 @@ La répartition du travail que j'ai effectué au cours du projet est la suivante
 \end{itemize}
 - en temps :
 \begin{itemize}
-\item
-- le travail requis pour l'implémentation des parties mentionnées ci-dessus représente un volume horaire compris entre 30 et 40 heures 
-\item
-- le volume de travail necéssaire pour parvenir à concevoir cette structure représente quand à lui un volume horaire situé entre 10 et 20 heures 
-\item
-- le volume de travail ayant conduit à l'élaboration des branchements entre les différents modules (en dehors des branchements déjà proposés entre les modules \textbf{game.c} et \textbf{piece.c}) se situe entre 10 et 20 heures.
+\item le travail requis pour l'implémentation des parties mentionnées ci-dessus représente un volume horaire compris entre 30 et 40 heures 
+\item le volume de travail necéssaire pour parvenir à concevoir cette structure représente quand à lui un volume horaire situé entre 10 et 20 heures 
+\item le volume de travail ayant conduit à l'élaboration des branchements entre les différents modules (en dehors des branchements déjà proposés entre les modules \textbf{game.c} et \textbf{piece.c}) se situe entre 10 et 20 heures.
 \end{itemize}
+\subsection*{Amélie}
+Au niveau des tâches effectués, je vais faire un résumé de celles-ci :
+\begin{itemize}
+\item implémentation du module game de la V1:  15 heures TD compris
+\item modification du module game V2 et résolution des problèmes de la V1 : 10 heures
+\item listes simplement chaînée : 10 heures
+\item solveur (surtout l'algorithme vu qu'il n'est pas fini à l'heure actuelle) : 30 heures
+\end{itemize}
+\subsection*{Anthony}
+\begin{description}
+\item [Module piece.C : ] Implémentation du module \textbf{piece.c}, toutes versions confondues (\textit{Approximativement 25 heures de travail})
+\item [Tests unitaires des modules game.c et piece.c : ] Participation aux corrections des modules de tests et aux changements à apporter pour les besoins de la V2 (\textit{Approximativement 15 heures de travail})
+\item [Module game.c : ] Correction des problèmes liés au module \textbf{game.c}, factorisation du code et finalisation de certaines fonctions (\textit{Approximativement 15 heures de travail})
+\end{description}
 
 \subsection*{Amélie}
 Au niveau des tâches effectués, je vais faire un résumé de celles-ci :
@@ -520,7 +504,8 @@ L'absence d'une configuration proposée pour la prise en charge d'un fichier de 
 
 \section{Au niveau de la V2}
 L'absence d'un formatage proposé pour les fichiers de configuration a rendu laborieux l'implémentation des modifications.
-De plus, le caractère statique de la bibliothèque associé au module \textbf{game.c} a requis d'en extraire la différentiation entre le rush-hour et l'âne rouge et de l'intégrer ailleurs.
+De plus, le caractère statique de la bibliothèque associé au module \textbf{game.c} a requis d'en extraire la différentiation entre le rush-hour et l'âne rouge et de l'intégrer ailleurs.\\
+Un autre problème rencontré est celui lié à le fonction \textit{copy\_game} du module \textbf{game.c}. En effet celle-ci ne passe pas le test qui lui est propre dans le module \textbf{test\_game.c}.
 
 \section{Au niveau du solveur}
 Suite au fait que l'on ne voyait pas comment entamer cette partie, nous avons perdu beaucoup de temps. De plus, comme on s'est réposé sur une personne et que celle-ci est tombée malade, le solveur a été fait beaucoup trop rapidement et donc ce n'est qu'une ébauche. De plus, l'algorithme formulé dans une partie précédente n'est valable que pour un Rush Hour que l'on peut qualifié de simple à résoudre. C'est pourquoi, la première approche aurait été plus optimisée pour un solveur.
@@ -529,18 +514,20 @@ Suite au fait que l'on ne voyait pas comment entamer cette partie, nous avons pe
 \chapter{Pour aller plus loin}
 \setcounter{section}{0}
 \section{Analyse des problèmes rencontrés}
-En ce qui concerne tous les problèmes qui nous ont causés des \textbf{segmentation fault}, il s'est souvent avéré que c'était un problème de raisonnement logique au niveau de sortie de tableau par exemple.
-Sinon, il y a aussi eu des problèmes de raisonnement sur les imbrications de if ... else dans le module game qui ont été résolu par Anthony car étant donnée qu'il n'y avait qu'Amélie qui avait implémenté de ce module elle n'arrivait pas à voir ces erreurs. La vision d'une autre personne a donc apporté une autre analyse du problème.
-
-Un des problèmes majeur de notre groupe reste quand même la gestion du temps. Ce problème est probablement dû à un problème d'organisation au sein du groupe ainsi qu'à un manque de communication. De plus, je pense que l'on s'est trop reposé sur un membre de notre équipe alors que l'on aurait plus dû par ce biais nous entre aidé afin de pouvoir chacun en retiré des connaissances.
+Des erreurs d'execution des fichiers de tests étaient pour la grande majorité dues à des erreurs d'implémentation des fichiers qu'il testaient ou dont ils étaient dépendants.\\
+L'implémentation de la structure de données \textit{hashTab} n'est pas terminée, car même si la compilation ne provoque pas d'erreur, des erreurs flagrantes subsistent encore, comme par exemple, la non-supression d'élément.\\
+Le problème lié à la fonction \textit{copy\_game} du module \textbf{game.c} et son test unitaire ne semble pas venir de la fonction en elle-même qui semble correcte. Il doit donc provenir d'une erreur passée inaperçue dans le test.\\
+De plus, ce test et celui du module \textbf{piece.c} ont des fuites mémoires dues au fait que les variables allouées dynamiquement pour les besoins des tests n'ont pas étés libérées après usage. Une erreur malencontreuse pourtant facile à régler.\\
+En ce qui concerne tous les problèmes qui nous ont causés des \textbf{segmentation fault}, il s'est souvent avéré que c'était un problème de raisonnement logique au niveau de sortie de tableau par exemple.\\
+Il y a aussi eu des problèmes de raisonnement sur les imbrications de if ... else dans le module game qui ont été résolu par Anthony car étant donnée qu'il n'y avait qu'Amélie qui avait implémenté ce module elle n'arrivait pas à voir ces erreurs. La vision d'une autre personne a donc apporté une autre analyse du problème.\\
+Un des problèmes majeur de notre groupe reste quand même la gestion du temps. Ce problème est probablement dû à un problème d'organisation au sein du groupe ainsi qu'à un manque de communication.
 
 \section{Les améliorations a apporter au projet}
-Il est raisonnable de penser que préférer la programmation Objet à la programmation Fonctionnelle aurait notablement réduit la quantité de travail nécessaire pour parvenir à un même résultat.
-Le paradigme Objet est très bien illustré par les modules \textbf{game.c} et \textbf{piece.c} dont l'encapsulation des données et les services rendus par les fonctions qu'ils contiennent correspondent au fonctionnement d'un Objet.
-De plus, le maintient et la portabilité du code produit auraient été facilités.\\
+Il est raisonnable de penser que préférer la programmation Objet à la programmation Fonctionnelle aurait notablement réduit la quantité de travail nécessaire pour parvenir à un même résultat. Le paradigme Objet est très bien illustré par les modules \textbf{game.c} et \textbf{piece.c} dont l'encapsulation des données et les services rendus par les fonctions qu'ils contiennent correspondent au fonctionnement d'un Objet. De plus, le maintient et la portabilité du code produit auraient été facilités.\\
 Dans cette optique d'optimisation, il aurait également été envisageable de choisir une implémentation Objet pour les modules \textbf{game.c} et \textbf{piece.c} tout en conservant une approche fonctionnelle pour le reste du programme (point d'entrée du programme, interactions entrée/sortie et branchements avec les modules \textbf{game.c} et \textbf{piece.c}).
 
 \section{Ce que nous a apporté le projet}
+Je pense que ce projet nous a apporté à tous un point de vue plus pratique sur les structures de donnée que l'on a vu cette année en Algorithmique. De plus, ce projet nous a permis de nous initié à la programmation au sein d'un groupe. Et nous a montré comment coopéré afin d'essayer d'obtenir des résultats.
 
 Je pense que ce projet nous a apporté à tous un point de vue plus pratique sur les structures de donnée que l'on a vu cette année en Algorithmique. De plus, ce projet nous a permis de nous initié à la programmation au sein d'un groupe. Et nous a montré comment coopéré afin d'essayer d'obtenir des résultats.
 \end{document}
