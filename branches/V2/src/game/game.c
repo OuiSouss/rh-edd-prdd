@@ -5,7 +5,7 @@
 
 struct game_s
 {
-     int** board;
+     int* board;
      int width;
      int height;
      int nb_move;
@@ -21,9 +21,8 @@ struct game_s
 static void positionning(game g, cpiece *pieces)
 {
      // initialization of the board
-     for (int h= 0; h<g->height; ++h)
-	  for (int w= 0; w<g->width; ++w )
-	       g->board[h][w] = -1;
+  for (int i= 0; i < g->height * g->width; ++i)
+    g->board[i] = -1;
 
      //course of the board to place the pieces
      for (int i=0; i<g->nb_piece; ++i)
@@ -37,20 +36,20 @@ static void positionning(game g, cpiece *pieces)
 	if(h==1)
 	  {
 	    for (int tmp_x=x; tmp_x<(w+x); ++tmp_x)
-	      g->board[y][tmp_x] = i;
+	      g->board[y * g->height + tmp_x] = i;
 	  }
 	// in this case we know that the piece is on vertical line
 	if (w==1)
 	  {
 	    for(int tmp_y=y; tmp_y<(h+y); ++tmp_y)
-	      g->board[tmp_y][x] = i;
+	      g->board[tmp_y * g->height + x] = i;
 	  }
 	//in this case we know that the piece is at minimum a square 2*2
 	else
 	  {
 	    for (int tmp_y=y; tmp_y<(h+y); ++tmp_y)
 	      for(int tmp_x=x;tmp_x<(w+w);++tmp_x)
-		g->board[tmp_y][tmp_x] = i;
+		g->board[tmp_y * g->height + tmp_x] = i;
 	  }
      }
 }
@@ -84,15 +83,9 @@ game new_game (int width, int height, int nb_pieces, piece *pieces)
   if (new_g==NULL)
       fprintf(stderr,"Problem in the allocation of newGame!!!\n");
 
-  new_g->board = malloc (sizeof(*(new_g->board))*height);
+  new_g->board = malloc (sizeof(*(new_g->board))*(height * width));
   if (new_g->board==NULL)
-      fprintf(stderr, "Problem in the allocation of newGame's board (height)\n");
-  for (int j= 0; j<height; ++j)
-  {
-      new_g->board[j] = (int *) malloc (sizeof(*(new_g->board[j]))*width);
-    if (new_g->board[j]==NULL)
-      fprintf(stderr, "Probleme in the allocation of newGame's board (width)\n");
-  }
+      fprintf(stderr, "Problem in the allocation of newGame's board\n");
 
   new_g->width = width;
   new_g->height = height;
@@ -139,8 +132,6 @@ void delete_game (game g)
 	  for (int i= 0; i < g->nb_piece; ++i)
 	       delete_piece(g->piece[i]);
 	  free(g->piece);
-	  for (int h= 0; h< g->height; ++h)
-	       free (g->board[h]);
 	  free(g->board);
 	  free(g);
      }
@@ -266,7 +257,7 @@ int game_height(cgame g)
 
 int game_square_piece (game g, int x, int y)
 {
-     return g->board[y][x];
+     return g->board[y * g->height + x];
 }
 
 
