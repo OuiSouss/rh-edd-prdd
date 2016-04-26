@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 {
   if (argc==3)
   {
-    if (atoi(argv[1])=='r')
+    if (*argv[1]=='r')
     {
       FILE* file_solve = fopen(argv[2],"r");
       if(file_solve==NULL)
@@ -118,18 +118,21 @@ int main(int argc, char* argv[])
       
       while(!feof(file_solve))
       {
-	fscanf(file_solve,"%d %d",&width,&height);
-	fscanf(file_solve,"%d",&nb_pieces);
+	if(fscanf(file_solve,"%d %d",&width,&height) != 2)
+	  fprintf(stderr, "Fsanf problem on first line\n");
+	if(fscanf(file_solve,"%d",&nb_pieces)!=1)
+	  fprintf(stderr, "Fsanf problem on second line\n");
 	pieces = malloc(sizeof(*pieces)*nb_pieces);
 	if (pieces==NULL)
 	{
-	  fprintf(stderr,"Allocation problem");
+	  fprintf(stderr,"Allocation problem\n");
 	  exit(EXIT_FAILURE);
 	}
 	int cmp = 0;
 	while(!feof(file_solve))
 	{
-	  fscanf(file_solve,"%d %d %d %d %d %d", &x,&y,&p_width,&p_height,&move_x,&move_y);
+	  if(fscanf(file_solve,"%d %d %d %d %d %d", &x,&y,&p_width,&p_height,&move_x,&move_y)!=6)
+	    fprintf(stderr, "Fsanf problem on line\n");
 	  pieces[cmp] = new_piece(x,y,p_width,p_height,move_x,move_y);
 	}
       }
@@ -139,7 +142,7 @@ int main(int argc, char* argv[])
 
       fclose(file_solve);
     }
-    else if (atoi(argv[1])=='a')
+    else
       printf("Nous sommes vraiment désolés mais notre algorithme ne fonctionne vraiment pas pour un ane rouge. Déjà, il faudrait qu'il fonctionne pour le rush hour!!!!!!!!!!!!!!!!!!!!!!!!!\n");
   }
   else
