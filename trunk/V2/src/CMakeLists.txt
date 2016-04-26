@@ -1,3 +1,4 @@
+enable_testing()
 add_subdirectory(game)
 add_subdirectory(exec)
 add_subdirectory(data)
