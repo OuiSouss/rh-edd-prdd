@@ -87,7 +87,6 @@ void delete_hash_tab(hashTab h, void* e,equalsFunction ef,void(*delete)(void *))
   //Find where was the element put thanks to the hash function. p_i is a pointer toward the index choosen.
   int *p_i=(*f)(e);
   int i=*p_i;
-  /*list *l=&(h->tab[i]);*/
   //If l is NULL, the element cannot have been add before, so the function stops.
   if(empty_list(h->tab[i]))
     return;
@@ -142,7 +141,7 @@ void* get_hash_tab(chashTab h, void* e,equalsFunction ef)
   return NULL;
 }
 
-int get_length(hashTab h)
+int get_length(chashTab h)
 {
   return h->length;
 }
