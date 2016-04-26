@@ -1,0 +1,4 @@
+#ifndef _DATA
+# define _DATA
+# include <data.h>
+#endif /* _DATA */

@@ -1,0 +1,4 @@
+#ifndef _ERROR_FLAGS
+# define _ERROR_FLAGS
+# include <error_flags.h>
+#endif /* _ERROR_FLAGS */
